@@ -1,4 +1,4 @@
-<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>EAS Finance Workspace v1.3.8</title></head><body><!-- EAS Finance Workspace v1.3.8 - GitHub development build · Development v2 -->
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>EAS Finance Workspace v1.3.9</title></head><body><!-- EAS Finance Workspace v1.3.9 - GitHub development build · Development v2 -->
 <div id="eas-finance-workspace" class="intro-only">
 <a class="floating-experts-cta" href="https://easfinance.co.uk/contact-us/" aria-label="Discuss your finance case with the EAS Finance team">Discuss with the experts</a>
 <style>
@@ -535,7 +535,7 @@
         <div class="metric"><b id="mEquity">£0</b><span id="mEquityLabel">Gross equity</span></div>
       </div>
       <div id="sideModule" class="callout">Choose an objective and the relevant finance module will open here. Everything else stays hidden.</div>
-<div class="version">Case version: <strong id="caseVersion">Base 1 · Development v3.1 reviewed build v1.3.8</strong> · assumptions remain traceable</div>
+<div class="version">Case version: <strong id="caseVersion">Base 1 · Development v3.1 reviewed build v1.3.9</strong> · assumptions remain traceable</div>
       <div id="sideInsights" aria-live="polite"></div><div id="assumptionPriorities" aria-live="polite"></div>
     </aside>
   </div>
@@ -3301,38 +3301,101 @@ function devImportedRowsToCosts(overrides={}){
   if(!state.monthlyRows.length)return null;
   const use=document.getElementById("devUseImportedSchedule");
   if(use && !use.checked)return null;
-  let rows=devPeriodRows(state.monthlyRows);
-  const out=[],saleEvents=[];
-  let coreFound=false,profFound=false,contFound=false,actualThrough=0;
-  rows.forEach(r=>{
-    const actual=Number(r.Actual)||0, forecast=Number(r.Forecast)||0;
+
+  const sourceRows=devPeriodRows(state.monthlyRows).map((r,i)=>{
+    const actual=Number(r.Actual)||0,forecast=Number(r.Forecast)||0;
     const status=(String(r.Status||"").toLowerCase().startsWith("actual")||Math.abs(actual)>0)?"actual":"forecast";
-    let amount=status==="actual"?actual:forecast;
-    const cat=devCanonicalCategory(r.Category||"");
-    let month=r._month;
+    return {
+      month:r._month,
+      category:devCanonicalCategory(r.Category||""),
+      status,
+      amount:status==="actual"?actual:forecast,
+      description:r.Description||r.Subcategory||"",
+      source:String(r.Source||state.importedSheetName||"").trim().toLowerCase()
+    };
+  });
+
+  const actualThrough=sourceRows.filter(r=>r.status==="actual").reduce((m,r)=>Math.max(m,r.month),0);
+  const buildStress=Math.max(0,1+(overrides.buildCostPct||0));
+  const buildMonthsAdd=Math.max(0,Math.round(overrides.buildMonthsAdd||0));
+  const exitMonthsAdd=Math.max(0,Math.round(overrides.exitMonthsAdd||0));
+  const gdvFactor=Math.max(0,1+(overrides.gdvPct||0));
+  const out=[],saleEvents=[];
+
+  // An untouched EAS-generated schedule should produce exactly the same scenarios
+  // as the headline model. Re-profile it over the stressed duration rather than
+  // simply shifting every row later.
+  const generatedOnly=sourceRows.length>0 &&
+    actualThrough===0 &&
+    sourceRows.every(r=>r.source==="generated") &&
+    sourceRows.every(r=>!["land_acquisition","finance","sales"].includes(r.category));
+
+  if(generatedOnly){
+    const coreBase=sourceRows.filter(r=>r.category==="core_construction").reduce((s,r)=>s+Math.max(0,r.amount),0);
+    const profBase=sourceRows.filter(r=>r.category==="professional").reduce((s,r)=>s+Math.max(0,r.amount),0);
+    const contBase=sourceRows.filter(r=>r.category==="contingency").reduce((s,r)=>s+Math.max(0,r.amount),0);
+    const sourceEnd=Math.max(1,...sourceRows.map(r=>r.month),Math.max(1,val("buildMonths")));
+    const buildMonths=sourceEnd+buildMonthsAdd;
+    const weights=(state.developmentType==="light_refurb"?devEvenWeights(buildMonths):devSCurveWeights(buildMonths));
+    const core=coreBase*buildStress;
+    const contingency=contBase*buildStress;
+    for(let i=0;i<buildMonths;i++){
+      if(core)out.push({month:i+1,category:"core_construction",amount:core*weights[i],status:"forecast",description:`Generated construction profile month ${i+1}`});
+      if(profBase)out.push({month:i+1,category:"professional",amount:profBase/buildMonths,status:"forecast",description:`Generated professional fees month ${i+1}`});
+      if(contingency)out.push({month:i+1,category:"contingency",amount:contingency*weights[i],status:"forecast",description:`Generated contingency month ${i+1}`});
+    }
+    return {rows:out,saleEvents,actualThrough:0,buildMonths};
+  }
+
+  // Imported schedules preserve actual history. A programme extension stretches
+  // the remaining forecast across the longer period; it does not postpone the
+  // whole forecast by the same number of months.
+  const futureCostRows=sourceRows.filter(r=>
+    r.status==="forecast" &&
+    !["sales","land_acquisition","finance"].includes(r.category) &&
+    r.month>actualThrough
+  );
+  const forecastStart=futureCostRows.length?Math.min(...futureCostRows.map(r=>r.month)):Math.max(1,actualThrough+1);
+  const forecastEnd=futureCostRows.length?Math.max(...futureCostRows.map(r=>r.month)):forecastStart;
+
+  function stretchedMonth(month){
+    if(!buildMonthsAdd || month<=actualThrough)return month;
+    if(forecastEnd<=forecastStart)return month+buildMonthsAdd;
+    const ratio=(month-forecastStart)/(forecastEnd-forecastStart);
+    return Math.max(forecastStart,Math.round(forecastStart+ratio*((forecastEnd+buildMonthsAdd)-forecastStart)));
+  }
+
+  let coreFound=false,profFound=false,contFound=false;
+  sourceRows.forEach(r=>{
+    let amount=r.amount,month=r.month;
+    const cat=r.category,status=r.status;
     if(cat==="sales"){
       if(status==="forecast"){
-        amount*=1+(overrides.gdvPct||0);
-        month+=(overrides.buildMonthsAdd||0)+(overrides.exitMonthsAdd||0);
+        amount*=gdvFactor;
+        month+=buildMonthsAdd+exitMonthsAdd;
       }
-      if(status==="actual")actualThrough=Math.max(actualThrough,month);
-      if(amount>0)saleEvents.push({month,gross:amount,status,description:r.Description||r.Subcategory||""});
+      if(amount>0)saleEvents.push({month,gross:Math.max(0,amount),status,description:r.description});
       return;
     }
     if(["land_acquisition","finance"].includes(cat))return;
-    if(status==="forecast" && cat==="core_construction") amount*=1+(overrides.buildCostPct||0);
-    if(status==="forecast" && overrides.buildMonthsAdd) month+=overrides.buildMonthsAdd;
-    if(status==="actual")actualThrough=Math.max(actualThrough,month);
+
+    if(status==="forecast"){
+      if(cat==="core_construction" || cat==="contingency")amount*=buildStress;
+      month=stretchedMonth(month);
+    }
     if(cat==="core_construction")coreFound=true;
     if(cat==="professional")profFound=true;
     if(cat==="contingency")contFound=true;
-    if(amount) out.push({month,category:cat,amount:Math.max(0,amount),status,description:r.Description||r.Subcategory||""});
+    if(amount)out.push({month,category:cat,amount:Math.max(0,amount),status,description:r.description});
   });
-  const buildMonths=Math.max(1,val("buildMonths")+(overrides.buildMonthsAdd||0),...out.map(r=>r.month));
-  const weights=devSCurveWeights(buildMonths);
+
+  const baseBuildMonths=Math.max(1,val("buildMonths"),forecastEnd,...out.map(r=>r.month));
+  const buildMonths=Math.max(baseBuildMonths,val("buildMonths")+buildMonthsAdd,forecastEnd+buildMonthsAdd,...out.map(r=>r.month));
+  const weights=(state.developmentType==="light_refurb"?devEvenWeights(buildMonths):devSCurveWeights(buildMonths));
   const coreTotal=out.filter(r=>r.category==="core_construction").reduce((s,r)=>s+r.amount,0);
+
   if(!coreFound){
-    const total=val("buildCost")*(1+(overrides.buildCostPct||0));
+    const total=val("buildCost")*buildStress;
     weights.forEach((w,i)=>out.push({month:i+1,category:"core_construction",amount:total*w,status:"forecast",description:"Generated construction profile"}));
   }
   if(!profFound){
@@ -3340,7 +3403,7 @@ function devImportedRowsToCosts(overrides={}){
     for(let i=0;i<buildMonths;i++)out.push({month:i+1,category:"professional",amount:total/buildMonths,status:"forecast",description:"Generated professional fees"});
   }
   if(!contFound){
-    const baseCore=coreFound?coreTotal:val("buildCost")*(1+(overrides.buildCostPct||0));
+    const baseCore=coreFound?coreTotal:val("buildCost")*buildStress;
     const total=baseCore*val("contingency")/100;
     weights.forEach((w,i)=>out.push({month:i+1,category:"contingency",amount:total*w,status:"forecast",description:"Generated contingency"}));
   }
@@ -3749,7 +3812,7 @@ function devScenarioRows(){
 function renderDetailedDevelopmentPreview(){
  const p=document.getElementById("modulePreview");if(!p||!document.getElementById("devSeniorRate"))return;const prep=devDetailedPrepared(),r=runDevelopmentCashflowModel(prep.cfg);const market=developmentMarketPosition(r.peakLtgdv,state.developmentFamily==="ground"?"ground":"existing",r.peakLtc,r.peakDebt);const exitComp=devExitFinanceComparison(prep.cfg,r);
  let alerts="";if(r.extraEquity>0)alerts+=`<div class="dev-alert"><strong>Additional developer liquidity required: ${moneyExact(r.extraEquity)}</strong><div class="note">This is above the opening cash entered and is driven by cost timing, draw eligibility/lag and serviced finance where applicable. Peak single-month injection: ${moneyExact(r.peakMonthlyEquityInjection)}.</div></div>`;if(r.exitShortfall>1)alerts+=`<div class="dev-alert danger"><strong>Exit shortfall: ${moneyExact(r.exitShortfall)}</strong><div class="note">Development debt remains after the modelled sales/refinance exit.</div></div>`;if(r.facilityHeadroom!==null&&r.facilityHeadroom<0)alerts+=`<div class="dev-alert danger"><strong>Senior facility limit exceeded by ${moneyExact(-r.facilityHeadroom)}</strong><div class="note">The entered senior commitment is below the modelled peak senior balance.</div></div>`;
- const scenarios=devScenarioRows();const scenarioHtml=`<details class="disclosure" open><summary>Scenario comparison</summary><table class="dev-scenario-table"><thead><tr><th>Scenario</th><th>Profit after finance</th><th>Finance cost</th><th>Peak debt</th><th>Peak debt / GDV</th><th>Exit shortfall</th></tr></thead><tbody>${scenarios.map(x=>`<tr><td>${x.name}</td><td>${moneyExact(x.r.profitAfterFinance)}</td><td>${moneyExact(x.r.totalFinanceCost)}</td><td>${moneyExact(x.r.peakDebt)}</td><td>${Number.isFinite(x.r.peakLtgdv)?(x.r.peakLtgdv*100).toFixed(1)+"%":"—"}</td><td>${moneyExact(x.r.exitShortfall)}</td></tr>`).join("")}</tbody></table><div class="note">When actual monthly rows are imported, scenario cost changes and timing shifts apply only to forecast rows.</div></details>`;
+ const scenarios=devScenarioRows();const scenarioHtml=`<details class="disclosure" open><summary>Scenario comparison</summary><table class="dev-scenario-table"><thead><tr><th>Scenario</th><th>Profit after finance</th><th>Finance cost</th><th>Peak debt</th><th>Peak debt / GDV</th><th>Exit shortfall</th></tr></thead><tbody>${scenarios.map(x=>`<tr><td>${x.name}</td><td>${moneyExact(x.r.profitAfterFinance)}</td><td>${moneyExact(x.r.totalFinanceCost)}</td><td>${moneyExact(x.r.peakDebt)}</td><td>${Number.isFinite(x.r.peakLtgdv)?(x.r.peakLtgdv*100).toFixed(1)+"%":"—"}</td><td>${moneyExact(x.r.exitShortfall)}</td></tr>`).join("")}</tbody></table><div class="note">Scenario cost changes and programme extensions apply only to forecast rows. Imported actual history remains fixed; a build-period extension re-phases the remaining forecast rather than simply delaying the whole schedule.</div></details>`;
  const ledger=`<details class="disclosure"><summary>Monthly funding ledger (${r.ledger.length} periods)</summary><div class="dev-ledger-wrap"><table class="dev-ledger"><thead><tr><th>Month</th><th>Status</th><th>Costs</th><th>Senior draw</th><th>Mezz draw</th><th>Interest</th><th>Sales</th><th>Refinance</th><th>Senior repaid</th><th>Mezz repaid</th><th>Equity injection</th><th>Closing cash</th><th>Senior balance</th><th>Mezz balance</th><th>Closing debt</th></tr></thead><tbody>${r.ledger.map(x=>`<tr><td>${x.month}</td><td><span class="dev-data-badge ${x.status}">${x.status}</span></td><td>${moneyExact(x.costs)}</td><td>${moneyExact(x.drawSenior)}</td><td>${moneyExact(x.drawMezz)}</td><td>${moneyExact(x.interest)}</td><td>${moneyExact(x.sales)}</td><td>${moneyExact(x.refinance)}</td><td>${moneyExact(x.repaymentSenior||0)}</td><td>${moneyExact(x.repaymentMezz||0)}</td><td>${moneyExact(x.equityInjection)}</td><td>${moneyExact(x.closingCash)}</td><td>${moneyExact(x.closingSenior||0)}</td><td>${moneyExact(x.closingMezz||0)}</td><td>${moneyExact(x.closingDebt)}</td></tr>`).join("")}</tbody></table></div></details>`;
  const exitHtml=exitComp?`<div class="section"><h3>Development exit-finance comparison</h3><table class="result-table"><tr><td>Debt at end of works</td><td>${moneyExact(exitComp.opening)}</td></tr><tr><td>Stay on development finance: interest during exit</td><td>${moneyExact(exitComp.stay.total)}</td></tr><tr><td>Switch to tested exit finance: interest + fee</td><td>${moneyExact(exitComp.exit.total)}</td></tr><tr><td>Indicative saving / (extra cost)</td><td>${moneyExact(exitComp.stay.total-exitComp.exit.total)}</td></tr><tr><td>First sale horizon where exit finance is cheaper</td><td>${exitComp.breakEvenMonths?exitComp.breakEvenMonths+" months":"Not within 36 months on these assumptions"}</td></tr></table></div>`:"";
  p.innerHTML=`<div class="assumption-key"><span class="key user">Entered by you</span><span class="key model">Illustrative assumption</span><span class="key derived">Calculated result</span></div><div class="section"><h3>Detailed development finance view</h3><table class="result-table">
@@ -3765,7 +3828,7 @@ applyMapping=function(){const maps={};document.querySelectorAll(".mapSelect").fo
 async function handleDevelopmentFile(file){const status=document.getElementById("importStatus");try{const name=(file.name||"").toLowerCase();let rows=[];if(name.endsWith(".xlsx")||name.endsWith(".xls")){if(typeof XLSX==="undefined")throw new Error("Excel library has not loaded");const ab=await file.arrayBuffer();const wb=XLSX.read(ab,{cellFormula:true,cellDates:true});const sheetName=wb.SheetNames.find(n=>{const r=XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,defval:""});return r.length>1;})||wb.SheetNames[0];state.importedSheetName=sheetName;rows=XLSX.utils.sheet_to_json(wb.Sheets[sheetName],{defval:"",raw:false});}else{state.importedSheetName="CSV";const text=await file.text();const lines=text.replace(/\r/g,"").split("\n").filter(x=>x.trim());if(lines.length<2)throw new Error("The CSV does not contain data rows");const headers=parseCsvLine(lines[0]);rows=lines.slice(1).map(line=>{const vals=parseCsvLine(line),o={};headers.forEach((h,i)=>o[h]=vals[i]??"");return o;});}if(!rows.length)throw new Error("No data rows were found");state.importedHeaders=Object.keys(rows[0]);state.importedRawRows=rows;renderMapping();}catch(err){console.error(err);if(status)status.textContent=`Import failed: ${err.message||err}`;}};
 downloadDevelopmentTemplate=function(){const months=Math.max(1,val("buildMonths")||12),rows=["Period,Status,Category,Subcategory,Description,Forecast,Actual,Source"];for(let m=1;m<=months;m++)rows.push(`${m},Forecast,Core construction,,Build month ${m},,,User / QS`);downloadText("EAS-Development-Monthly-Template.csv",rows.join("\n"),"text/csv");};
 function downloadDevelopmentExcelTemplate(){if(typeof XLSX==="undefined"){alert("Excel support has not loaded yet. Please retry in a moment.");return;}const months=Math.max(1,val("buildMonths")||12),data=[["Period","Status","Category","Subcategory","Description","Forecast","Actual","Source"]];for(let m=1;m<=months;m++)data.push([m,"Forecast","Core construction","","Build month "+m,"","","User / QS"]);const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(data);XLSX.utils.book_append_sheet(wb,ws,"Monthly Cost Plan");XLSX.writeFile(wb,"EAS-Development-Monthly-Template.xlsx");}
-function generateMonthlyPlan(){state.importedSheetName="Generated";const months=Math.max(1,Math.round(val("buildMonths")||12)),works=val("buildCost"),prof=val("profFees"),cont=works*val("contingency")/100,w=devSCurveWeights(months);state.monthlyRows=[];for(let i=0;i<months;i++){state.monthlyRows.push({Month:i+1,Status:"Forecast",Category:"Core construction",Subcategory:"",Description:`Build month ${i+1}`,Forecast:works*w[i],Actual:0,Source:"Generated"});state.monthlyRows.push({Month:i+1,Status:"Forecast",Category:"Professional",Subcategory:"",Description:`Professional fees month ${i+1}`,Forecast:prof/months,Actual:0,Source:"Generated"});state.monthlyRows.push({Month:i+1,Status:"Forecast",Category:"Contingency",Subcategory:"",Description:`Contingency month ${i+1}`,Forecast:cont*w[i],Actual:0,Source:"Generated"});}renderMonthlyPreview();const use=document.getElementById("devUseImportedSchedule");if(use)use.checked=true;const s=document.getElementById("importStatus");if(s)s.textContent="Generated EAS monthly schedule is now driving finance timing. Export to Excel to amend it, then re-import if required.";updateModulePreview();}
+function generateMonthlyPlan(){state.importedSheetName="Generated";const months=Math.max(1,Math.round(val("buildMonths")||12)),works=val("buildCost"),prof=val("profFees"),cont=works*val("contingency")/100,w=(state.developmentType==="light_refurb"?devEvenWeights(months):devSCurveWeights(months));state.monthlyRows=[];for(let i=0;i<months;i++){state.monthlyRows.push({Month:i+1,Status:"Forecast",Category:"Core construction",Subcategory:"",Description:`Build month ${i+1}`,Forecast:works*w[i],Actual:0,Source:"Generated"});state.monthlyRows.push({Month:i+1,Status:"Forecast",Category:"Professional",Subcategory:"",Description:`Professional fees month ${i+1}`,Forecast:prof/months,Actual:0,Source:"Generated"});state.monthlyRows.push({Month:i+1,Status:"Forecast",Category:"Contingency",Subcategory:"",Description:`Contingency month ${i+1}`,Forecast:cont*w[i],Actual:0,Source:"Generated"});}renderMonthlyPreview();const use=document.getElementById("devUseImportedSchedule");if(use)use.checked=true;const s=document.getElementById("importStatus");if(s)s.textContent="Generated EAS monthly schedule is now driving finance timing. Scenario tests re-profile future forecast rows while keeping any imported actual history fixed.";updateModulePreview();}
 renderMonthlyPreview=function(){const el=document.getElementById("monthlyPreview");if(!el)return;if(!state.monthlyRows.length){el.innerHTML="";return;}const forecast=state.monthlyRows.reduce((s,r)=>s+(Number(r.Forecast)||0),0),actual=state.monthlyRows.reduce((s,r)=>s+(Number(r.Actual)||0),0);el.innerHTML=`<div class="summary-grid"><div class="summary-box"><span>Rows</span><strong>${state.monthlyRows.length}</strong></div><div class="summary-box"><span>Forecast total</span><strong>${money(forecast)}</strong></div><div class="summary-box"><span>Actual total</span><strong>${money(actual)}</strong></div></div><div class="monthly-preview"><table><thead><tr><th>Period</th><th>Status</th><th>Category</th><th>Description</th><th>Forecast</th><th>Actual</th></tr></thead><tbody>${state.monthlyRows.slice(0,120).map(r=>`<tr><td>${escapeHtml(r.Month)}</td><td>${escapeHtml(r.Status||"")}</td><td>${escapeHtml(r.Category)}</td><td>${escapeHtml(r.Description)}</td><td>${money(r.Forecast)}</td><td>${money(r.Actual)}</td></tr>`).join("")}</tbody></table></div>`;};
 const _renderMonthlyPreviewV138=renderMonthlyPreview;
 renderMonthlyPreview=function(){_renderMonthlyPreviewV138();updateDetailedScheduleStatus();};
