@@ -1,4 +1,4 @@
-<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>EAS Finance Workspace v1.3.1</title></head><body><!-- EAS Finance Workspace v1.3.1 - WordPress Custom HTML version · Development v2 -->
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>EAS Finance Workspace v1.3.5</title></head><body><!-- EAS Finance Workspace v1.3.5 - GitHub development build · Development v2 -->
 <div id="eas-finance-workspace" class="intro-only">
 <a class="floating-experts-cta" href="https://easfinance.co.uk/contact-us/" aria-label="Discuss your finance case with the EAS Finance team">Discuss with the experts</a>
 <style>
@@ -324,6 +324,46 @@
  #eas-finance-workspace .comparison-insights{grid-template-columns:1fr}
 }
 
+
+#eas-finance-workspace .comparison-headline{
+  border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:16px;
+  padding:22px 24px;margin:20px 0;background:rgba(255,255,255,.48);
+}
+#eas-finance-workspace .comparison-headline h3{margin:5px 0 4px}
+#eas-finance-workspace .comparison-profit{font-family:Georgia,serif;font-size:42px;line-height:1.05;color:var(--navy);margin:8px 0}
+#eas-finance-workspace .comparison-explanation{
+  border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:18px 0;background:var(--white);
+}
+#eas-finance-workspace .comparison-explanation h3{margin-top:0}
+#eas-finance-workspace .compare-winners-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0 24px;
+}
+#eas-finance-workspace .compare-winner{
+  border:1px solid var(--line);border-radius:14px;padding:16px;background:rgba(255,255,255,.62);
+}
+#eas-finance-workspace .compare-winner-label{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:8px}
+#eas-finance-workspace .compare-winner-value{font-family:Georgia,serif;font-size:25px;color:var(--navy);margin-top:6px}
+#eas-finance-workspace .comparison-market-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 22px;
+}
+#eas-finance-workspace .comparison-market{margin:0;padding:16px 18px;border-radius:14px}
+#eas-finance-workspace .comparison-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+#eas-finance-workspace .comparison-table{min-width:1180px;width:100%;border-collapse:collapse}
+#eas-finance-workspace .comparison-table th,
+#eas-finance-workspace .comparison-table td{padding:13px 12px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+#eas-finance-workspace .comparison-table th:first-child,
+#eas-finance-workspace .comparison-table td:first-child{text-align:left;position:sticky;left:0;background:var(--white);z-index:1}
+#eas-finance-workspace .comparison-table thead th{background:#f0ecdf;font-size:13px;white-space:nowrap}
+#eas-finance-workspace .comparison-table .secondary-metric{color:var(--muted)}
+@media(max-width:950px){
+  #eas-finance-workspace .compare-winners-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #eas-finance-workspace .comparison-market-grid{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  #eas-finance-workspace .compare-winners-grid{grid-template-columns:1fr}
+  #eas-finance-workspace .comparison-profit{font-size:34px}
+}
+
 </style>
 
 <div class="shell">
@@ -476,7 +516,7 @@
         <div class="metric"><b id="mEquity">£0</b><span id="mEquityLabel">Gross equity</span></div>
       </div>
       <div id="sideModule" class="callout">Choose an objective and the relevant finance module will open here. Everything else stays hidden.</div>
-<div class="version">Case version: <strong id="caseVersion">Base 1 · Development v3.1 reviewed build v1.3.4</strong> · assumptions remain traceable</div>
+<div class="version">Case version: <strong id="caseVersion">Base 1 · Development v3.1 reviewed build v1.3.5</strong> · assumptions remain traceable</div>
       <div id="sideInsights" aria-live="polite"></div><div id="assumptionPriorities" aria-live="polite"></div>
     </aside>
   </div>
@@ -1286,2033 +1326,154 @@ function renderComparisonInsights(){
    const bestRank=Math.max(...fundedIndexes.map(i=>rank[ms[i].market.cls]||0));
    broadest=state.quickProjects.filter((p,i)=>fundedIndexes.includes(i)&&(rank[ms[i].market.cls]||0)===bestRank).map(p=>p.name).join(", ");
  }
- return `<div class="comparison-insights">${items.map(x=>`<div class="comparison-insight"><strong>${x[0]}</strong>${escapeHtml(x[1].name)}</div>`).join("")}<div class="comparison-insight"><strong>Broadest indicative gearing range</strong>${escapeHtml(broadest)}</div></div>`;
+ return `<div class="comparison-insights">${items.map(x=>`<div class="comparison-insight"><strong>${x[0]}</strong>${escapeHtml(x[1].name)}</div>`).join("")}<div class="comparison-insight"><strong>Indicative funding position</strong>${escapeHtml(broadest)}</div></div>`;
 }
 function renderQuickDevelopmentResults(){
- const preview=document.getElementById("modulePreview");if(!preview)return;
- ensureQuickProjects();
- const topAdd=document.querySelector("#step3 .quick-project-add");
- if(topAdd) topAdd.innerHTML=state.quickProjects.length<4?`<button class="btn secondary" type="button" onclick="addQuickProject()">+ Add another project</button>`:`<span class="note">Maximum four projects in Quick Development Test.</span>`;
- if(state.quickProjects.length===1){
-   const p=state.quickProjects[0],m=quickProjectMetrics(p);
-   preview.innerHTML=`<div class="section"><h3>Quick project result</h3><table class="result-table">
-     <tr><td>Economic project cost before finance</td><td>${moneyExact(m.economicCost)}</td></tr>
-     <tr><td>Completed value / GDV</td><td>${moneyExact(m.gdv)}</td></tr>
-     <tr><td>Profit before finance and disposal costs</td><td>${moneyExact(m.profit)}</td></tr>
-     <tr><td>Profit on cost before finance</td><td>${(m.poc*100).toFixed(1)}%</td></tr>
-     <tr><td>New cash contribution entered</td><td>${moneyExact(m.cash)}</td></tr>
-     <tr><td>Project equity represented in this structure</td><td>${moneyExact(m.projectEquity)}</td></tr>
-     <tr><td>Indicative funding need before finance costs</td><td>${moneyExact(m.fundingNeed)}</td></tr>
-     <tr><td>Funding / GDV</td><td>${Number.isFinite(m.ltgdv)?(m.ltgdv*100).toFixed(1)+"%":"—"}</td></tr>
-     <tr><td>Funding / project cost</td><td>${Number.isFinite(m.ltc)?(m.ltc*100).toFixed(1)+"%":"—"}</td></tr>
-     <tr><td>Simple profit / project equity</td><td>${Number.isFinite(m.returnOnEquity)?m.returnOnEquity.toFixed(2)+"×":"—"}</td></tr>
-     <tr><td>Total works + exit period</td><td>${m.duration} months</td></tr>
-   </table>
-   ${marketPositionPanel(m.market.status,m.market.cls,m.market.reason,"Quick comparison only. Project equity includes existing site equity where relevant. Finance costs, lender fees, tax/VAT effects and detailed monthly draw timing are not included.")}
-   <div class="toolbar"><button class="btn primary" type="button" onclick="modelQuickProjectInDetail(0)">Model this project in detail</button></div></div>`;
-   return;
- }
- const rows=state.quickProjects.map((p,i)=>{const m=quickProjectMetrics(p);return `<tr>
-   <td><strong>${escapeHtml(p.name)}</strong><br><span class="note">${quickDevTypeLabel(p.type)}</span></td>
-   <td>${moneyExact(m.profit)}</td><td>${(m.poc*100).toFixed(1)}%</td>
-   <td>${Number.isFinite(m.ltgdv)?(m.ltgdv*100).toFixed(1)+"%":"—"}</td>
-   <td>${Number.isFinite(m.ltc)?(m.ltc*100).toFixed(1)+"%":"—"}</td>
-   <td>${moneyExact(m.cash)}</td><td>${moneyExact(m.projectEquity)}</td>
-   <td>${Number.isFinite(m.returnOnEquity)?m.returnOnEquity.toFixed(2)+"×":"—"}</td><td>${m.duration} mo</td>
-   <td><span class="quick-market-badge ${m.market.cls}">${quickMarketShort(m.market)}</span></td>
-   <td><button class="mini-btn" type="button" onclick="modelQuickProjectInDetail(${i})">Model in detail</button></td>
-  </tr>`;}).join("");
- preview.innerHTML=`<div class="section"><h3>Compare your projects</h3><div class="note">No single score is imposed. Compare margin, project equity, headline gearing, time and indicative funding range separately.</div>
-  ${renderComparisonInsights()}
-  <div class="quick-compare-scroll"><table class="quick-compare-table"><thead><tr><th>Project</th><th>Profit</th><th>Profit on cost</th><th>Funding / GDV</th><th>Funding / cost</th><th>New cash</th><th>Project equity</th><th>Profit / equity</th><th>Duration</th><th>Gearing view</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
-  <div class="callout"><strong>Comparison note:</strong> project equity includes existing site equity where relevant. Profit / equity is a simple first-pass capital-efficiency measure, not an IRR. Detailed finance costs and monthly timing can change the relative picture.</div></div>`;
-}
-function renderQuickDevelopmentWorkspace(el){
- ensureQuickProjects();
- document.getElementById('eas-finance-workspace').classList.remove("advanced");
- el.innerHTML=`<div class="quick-dev-head"><div><div class="eyebrow">Development v2</div><h3>Quick Development Test</h3><div class="note">Enter the project economics first. You only need one project; add another when you want to compare opportunities. Borrower and wider-security detail can wait until you decide a project is worth taking further.</div></div></div>
-  <div id="quickProjectCards" class="quick-projects"></div>
-  <div class="quick-project-add">${state.quickProjects.length<4?`<button class="btn secondary" type="button" onclick="addQuickProject()">+ Add another project</button>`:""}</div>
-  <div id="modulePreview"></div>`;
- renderQuickProjectCards();
- renderQuickDevelopmentResults();
- updateSide();updateUsefulNow();
-}
-function applyDevelopmentSeed(){
- const p=state.developmentSeed;if(!p || state.developmentSeedApplied)return;
- const set=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v;};
- set("siteOwnership",p.siteStatus);
- set("siteValue",p.siteValue);
- set("sitePurchasePrice",p.siteValue);
- set("siteAcquisitionCosts",0);
- set("siteDebt",p.existingDebt);
- set("buildCost",p.works);
- set("profFees",p.fees);
- set("gdv",p.gdv);
- set("units",p.units||1);
- set("retainUnits",0);
- [["contingency",p.contingency],["buildMonths",p.buildMonths],["salesMonths",p.exitMonths]].forEach(([id,v])=>{
-   set(id,v);set(id+"R",v);const view=document.getElementById(id+"View");if(view)view.textContent=id==="contingency"?`${v}%`:v;
- });
- const cash=document.getElementById("cashAvailable");if(cash)cash.value=p.cash;
- updateDevelopmentSiteFields();
- state.developmentSeedApplied=true;
- const step=document.getElementById("step3");
- if(step){step.insertAdjacentHTML("afterbegin",`<div class="promoted-banner"><div><strong>Loaded from Quick Development Test: ${escapeHtml(p.name)}</strong><div class="note">Main project figures have been carried forward. Add the deeper timing, Excel-assisted data and finance structure here.</div></div><button class="btn secondary" type="button" onclick="returnToQuickProjects()">Back to quick projects</button></div>`);}
-}
-function modelQuickProjectInDetail(index){
- const p=state.quickProjects[index];if(!p)return;
- state.developmentSeed={...p};state.developmentSeedApplied=false;
- state.developmentFamily=quickDevTypeFamily(p.type);
- state.developmentType=p.type==="ground"?"ground_up":p.type;
- state.developmentEntryMode="advanced";
- const cash=document.getElementById("cashAvailable");if(cash)cash.value=p.cash;
- const quick=document.getElementById("devQuickChoice"),advanced=document.getElementById("devAdvancedChoice");
- if(quick)quick.classList.remove("active");if(advanced)advanced.classList.add("active");
- renderSpecialist();renderRouteSummaries();updateSide();linkVisibleLabels();
- window.scrollTo({top:80,behavior:"smooth"});
-}
-function returnToQuickProjects(){
- state.developmentEntryMode="quick";state.developmentSeed=null;state.developmentSeedApplied=false;
- const quick=document.getElementById("devQuickChoice"),advanced=document.getElementById("devAdvancedChoice");
- if(quick)quick.classList.add("active");if(advanced)advanced.classList.remove("active");
- renderSpecialist();renderRouteSummaries();updateSide();linkVisibleLabels();
- window.scrollTo({top:80,behavior:"smooth"});
-}
+  const wrap=document.getElementById("quickDevResults");
+  if(!wrap)return;
+  if(!state.quickProjects.length){wrap.innerHTML="";return;}
+  const metrics=state.quickProjects.map(p=>({p,m:quickProjectMetricsV3(p)}));
 
-function renderSpecialist(){
- const el=document.getElementById("step3");
- const o=state.objective;
- if(o==="develop" && state.developmentEntryMode==="quick"){
-  renderQuickDevelopmentWorkspace(el);
-  return;
- }
- if(o==="develop"){
-  el.innerHTML=`
-   <div id="devTypeChooser"></div>
-   <div id="contextQuestions"></div>
-   <div class="section">
-    <div class="field">
-      <label>Do you already own the site / property?</label>
-      <select id="siteOwnership">
-        <option value="owned" selected>Yes, already owned</option>
-        <option value="buying">No, it is being purchased</option>
-      </select>
-    </div>
-    <div class="grid2">
-     <div class="field"><label>Current site / property value</label><input id="siteValue" type="number" value="500000" step="10000" min="0"><div class="help">For an already-owned site, this is the economic land/property contribution used in the appraisal.</div></div>
-     <div class="field" id="landHistoricCostField"><label>Historic amount originally paid (context only)</label><input id="landHistoricCost" type="number" value="0" step="10000" min="0"><div class="help">Kept separate from current value and current cash requirement.</div></div>
-     <div class="field" id="siteDebtField"><label>Existing debt on site</label><input id="siteDebt" type="number" value="0" step="10000" min="0"></div>
-     <div class="field hidden" id="sitePurchasePriceField"><label>Site / property purchase price</label><input id="sitePurchasePrice" type="number" value="500000" step="10000" min="0"></div>
-     <div class="field hidden" id="siteAcquisitionCostsField"><label>Acquisition costs being funded</label><input id="siteAcquisitionCosts" type="number" value="0" step="1000" min="0"></div>
-     <div class="field"><label>Core works budget</label><input id="buildCost" type="number" value="800000" step="10000" min="0">
-<div class="confidence-row"><label>How firm is this?</label><select id="buildConfidence" class="confidence-select"><option value="1">QS / firm cost plan</option><option value=".65" selected>Reasoned estimate</option><option value=".35">Early estimate</option></select></div></div>
-     <div class="field"><label>Professional fees</label><input id="profFees" type="number" value="80000" step="5000" min="0"></div>
-    </div>
-    ${rangeField("contingency","Contingency %",0,15,.5,5,"% of core works")}
-    ${rangeField("buildMonths","Construction / works period",2,30,1,14," months")}
-    <div class="grid2">
-     <div class="field"><label>Completed value / GDV</label><input id="gdv" type="number" value="1800000" step="25000">
-<div class="confidence-row"><label>How firm is this?</label><select id="gdvConfidence" class="confidence-select"><option value="1">Formal valuation</option><option value=".65" selected>Comparable evidence</option><option value=".35">Early estimate</option></select></div></div>
-     <div class="field"><label>Number of units</label><input id="units" type="number" value="6" min="1" max="100"></div>
-    </div>
-    ${rangeField("salesMonths","Expected sales period",1,24,1,6," months")}
-    <div class="field"><label>Units you expect to retain</label><input id="retainUnits" type="number" value="0" min="0" max="100"></div>
-   </div>
-   <div class="section advanced-only">
-    <h3>Test an unexpected cost</h3>
-    <div class="grid2"><div class="field"><label>Type</label><select id="jumpType"></select></div>
-    <div class="field"><label>Amount</label><input id="jumpCost" type="number" value="0" step="5000"></div>
-    <div class="field"><label>Month of cost</label><input id="jumpMonth" type="number" value="7" min="1" max="60" step="1"></div>
-    <div class="field"><label>Use contingency first?</label><select id="jumpUseContingency"><option value="yes" selected>Yes</option><option value="no">No</option></select></div></div>
-    <div class="help">If contingency is used first, only the amount above the budgeted contingency increases total project cost.</div>
-   </div>
-   <div class="section advanced-only hidden" id="excelAssistPanel">
-    <h3>Monthly cost plan / Excel-assisted mode</h3>
-    <div class="callout">The monthly schedule drives the finance model. Import an Excel or CSV cost plan, or generate an EAS schedule from the current assumptions. Actual rows remain fixed when scenarios are tested.</div>
-    <div class="import-box">
-      <strong>Monthly development data</strong>
-      <div class="note">Supported fields: Period, Status, Category, Subcategory, Description, Forecast, Actual and Source. Existing headings are mapped before use.</div>
-      <div class="import-actions">
-        <button class="btn secondary" type="button" onclick="downloadDevelopmentExcelTemplate()">Download Excel template</button>
-        <button class="btn secondary" type="button" onclick="downloadDevelopmentTemplate()">Download CSV template</button>
-        <label class="btn secondary" for="developmentCsv">Import Excel / CSV</label>
-        <input class="file-input" id="developmentCsv" type="file" accept=".csv,.xlsx,.xls,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
-        <button class="btn secondary" type="button" onclick="generateMonthlyPlan()">Generate EAS monthly plan</button>
-        <button class="btn secondary" type="button" onclick="exportDetailedDevelopmentWorkbook()">Export current model to Excel</button>
-        <button class="btn secondary" type="button" onclick="downloadDevelopmentManifest()">Download model data (JSON)</button>
-      </div>
-      <div class="dev-xlsx-note">Excel is processed in the browser. Imported monthly data is used for finance timing once the column mapping is confirmed.</div>
-      <div id="importStatus" class="note" style="margin-top:8px"></div>
-      <div id="mappingArea"></div>
-      <div id="monthlyPreview"></div>
-    </div>
-   </div>
-   <div id="modulePreview"></div>`;
-  renderDevelopmentTypeChooser();
-  renderContextQuestions();
-  updateDevelopmentSiteFields();
-  const ownership=document.getElementById("siteOwnership");
-  if(ownership) ownership.addEventListener("change",()=>{updateDevelopmentSiteFields();updateModulePreview();});
-  ["contingency","buildMonths","salesMonths"].forEach(id=>wireRange(id,id==="contingency"?x=>x+"%":x=>x));
-  el.querySelectorAll("input,select").forEach(x=>x.addEventListener("input",updateModulePreview));
-  applyDevelopmentSeed();
- } else if(o==="buy_property"){
-  const startingCash=val("cashAvailable")||0;
-  el.innerHTML=`
-   <div class="field">
-    <label>What are you buying the property for?</label>
-    <select id="purchasePurpose">
-      <option value="owner_occupied">Business premises / owner-occupied commercial</option>
-      <option value="investment">Investment property</option>
-      <option value="bridge">Short-term purchase / bridging</option>
-      <option value="refurb">Purchase with refurbishment or conversion</option>
-    </select>
-   </div>
-
-   <div class="grid2">
-    <div class="field">
-      <label>Purchase price</label>
-      <input id="purchasePrice" type="number" value="500000" step="10000">
-    </div>
-    <div class="field">
-      <label>Cash contribution</label>
-      <input id="purchaseCash" type="number" value="${startingCash}" step="5000">
-      <div class="help">Defaults to the cash you entered on the previous screen. Change it only if you do not intend to use all of that cash.</div>
-    </div>
-    <div class="field">
-      <label>Purchase costs to be funded</label>
-      <input id="purchaseCosts" type="number" value="0" step="1000">
-      <div class="help">Only include costs you want the finance structure to cover. Costs paid separately from other cash should not be added here.</div>
-    </div>
-    <div class="field">
-      <label>Finance required</label>
-      <input id="purchaseFinance" type="text" readonly value="">
-      <div class="help">Calculated automatically from purchase price + funded costs − cash contribution.</div>
-    </div>
-   </div>
-
-   <div id="purchasePurposeFields"></div>
-   <div id="modulePreview"></div>`;
-
-  renderPurchasePurposeFields();
-  updatePurchaseFinance();
-  el.querySelectorAll("input,select").forEach(x=>x.addEventListener("input",()=>{
-    updatePurchaseFinance();
-    if(x.id==="purchasePurpose") renderPurchasePurposeFields();
-    updateModulePreview();
-  }));
-  document.getElementById("purchasePurpose").addEventListener("change",()=>{
-    renderPurchasePurposeFields();
-    updatePurchaseFinance();
-    updateModulePreview();
-  });
-
- } else if(o==="refinance" || o==="retain"){
-  el.innerHTML=`
-   <div class="grid2">
-    <div class="field"><label>Property value</label><input id="propValue" type="number" value="600000" step="10000"></div>
-    <div class="field"><label>Existing debt to repay</label><input id="propDebt" type="number" value="200000" step="10000"></div>
-    <div class="field"><label>Net cash required</label><input id="cashNeed" type="number" value="200000" step="10000"></div>
-    <div class="field"><label>Intended exit / repayment</label><select id="exit"><option>Refinance to longer-term finance</option><option>Sale</option><option>Business/property cash flow</option></select></div>
-    <div class="field"><label>How clear is the exit?</label><select id="exitQuality"><option value="clear">Clear and evidenced</option><option value="reasonable" selected>Reasonable but not fully evidenced</option><option value="weak">Uncertain at this stage</option></select></div>
-   </div>
-   ${rangeField("bridgeTerm","Short-term facility test period",3,24,1,12," months")}
-   ${rangeField("bridgeRate","Illustrative monthly rate",0.4,2,.05,.85,"% per month")}
-   <div class="field"><label>Interest treatment to test</label><select id="interestMode"><option value="rolled">Rolled</option><option value="retained">Retained</option><option value="serviced">Serviced monthly</option></select></div>
-   <div id="modulePreview"></div>`;
-  wireRange("bridgeTerm",x=>x);wireRange("bridgeRate",x=>x.toFixed(2));
-  el.querySelectorAll("input,select").forEach(x=>x.addEventListener("input",updateModulePreview));
- } else if(o==="buy_business"){
-  el.innerHTML=`
-   <div class="grid2">
-    <div class="field"><label>Purchase price</label><input id="bizPrice" type="number" value="1500000" step="25000"></div>
-    <div class="field"><label>Transaction costs</label><input id="bizCosts" type="number" value="75000" step="5000"></div>
-    <div class="field"><label>Approximate sustainable annual business profit</label><input id="ebitda" type="number" value="350000" step="10000">
-<div class="help">Use a sensible recurring operating-profit figure. If you already know the adjusted EBITDA, you can use that.</div>
-<div class="confidence-row"><label>Evidence quality</label><select id="ebitdaConfidence" class="confidence-select"><option value="1">Verified normalised accounts</option><option value=".65" selected>Management-adjusted</option><option value=".35">Indicative only</option></select></div></div>
-    <div class="field"><label>Buyer cash</label><input id="buyerCash" type="number" value="${val("cashAvailable")||0}" step="10000"><div class="help">Defaults to the cash entered on the previous screen.</div></div>
-    <div class="field"><label>Senior debt to test</label><input id="seniorDebt" type="number" value="800000" step="10000"></div>
-    <div class="field"><label>Vendor / deferred support</label><input id="vendorDebt" type="number" value="400000" step="10000"></div>
-   </div>
-   ${rangeField("acqRate","Illustrative blended debt rate",3,18,.25,8,"% p.a.")}
-   ${rangeField("acqTerm","Debt repayment period",2,10,1,5," years")}
-   <div id="modulePreview"></div>`;
-  wireRange("acqRate",x=>x.toFixed(2));wireRange("acqTerm",x=>x);
-  el.querySelectorAll("input,select").forEach(x=>x.addEventListener("input",updateModulePreview));
- } else if(o==="business_growth"){
-  el.innerHTML=`
-   <div class="grid2">
-    <div class="field"><label>Funding required</label><input id="wcAmount" type="number" value="100000" step="5000"></div>
-    <div class="field"><label>Monthly turnover</label><input id="turnover" type="number" value="100000" step="5000"></div>
-    <div class="field"><label>Monthly gross profit</label><input id="grossProfit" type="number" value="40000" step="2500">
-<div class="confidence-row"><label>Evidence quality</label><select id="gpConfidence" class="confidence-select"><option value="1">Recent management accounts</option><option value=".65" selected>Typical recent month</option><option value=".35">Estimate</option></select></div></div>
-    <div class="field"><label>Monthly operating costs</label><input id="opCosts" type="number" value="25000" step="2500" min="0"></div>
-    <div class="field"><label>Existing monthly loan / finance repayments</label><input id="existingMonthlyDebt" type="number" value="0" step="250" min="0"><div class="help">Include repayments that will continue after the new funding is taken.</div></div>
-   </div>
-   <div class="grid3">
-    <div class="field"><label>Debtor days</label><input id="debtorDays" type="number" value="60"></div>
-    <div class="field"><label>Stock days</label><input id="stockDays" type="number" value="20"></div>
-    <div class="field"><label>Creditor days</label><input id="creditorDays" type="number" value="30"></div>
-   </div>
-   ${rangeField("wcRate","Illustrative rate",3,25,.25,10,"% p.a.")}
-   ${rangeField("wcTerm","Term loan comparison",6,60,1,36," months")}
-   <div id="modulePreview"></div>`;
-  wireRange("wcRate",x=>x.toFixed(2));wireRange("wcTerm",x=>x);
-  el.querySelectorAll("input,select").forEach(x=>x.addEventListener("input",updateModulePreview));
- } else if(o==="asset_finance"){
-  el.innerHTML=`
-   <div class="grid2">
-    <div class="field"><label>Asset price</label><input id="assetPrice" type="number" value="100000" step="5000"></div>
-    <div class="field"><label>Deposit</label><input id="deposit" type="number" value="10000" step="1000"></div>
-    <div class="field"><label>Balloon / final payment</label><input id="balloon" type="number" value="0" step="1000"></div>
-    <div class="field"><label>Structure</label><select id="assetStructure"><option>Hire purchase</option><option>Lease purchase</option><option>Finance lease</option></select></div>
-    <div class="field"><label>Approximate monthly cash available for a new payment</label><input id="assetCashSurplus" type="number" value="10000" step="500" min="0"><div class="help">Use a sensible recurring monthly surplus after normal business costs.</div></div>
-   </div>
-   ${rangeField("assetRate","Illustrative rate",3,18,.25,7.5,"% p.a.")}
-   ${rangeField("assetTerm","Term",12,84,6,60," months")}
-   <div id="modulePreview"></div>`;
-  wireRange("assetRate",x=>x.toFixed(2));wireRange("assetTerm",x=>x);
-  el.querySelectorAll("input,select").forEach(x=>x.addEventListener("input",updateModulePreview));
- } else if(o==="invoice"){
-  el.innerHTML=`
-   <div class="grid2">
-    <div class="field"><label>Eligible receivables</label><input id="receivables" type="number" value="500000" step="10000"></div>
-    <div class="field"><label>Current drawings</label><input id="currentDrawn" type="number" value="150000" step="10000"></div>
-   </div>
-   ${rangeField("advanceRate","Advance rate to test",50,95,1,85,"%")}
-   ${rangeField("eligibility","Receivables judged eligible",50,100,1,90,"%")}
-   ${rangeField("reserve","Reserve / dilution",0,15,.5,5,"%")}
-   <div id="modulePreview"></div>`;
-  wireRange("advanceRate",x=>x);wireRange("eligibility",x=>x);wireRange("reserve",x=>x);
-  el.querySelectorAll("input,select").forEach(x=>x.addEventListener("input",updateModulePreview));
- }
- if(state.objective==="develop"){
-   const panel=document.getElementById("excelAssistPanel");
-   const file=document.getElementById("developmentCsv");
-   if(file) file.addEventListener("change",e=>{if(e.target.files&&e.target.files[0])handleDevelopmentFile(e.target.files[0])});
-   if(state.developmentEntryMode==="advanced"){
-     document.getElementById('eas-finance-workspace').classList.add("advanced");
-     if(panel) panel.classList.remove("hidden");
-     const q=document.getElementById("quickMode"), a=document.getElementById("advancedMode");
-     if(q&&a){q.classList.remove("active");a.classList.add("active");}
-   } else {
-     document.getElementById('eas-finance-workspace').classList.remove("advanced");
-     if(panel) panel.classList.add("hidden");
-   }
- }
- updateModulePreview();
-}
-
-
-
-function updateDevelopmentSiteFields(){
-  const buying=text("siteOwnership")==="buying";
-  const debtField=document.getElementById("siteDebtField");
-  const priceField=document.getElementById("sitePurchasePriceField");
-  const costsField=document.getElementById("siteAcquisitionCostsField");
-  if(debtField) debtField.classList.toggle("hidden",buying);
-  if(priceField) priceField.classList.toggle("hidden",!buying);
-  if(costsField) costsField.classList.toggle("hidden",!buying);
-}
-
-function renderDevelopmentTypeChooser(){
- const el=document.getElementById("devTypeChooser"); if(!el) return;
- if(state.developmentFamily==="ground"){
-   state.developmentType="ground_up";
-   el.innerHTML=`<div class="callout"><strong>Ground-up development</strong><br>Groundworks, structure, services, programme, sales and refinance risks are prioritised.</div>`;
- } else {
-   const options=[
-     ["conversion","Conversion"],
-     ["heavy_refurb","Heavy refurbishment"],
-     ["light_refurb","Light refurbishment"],
-     ["part_complete","Part-complete"]
-   ];
-   if(!options.some(x=>x[0]===state.developmentType)) state.developmentType="conversion";
-   el.innerHTML=`<div class="pill-group" id="existingDevTypes">`+
-     options.map(x=>`<button class="pill ${state.developmentType===x[0]?"active":""}" data-v="${x[0]}">${x[1]}</button>`).join("")+
-     `</div>`;
-   [...el.querySelectorAll(".pill")].forEach(b=>b.onclick=()=>{
-     [...el.querySelectorAll(".pill")].forEach(x=>x.classList.remove("active"));
-     b.classList.add("active");
-     state.developmentType=b.dataset.v;
-     renderContextQuestions();
-     updateModulePreview();
-   });
- }
-}
-
-function renderContextQuestions(){
- const q=document.getElementById("contextQuestions");if(!q)return;
- const risk={
-  ground_up:["Is excavation / groundworks required?","Have ground investigations been completed?","Are utility or drainage diversions expected?"],
-  conversion:["Has a structural/building survey been completed?","Are structural alterations required?","Are major M&E changes expected?"],
-  heavy_refurb:["Has the building been fully surveyed?","Are structural or hidden-condition risks known?","Are major services being replaced?"],
-  light_refurb:["Are the works primarily cosmetic/non-structural?","Is the property habitable during the works?"],
-  part_complete:["What percentage of the works is already complete?","What remains to reach practical completion?","Is the existing facility still available?"]
- }[state.developmentType]||[];
- q.innerHTML=`<div class="section"><h3>Project checklist</h3><div class="note">These questions are prompts for the detailed review. They do not yet alter the calculated result.</div>${risk.map(x=>`<div class="field"><label>${x}</label><select><option>Not sure</option><option>Yes</option><option>No</option><option>Partly</option></select></div>`).join("")}</div>`;
- const j=document.getElementById("jumpType");
- if(j){
-  const opts=state.developmentType==="ground_up"
-   ?["Ground conditions","Drainage","Utilities/services","Foundations/piling","Contamination","Other"]
-   :["Structural defect","Existing services/M&E","Asbestos","Roof/water ingress","Building Regulations/fire","Other"];
-  j.innerHTML=opts.map(x=>`<option>${x}</option>`).join("");
- }
-}
-
-
-function updateUsefulNow(){
- let box=document.getElementById("usefulNow");
- if(!box){
-   box=document.createElement("div");box.id="usefulNow";
-   document.getElementById("sideInsights").before(box);
- }
- if(state.step<3){box.innerHTML="";return}
- let label="",value="",sub="";
- if(state.objective==="develop" && state.developmentEntryMode==="quick" && state.quickProjects.length){
-   const ms=state.quickProjects.map(quickProjectMetrics);
-   if(ms.length===1){label="Profit before finance";value=moneyExact(ms[0].profit);sub="Quick project economics before finance and disposal costs";}
-   else {const maxProfit=Math.max(...ms.map(m=>m.profit));label="Highest profit in comparison";value=moneyExact(maxProfit);sub=`Across ${ms.length} projects before finance and disposal costs`;}
- } else if(state.objective==="develop" && document.getElementById("gdv")){
-   const build=val("buildCost"), prof=val("profFees"), cont=build*val("contingency")/100, jump=val("jumpCost");
-   const buying=text("siteOwnership")==="buying";
-   const siteCost=buying?val("sitePurchasePrice")+val("siteAcquisitionCosts"):val("siteValue");
-   const total=siteCost+build+prof+cont+jump;
-   const profit=val("gdv")-total;
-   label="Profit before finance"; value=money(profit); sub="Before finance and disposal costs";
- } else if(state.objective==="buy_property" && document.getElementById("purchasePrice")){
-   const finance=Math.max(0,val("purchasePrice")+val("purchaseCosts")-val("purchaseCash"));
-   label="Calculated finance required"; value=money(finance);
-   sub=val("purchasePrice")?`${(finance/val("purchasePrice")*100).toFixed(1)}% of purchase price`:"";
- } else if(["refinance","retain"].includes(state.objective) && document.getElementById("propValue")){
-   const gross=val("propDebt")+val("cashNeed"), v=val("propValue");
-   label="Initial borrowing need"; value=money(gross); sub=v?`${(gross/v*100).toFixed(1)}% of entered property value`:"";
- } else if(state.objective==="buy_business" && document.getElementById("bizPrice")){
-   const gap=Math.max(0,val("bizPrice")+val("bizCosts")-val("buyerCash")-val("seniorDebt")-val("vendorDebt"));
-   label="Current sources/uses gap"; value=money(gap); sub=gap?"Structure still needs funding":"Entered sources cover entered uses";
- } else if(state.objective==="business_growth" && document.getElementById("grossProfit")){
-   const s=val("grossProfit")-val("opCosts");
-   label="Monthly operating surplus";value=money(s);sub="Before existing and new debt service";
- } else if(state.objective==="asset_finance" && document.getElementById("assetPrice")){
-   label="Amount to finance";value=money(val("assetPrice")-val("deposit"));sub="Before fees/VAT treatment";
- } else if(state.objective==="invoice" && document.getElementById("receivables")){
-   const eligible=val("receivables")*val("eligibility")/100, base=eligible*val("advanceRate")/100*(1-val("reserve")/100);
-   label="Indicative borrowing base";value=money(base);sub="Before lender-specific eligibility adjustments";
- }
- box.innerHTML=label?`<div class="quick-result"><div class="eyebrow">Useful now</div><span>${label}</span><strong>${value}</strong><span style="font-size:12px;opacity:.8">${sub}</span></div>`:"";
-}
-
-
-function confidenceVal(id,def=.65){
- const e=document.getElementById(id); return e?Number(e.value):def;
-}
-function uncertaintyScore(conf){return Math.max(0,1-conf)}
-function rankAssumptions(){
- const out=[];
- const o=state.objective;
- if(state.step<3){renderPriorityPanel([]);return}
- if(o==="develop" && document.getElementById("buildCost")){
-   const build=val("buildCost"),gdv=val("gdv"),months=val("buildMonths"),sales=val("salesMonths");
-   // Impact is approximate change in headline economics from a plausible 10% move, or timing move.
-   out.push({name:"Completed value / GDV",impact:Math.abs(gdv*.10),uncertainty:uncertaintyScore(confidenceVal("gdvConfidence")),
-             why:"A 10% value movement changes project profit directly."});
-   out.push({name:"Core works cost",impact:Math.abs(build*.10),uncertainty:uncertaintyScore(confidenceVal("buildConfidence")),
-             why:"A 10% cost movement changes both cash need and profit."});
-   out.push({name:"Construction period",impact:Math.max(1,build*.015*Math.max(1,months/12)),uncertainty:.5,
-             why:"Longer construction alters draw timing and finance cost."});
-   out.push({name:"Sales period",impact:Math.max(1,gdv*.006*Math.max(1,sales/6)),uncertainty:.5,
-             why:"Slower receipts keep debt outstanding for longer."});
- } else if(o==="buy_business" && document.getElementById("ebitda")){
-   const e=val("ebitda"),price=val("bizPrice"),vendor=val("vendorDebt");
-   out.push({name:"Sustainable business profit",impact:e*.15,uncertainty:uncertaintyScore(confidenceVal("ebitdaConfidence")),
-             why:"It drives post-deal debt-service capacity and leverage."});
-   out.push({name:"Purchase price",impact:price*.05,uncertainty:.25,why:"Price directly changes sources, uses and leverage."});
-   out.push({name:"Vendor / deferred support",impact:vendor*.25,uncertainty:.45,why:"If it changes, the senior/equity funding gap changes."});
- } else if(o==="business_growth" && document.getElementById("grossProfit")){
-   const gp=val("grossProfit"),deb=val("debtorDays"),stock=val("stockDays");
-   out.push({name:"Gross profit",impact:gp*.10,uncertainty:uncertaintyScore(confidenceVal("gpConfidence")),
-             why:"Operating surplus is what services new borrowing."});
-   out.push({name:"Debtor days",impact:val("turnover")*(15/30),uncertainty:.45,why:"Slower collections can materially increase cash tied up."});
-   out.push({name:"Stock days",impact:Math.max(1,(val("turnover")-gp)*(15/30)),uncertainty:.4,why:"More stock ties up working capital before cash is recovered."});
- } else if(o==="buy_property" && document.getElementById("purchasePrice")){
-   const price=val("purchasePrice"), finance=Math.max(0,price+val("purchaseCosts")-val("purchaseCash"));
-   out.push({name:"Purchase price",impact:price*.05,uncertainty:.15,why:"Purchase price directly determines the funding requirement and leverage."});
-   out.push({name:"Cash contribution",impact:Math.max(1,val("purchaseCash")*.10),uncertainty:.15,why:"Changing the cash contribution changes the loan requirement pound for pound."});
-   if(text("purchasePurpose")==="investment"){
-     out.push({name:"Expected rent",impact:val("purchaseRent")*12*.10,uncertainty:.4,why:"Rent drives the investment coverage calculation."});
-   } else if(text("purchasePurpose")==="owner_occupied"){
-     out.push({name:"Business profit / cash earnings",impact:val("purchaseEbitda")*.10,uncertainty:.4,why:"The business needs sufficient recurring profit to support the mortgage repayments."});
-   } else if(text("purchasePurpose")==="bridge"){
-     out.push({name:"Exit timing",impact:finance*val("purchaseBridgeRate")/100*3,uncertainty:.5,why:"Delay extends short-term interest cost."});
-   }
- } else if(["refinance","retain"].includes(o) && document.getElementById("propValue")){
-   const v=val("propValue"),need=val("cashNeed"),term=val("bridgeTerm");
-   out.push({name:"Property value",impact:v*.10,uncertainty:.4,why:"Value changes leverage across the tested structure."});
-   out.push({name:"Exit timing",impact:(val("propDebt")+need)*val("bridgeRate")/100*3,uncertainty:.5,why:"Delay extends short-term interest cost."});
-   out.push({name:"Net cash required",impact:need*.10,uncertainty:.2,why:"Every additional pound required increases borrowing or equity need."});
- } else if(o==="invoice" && document.getElementById("receivables")){
-   const rec=val("receivables");
-   out.push({name:"Receivables eligibility",impact:rec*.1*val("advanceRate")/100,uncertainty:.5,why:"Ineligible debtors reduce the borrowing base directly."});
-   out.push({name:"Advance rate",impact:rec*val("eligibility")/100*.05,uncertainty:.4,why:"The advance percentage changes available headroom."});
-   out.push({name:"Reserves / dilution",impact:rec*.03,uncertainty:.45,why:"Reserves reduce availability even when receivables are otherwise eligible."});
- }
- out.forEach(x=>x.score=x.impact*(.25+x.uncertainty));
- out.sort((a,b)=>b.score-a.score);
- renderPriorityPanel(out.slice(0,3));
-}
-function renderPriorityPanel(items){
- const box=document.getElementById("assumptionPriorities");if(!box)return;
- if(!items.length){box.innerHTML="";return}
- box.innerHTML=`<div class="priority-panel"><div class="priority-head"><strong>What is worth checking first?</strong><div class="note">Ranked by estimated financial impact and how uncertain the input appears to be.</div></div>`+
- items.map((x,i)=>`<div class="priority-item"><div class="priority-rank">${i+1}</div><div><strong>${x.name}</strong><div class="why">${x.why}</div></div><div class="priority-tag">${i===0?"Check first":"Worth testing"}</div></div>`).join("")+
- `</div>`;
-}
-function materialityPrompt(){
- const box=document.getElementById("materialPrompt")||document.createElement("div");
- box.id="materialPrompt";
- if(!box.parentNode) document.getElementById("assumptionPriorities").after(box);
- let msg="";
- if(state.step>=3 && state.assets.length===0){
-   if(state.objective==="develop"){
-     const cash=commonMetrics().cash, rough=Math.max(0,val("buildCost")+val("profFees")-cash);
-     if(rough>0) msg="You have not entered other assets. That is fine for the project view. Add them only if you want to test whether another asset could support the funding structure.";
-   } else if(["refinance","buy_property","retain"].includes(state.objective)){
-     msg="Other property is not needed for this first calculation. Add it only if you want to test additional security or another source of capital.";
-   }
- }
- box.innerHTML=msg?`<div class="material-prompt"><strong>Optional wider view</strong><br>${msg}</div>`:"";
-}
-
-
-
-
-function marketPositionPanel(status,cls,reason,note=""){
-  return `<div class="market-position ${cls}" role="status" aria-live="polite">
-    <div class="market-kicker">Indicative market position</div>
-    <strong>${status}</strong>
-    <div class="market-reason">${reason}</div>
-    ${note?`<div class="note" style="margin-top:7px">${note}</div>`:""}
-  </div>`;
-}
-
-function investmentMarketPosition(ltv,icr){
-  if(icr<1.0 || ltv>0.80){
-    return {
-      status:"Specialist funding or a different structure is likely to be needed",
-      cls:"specialist",
-      reason:icr<1.0
-        ? "The entered rent does not cover the annual interest on the tested structure."
-        : `The initial LTV is ${(ltv*100).toFixed(1)}%, above the range available from many mainstream investment lenders.`
-    };
-  }
-  if(icr<1.25 || ltv>0.75){
-    return {
-      status:"Narrower lender market",
-      cls:"borderline",
-      reason:`The case is not necessarily unfinanceable, but ${icr<1.25?`rent cover is ${icr.toFixed(2)}×`:""}${icr<1.25&&ltv>0.75?" and ":""}${ltv>0.75?`LTV is ${(ltv*100).toFixed(1)}%`:""}. Specialist or more flexible lenders may still be available.`
-    };
-  }
-  return {
-    status:"Broad lender market may be available",
-    cls:"mainstream",
-    reason:`The entered LTV of ${(ltv*100).toFixed(1)}% and rent-to-interest cover of ${icr.toFixed(2)}× sit within a broadly conventional range.`
-  };
-}
-
-function bridgeMarketPosition(ltv,termMonths,exitQuality="reasonable"){
-  if(exitQuality==="weak"){
-    return {
-      status:"Specialist structure likely",
-      cls:"specialist",
-      reason:"The exit is currently uncertain. Bridging relies on a credible repayment route, so lender appetite is likely to be limited until the exit is strengthened."
-    };
-  }
-  if(ltv>0.75){
-    return {
-      status:"Specialist structure likely",
-      cls:"specialist",
-      reason:`The initial LTV is ${(ltv*100).toFixed(1)}%. Some specialist lenders may stretch leverage, but the lender field is likely to be limited and pricing or conditions stronger.`
-    };
-  }
-  if(ltv>0.65 || termMonths>18 || exitQuality!=="clear"){
-    return {
-      status:"Narrower bridging market",
-      cls:"borderline",
-      reason:`${ltv>0.65?`LTV is ${(ltv*100).toFixed(1)}%. `:""}${termMonths>18?`The tested term is ${termMonths} months. `:""}${exitQuality!=="clear"?"The exit is reasonable but not fully evidenced. ":""}The case may still be financeable, but lender choice is likely to narrow.`
-    };
-  }
-  return {
-    status:"Broad bridging market may be available",
-    cls:"mainstream",
-    reason:"The entered leverage, term and exit evidence sit within a broadly conventional bridging range, subject to security, borrower quality and valuation."
-  };
-}
-
-function developmentMarketPosition(ltgdv,family="ground",ltc=NaN,fundingNeed=null){
-  if(fundingNeed!==null && Number(fundingNeed)<=0){
-    return {
-      status:"No external development funding indicated",
-      cls:"mainstream",
-      noFunding:true,
-      reason:"On the figures entered, the project does not currently require external development funding before finance costs."
-    };
-  }
-  if(!Number.isFinite(ltgdv) && !Number.isFinite(ltc)){
-    return {status:"More information needed to assess headline gearing",cls:"borderline",reason:"A completed value and project-cost/funding requirement are needed before the headline gearing can be interpreted."};
-  }
-  const broadGdv=family==="ground" ? 0.65 : 0.70;
-  const stretchedGdv=family==="ground" ? 0.725 : 0.75;
-  const broadCost=0.85;
-  const stretchedCost=0.875;
-  const gdvSpecial=Number.isFinite(ltgdv)&&ltgdv>stretchedGdv;
-  const costSpecial=Number.isFinite(ltc)&&ltc>stretchedCost;
-  const gdvNarrow=Number.isFinite(ltgdv)&&ltgdv>broadGdv;
-  const costNarrow=Number.isFinite(ltc)&&ltc>broadCost;
-  const parts=[];
-  if(Number.isFinite(ltgdv)) parts.push(`funding / GDV ${(ltgdv*100).toFixed(1)}%`);
-  if(Number.isFinite(ltc)) parts.push(`funding / project cost ${(ltc*100).toFixed(1)}%`);
-  const gearing=parts.join(" and ");
-  if(gdvSpecial||costSpecial){
-    return {
-      status:"Specialist or highly structured development funding likely",
-      cls:"specialist",
-      reason:`The headline gearing is ${gearing}. At least one measure is beyond the broad stretched-senior range used for this first-pass comparison. More equity, additional security, mezzanine or another structure may need to be explored.`
-    };
-  }
-  if(gdvNarrow||costNarrow){
-    return {
-      status:"Narrower development funding range",
-      cls:"borderline",
-      reason:`The headline gearing is ${gearing}. At least one measure is above the broad senior range used for this first-pass comparison, although stretched or specialist senior funding may still be possible.`
-    };
-  }
-  return {
-    status:"Headline gearing sits within a broad senior range",
-    cls:"mainstream",
-    reason:`The headline gearing is ${gearing}. This is a gearing view only: margin, experience, planning, cost evidence, contingency, draw structure and exit still determine actual lender appetite.`
-  };
-}
-
-function acquisitionMarketPosition(gap,leverage,cover){
-  if(gap>0 || cover<1.0 || leverage>4.0){
-    return {
-      status:"Specialist acquisition structure likely",
-      cls:"specialist",
-      reason:gap>0
-        ? `The entered sources leave a funding gap of ${money(gap)}.`
-        : cover<1.0
-          ? "The tested annual debt service is greater than the sustainable business profit entered."
-          : `Debt is ${leverage.toFixed(2)}× the sustainable business profit entered, which is a highly leveraged structure.`
-    };
-  }
-  if(cover<1.30 || leverage>3.0){
-    return {
-      status:"Narrower acquisition funding market",
-      cls:"borderline",
-      reason:`The transaction may be financeable, but ${cover<1.30?`repayment cover is ${cover.toFixed(2)}×`:""}${cover<1.30&&leverage>3.0?" and ":""}${leverage>3.0?`debt is ${leverage.toFixed(2)}× business profit`:""}. More buyer cash, vendor support or a different debt profile may widen options.`
-    };
-  }
-  return {
-    status:"Conventional acquisition debt may be possible",
-    cls:"mainstream",
-    reason:"The entered sources cover the uses and the tested leverage and repayment cover are not obviously stretched."
-  };
-}
-
-function workingCapitalMarketPosition(coverage,cashCycleDays){
-  if(coverage<1.0){
-    return {
-      status:"Specialist or alternative working-capital funding likely",
-      cls:"specialist",
-      reason:"The entered monthly operating surplus is below the tested new repayment burden. A short-term loan may increase pressure rather than solve it."
-    };
-  }
-  if(coverage<1.35 || cashCycleDays>90){
-    return {
-      status:"Narrower business-finance market",
-      cls:"borderline",
-      reason:`${coverage<1.35?`Operating surplus covers the tested payment by only ${coverage.toFixed(2)}×`:""}${coverage<1.35&&cashCycleDays>90?" and ":""}${cashCycleDays>90?`the cash conversion cycle is ${Math.round(cashCycleDays)} days`:""}. Invoice finance, ABL or another structure may fit better than a plain term loan.`
-    };
-  }
-  return {
-    status:"Broad business-finance options may be available",
-    cls:"mainstream",
-    reason:"The entered operating surplus provides reasonable headroom over the tested payment and the cash cycle does not appear unusually stretched."
-  };
-}
-
-function assetFinanceMarketPosition(payment,cashSurplus,depositPct,balloonPct){
-  if(cashSurplus<=0){
-    return {
-      status:"Affordability information needed",
-      cls:"borderline",
-      reason:"Enter the approximate monthly cash available for a new finance payment to interpret likely lender appetite."
-    };
-  }
-  const cover=payment>0?cashSurplus/payment:0;
-  if(cover<1.0 || balloonPct>0.50){
-    return {
-      status:"Specialist asset-finance structure likely",
-      cls:"specialist",
-      reason:cover<1.0
-        ? "The monthly cash available is below the tested finance payment."
-        : `The balloon is ${(balloonPct*100).toFixed(0)}% of the asset price, which is a heavily back-ended structure.`
-    };
-  }
-  if(cover<1.30 || depositPct<0.05 || balloonPct>0.35){
-    return {
-      status:"Narrower asset-finance market",
-      cls:"borderline",
-      reason:"The structure has limited payment headroom or a relatively aggressive deposit/balloon profile."
-    };
-  }
-  return {
-    status:"Broad asset-finance market may be available",
-    cls:"mainstream",
-    reason:"The tested payment has reasonable cash headroom and the deposit/balloon structure is not obviously stretched."
-  };
-}
-
-function invoiceMarketPosition(base,drawn,eligibilityPct,reservePct){
-  const utilisation=base>0?drawn/base:1;
-  if(base<=0 || utilisation>1){
-    return {
-      status:"Specialist restructuring or additional assets may be needed",
-      cls:"specialist",
-      reason:"Current drawings exceed the calculated borrowing base, or the entered receivables do not produce a usable borrowing base."
-    };
-  }
-  if(utilisation>0.90 || eligibilityPct<0.75 || reservePct>0.10){
-    return {
-      status:"Narrower invoice-finance / ABL market",
-      cls:"borderline",
-      reason:"Availability is relatively tight after the eligibility and reserve assumptions. Debtor quality, concentration or a wider ABL structure may become important."
-    };
-  }
-  return {
-    status:"Broad invoice-finance market may be available",
-    cls:"mainstream",
-    reason:"The entered receivables produce positive headroom without unusually aggressive utilisation, subject to debtor quality and concentration."
-  };
-}
-
-function commercialMarketPosition(ltv,cover,repaymentBasis){
-  // Indicative positioning only. Thresholds are deliberately broad and are
-  // not intended to reproduce any one lender's credit policy.
-  let status="", cls="", reason="";
-
-  if(cover < 1.0){
-    status="Specialist funding or a different structure is likely to be needed";
-    cls="specialist";
-    reason=`The approximate repayment cover is ${cover.toFixed(2)}×, so the business profit entered is below the annual mortgage repayments on this structure. More cash, a different repayment basis, a longer term, additional support or a specialist lender may need to be explored.`;
-  } else if(ltv > 0.75){
-    status="Specialist funding is likely to be needed";
-    cls="specialist";
-    reason=`The initial LTV is ${(ltv*100).toFixed(1)}%, which is above the normal range for many mainstream commercial mortgage lenders even though some specialist lenders may consider higher leverage.`;
-  } else if(cover < 1.30 || ltv > 0.70){
-    status="Outside typical Tier 1 / mainstream terms";
-    cls="borderline";
-    const reasons=[];
-    if(cover < 1.30) reasons.push(`repayment cover is ${cover.toFixed(2)}×`);
-    if(ltv > 0.70) reasons.push(`LTV is ${(ltv*100).toFixed(1)}%`);
-    reason=`The case is not necessarily unfinanceable, but ${reasons.join(" and ")}. The lender field is likely to narrow and pricing may be higher.`;
-  } else {
-    status="Tier 1 / mainstream funding may be possible";
-    cls="mainstream";
-    reason=`The entered LTV of ${(ltv*100).toFixed(1)}% and approximate repayment cover of ${cover.toFixed(2)}× sit within a broadly mainstream range. Full accounts, property type, trading history, credit quality and lender policy still matter.`;
-  }
-
-  return {status,cls,reason};
-}
-
-function monthlyPayment(principal,annualPct,years){
- const n=Math.max(1,Math.round(years*12));
- const m=Math.max(0,annualPct)/100/12;
- if(m===0) return principal/n;
- return principal*m/(1-Math.pow(1+m,-n));
-}
-
-function updateModulePreview(){
- const p=document.getElementById("modulePreview");if(!p)return;
- let h="";
-
- if(state.objective==="develop"){
-  const build=val("buildCost"), prof=val("profFees"), cont=build*val("contingency")/100, jump=val("jumpCost");
-  const buying=text("siteOwnership")==="buying";
-  const siteEconomicValue=buying?val("sitePurchasePrice"):val("siteValue");
-  const acquisitionCosts=buying?val("siteAcquisitionCosts"):0;
-  const economicCost=siteEconomicValue+acquisitionCosts+build+prof+cont+jump;
-  const gdv=val("gdv");
-  const profit=gdv-economicCost, poc=economicCost?profit/economicCost:0;
-  const months=val("buildMonths")+val("salesMonths");
-  const fundingNeed=Math.max(0,
-    (buying?val("sitePurchasePrice")+acquisitionCosts:val("siteDebt"))
-    +build+prof+cont+jump-commonMetrics().cash
-  );
-  const ltgdv=gdv?fundingNeed/gdv:NaN;
-  const ltc=economicCost?fundingNeed/economicCost:NaN;
-  const market=developmentMarketPosition(ltgdv,state.developmentFamily==="ground"?"ground":"existing",ltc,fundingNeed);
-
-  h=`<div class="section"><h3>Live project view</h3>
-   <table class="result-table">
-    <tr><td>Economic project cost before finance</td><td>${moneyExact(economicCost)}</td></tr>
-    <tr><td>Completed value / GDV</td><td>${moneyExact(gdv)}</td></tr>
-    <tr><td>Profit before finance and disposal costs</td><td>${moneyExact(profit)}</td></tr>
-    <tr><td>Profit on cost before finance</td><td>${(poc*100).toFixed(1)}%</td></tr>
-    <tr><td>Indicative project duration</td><td>${months} months</td></tr>
-    <tr><td>Indicative funding need before finance costs</td><td>${moneyExact(fundingNeed)}</td></tr>
-    <tr><td>Funding / GDV</td><td>${Number.isFinite(ltgdv)?(ltgdv*100).toFixed(1)+"%":"—"}</td></tr>
-    <tr><td>Funding / project cost</td><td>${Number.isFinite(ltc)?(ltc*100).toFixed(1)+"%":"—"}</td></tr>
-   </table>
-   ${marketPositionPanel(market.status,market.cls,market.reason,"Headline gearing guide only. Finance interest, lender fees, VAT/tax effects and the detailed draw profile are not included in this funding-need figure.")}
-   <div class="callout"><strong>What matters next:</strong> the detailed development model should ultimately test peak cash requirement, draw timing, finance cost, contingency and exit rather than rely on headline gearing alone.</div></div>`;
- } else if(state.objective==="buy_property"){
-  const price=val("purchasePrice"), costs=val("purchaseCosts"), cash=val("purchaseCash");
-  const finance=Math.max(0,price+costs-cash);
-  const ltv=price?finance/price:0;
-  const purpose=text("purchasePurpose");
-
-  if(purpose==="owner_occupied"){
-    const rate=val("purchaseAnnualRate"), years=val("purchaseTermYears");
-    const interestOnly=finance*(rate/100)/12;
-    const payment=text("purchaseRepayment")==="interest" ? interestOnly : monthlyPayment(finance,rate,years);
-    const newAnnualDebt=payment*12;
-    const existingAnnualDebt=val("purchaseExistingDebtService");
-    const totalAnnualDebt=newAnnualDebt+existingAnnualDebt;
-    const cover=totalAnnualDebt?val("purchaseEbitda")/totalAnnualDebt:0;
-    const market=commercialMarketPosition(ltv,cover,text("purchaseRepayment"));
-
-    h=`<div class="section"><h3>Commercial mortgage view</h3><table class="result-table">
-      <tr><td>Purchase price</td><td>${moneyExact(price)}</td></tr>
-      <tr><td>Cash contribution</td><td>${moneyExact(cash)}</td></tr>
-      <tr><td>Calculated finance required</td><td>${moneyExact(finance)}</td></tr>
-      <tr><td>Initial LTV</td><td>${(ltv*100).toFixed(1)}%</td></tr>
-      <tr><td>Illustrative monthly new mortgage payment</td><td>${moneyExact(payment)}</td></tr>
-      <tr><td>Existing annual finance repayments</td><td>${moneyExact(existingAnnualDebt)}</td></tr>
-      <tr><td>Approximate total repayment cover</td><td>${cover.toFixed(2)}×</td></tr>
+  if(metrics.length===1){
+    const {p,m}=metrics[0];
+    wrap.innerHTML=`<div class="section"><h2>Quick project result</h2><table class="metric-table">
+      <tr><td>Economic project cost before finance</td><td>${moneyExact(m.economicCostBeforeFinance)}</td></tr>
+      <tr><td>Completed value / GDV</td><td>${moneyExact(m.gdv)}</td></tr>
+      <tr><td>Profit before finance</td><td>${moneyExact(m.profitBeforeFinance)}</td></tr>
+      <tr><td>Project funding need before finance costs</td><td>${moneyExact(m.coreFundingNeed)}</td></tr>
+      <tr><td>Day-one lender cash advance</td><td>${moneyExact(m.dayOneAdvance)}</td></tr>
+      <tr><td>Day-one debt after capitalised fee</td><td>${moneyExact(m.dayOneDebt)}</td></tr>
+      <tr><td>Amount used to calculate arrangement fee</td><td>${moneyExact(m.feeBasis)}</td></tr>
+      <tr><td>Arrangement fee</td><td>${moneyExact(m.arrangementFee)}</td></tr>
+      ${m.exitFee>0?`<tr><td>Amount used to calculate exit fee</td><td>${moneyExact(m.exitFeeBasis)}</td></tr><tr><td>Exit fee</td><td>${moneyExact(m.exitFee)}</td></tr>`:""}
+      ${m.refinanceFee>0?`<tr><td>Refinance fee</td><td>${moneyExact(m.refinanceFee)}</td></tr>`:""}
+      <tr><td>Total finance fees</td><td>${moneyExact(m.arrangementFee+m.exitFee+m.refinanceFee)}</td></tr>
+      <tr><td>Indicative gross facility requirement (peak debt)</td><td>${moneyExact(m.peakDebt)}</td></tr>
+      <tr><td>Estimated interest</td><td>${moneyExact(m.totalInterest)}</td></tr>
+      <tr><td><strong>Profit after estimated finance</strong></td><td><strong>${moneyExact(m.profitAfterFinance)}</strong></td></tr>
+      <tr><td>Profit on total cost after finance</td><td>${pct(m.profitOnTotalCost)}</td></tr>
+      <tr><td>Peak development debt</td><td>${moneyExact(m.peakDebt)}</td></tr>
+      <tr><td>Peak debt / GDV</td><td>${pct(m.peakLtgdv)}</td></tr>
+      <tr><td>Peak debt / project cost</td><td>${pct(m.peakLtc)}</td></tr>
+      <tr><td>Developer equity represented / required</td><td>${moneyExact(m.totalDeveloperEquity)}</td></tr>
+      <tr><td>Profit / developer equity</td><td>${Number.isFinite(m.profitEquityMultiple)?m.profitEquityMultiple.toFixed(2)+"×":"—"}</td></tr>
+      <tr><td>Indicative equity IRR</td><td>${Number.isFinite(m.equityIrr)?pct(m.equityIrr):"—"}</td></tr>
+      <tr><td>Total works + exit period</td><td>${m.totalMonths} months</td></tr>
     </table>
-    ${marketPositionPanel(market.status,market.cls,market.reason,"Based only on the limited figures entered. Property type, trading history, accounts, credit quality and lender policy still matter.")}
-    <div class="callout">LTV is currently calculated against purchase price. A lender may use the lower of purchase price and valuation where applicable.</div></div>`;
+    ${m.additionalEquityRequired>0?`<div class="callout"><strong>Additional liquidity required: ${moneyExact(m.additionalEquityRequired)}</strong><br>With the cash entered and ${state.quickDevFinance.certificationLag}-month works draw lag, the quick model needs extra temporary/developer equity during the project.</div>`:""}
+    <div class="${m.market.cls}"><div class="eyebrow">Indicative market position</div><h3>${m.market.title}</h3><p>${m.market.text}</p><p>Finance is estimated month by month from the common assumptions above. The Detailed Development Model can replace the generated profile with actual Excel/monthly data and lender-specific terms.</p></div>
+    <button class="btn primary" type="button" onclick="promoteQuickProjectToDetailed('${p.id}')">Model this project in detail</button></div>`;
+    return;
+  }
 
-  } else if(purpose==="investment"){
-    const rate=val("purchaseAnnualRate"), stressRate=Math.max(val("purchaseStressRate"),rate), years=val("purchaseTermYears");
-    const payment=text("purchaseRepayment")==="interest" ? finance*(rate/100)/12 : monthlyPayment(finance,rate,years);
-    const annualRent=val("purchaseRent")*12;
-    const annualPayInterest=finance*(rate/100);
-    const stressedInterest=finance*(stressRate/100);
-    const payIcr=annualPayInterest?annualRent/annualPayInterest:0;
-    const stressIcr=stressedInterest?annualRent/stressedInterest:0;
-    const market=investmentMarketPosition(ltv,stressIcr);
+  const sortedByProfit=[...metrics].sort((a,b)=>b.m.profitAfterFinance-a.m.profitAfterFinance);
+  const leader=sortedByProfit[0];
+  const runner=sortedByProfit[1];
+  const profitLead=leader.m.profitAfterFinance-runner.m.profitAfterFinance;
 
-    h=`<div class="section"><h3>Investment mortgage view</h3><table class="result-table">
-      <tr><td>Purchase price</td><td>${moneyExact(price)}</td></tr>
-      <tr><td>Cash contribution</td><td>${moneyExact(cash)}</td></tr>
-      <tr><td>Calculated finance required</td><td>${moneyExact(finance)}</td></tr>
-      <tr><td>Initial LTV</td><td>${(ltv*100).toFixed(1)}%</td></tr>
-      <tr><td>Annual rent entered</td><td>${moneyExact(annualRent)}</td></tr>
-      <tr><td>Rent / pay-rate interest</td><td>${payIcr.toFixed(2)}×</td></tr>
-      <tr><td>Rent cover at ${stressRate.toFixed(2)}% stress rate</td><td>${stressIcr.toFixed(2)}×</td></tr>
-      <tr><td>Illustrative monthly payment</td><td>${moneyExact(payment)}</td></tr>
-    </table>
-    ${marketPositionPanel(market.status,market.cls,market.reason,"The market-position guide uses the stress rate entered, not the pay rate. Actual lender stress and ICR rules vary by borrower, property and product.")}
+  const winners={
+    margin:[...metrics].sort((a,b)=>b.m.profitOnTotalCost-a.m.profitOnTotalCost)[0],
+    irr:[...metrics].filter(x=>Number.isFinite(x.m.equityIrr)).sort((a,b)=>b.m.equityIrr-a.m.equityIrr)[0],
+    equityEfficiency:[...metrics].filter(x=>Number.isFinite(x.m.profitEquityMultiple)).sort((a,b)=>b.m.profitEquityMultiple-a.m.profitEquityMultiple)[0],
+    equityRequired:[...metrics].sort((a,b)=>a.m.totalDeveloperEquity-b.m.totalDeveloperEquity)[0],
+    financeCost:[...metrics].sort((a,b)=>a.m.totalFinanceCost-b.m.totalFinanceCost)[0],
+    ltgdv:[...metrics].sort((a,b)=>a.m.peakLtgdv-b.m.peakLtgdv)[0],
+    duration:[...metrics].sort((a,b)=>a.m.totalMonths-b.m.totalMonths)[0]
+  };
+
+  const projectName=x=>escapeHtml(x.p.name||"Project");
+  const explainParts=[];
+  if(profitLead>0){
+    explainParts.push(`${projectName(leader)} produces ${moneyExact(leader.m.profitAfterFinance)} estimated profit after finance, ${moneyExact(profitLead)} more than ${projectName(runner)}.`);
+  }
+  const financeGap=runner.m.totalFinanceCost-leader.m.totalFinanceCost;
+  if(Math.abs(financeGap)>1){
+    if(financeGap>0) explainParts.push(`${projectName(leader)} also uses ${moneyExact(financeGap)} less estimated finance cost than ${projectName(runner)}.`);
+    else explainParts.push(`${projectName(runner)} uses ${moneyExact(Math.abs(financeGap))} less estimated finance cost, so the profit lead is not simply a cheaper-funding result.`);
+  }
+  if(leader.m.totalMonths!==runner.m.totalMonths){
+    const faster=leader.m.totalMonths<runner.m.totalMonths?leader:runner;
+    const slower=faster===leader?runner:leader;
+    explainParts.push(`${projectName(faster)} has a ${slower.m.totalMonths-faster.m.totalMonths}-month shorter works-and-exit period.`);
+  }
+  if(leader.m.peakLtgdv<runner.m.peakLtgdv){
+    explainParts.push(`${projectName(leader)} also carries lower peak debt relative to GDV.`);
+  }
+
+  const fundingPosition=metrics.map(x=>`<div class="${x.m.market.cls} comparison-market">
+      <strong>${projectName(x)}</strong><br><span>${escapeHtml(x.m.market.title)}</span>
+    </div>`).join("");
+
+  const winnerCard=(label,x,value,sub="")=>`<div class="compare-winner">
+      <div class="compare-winner-label">${label}</div>
+      <strong>${projectName(x)}</strong>
+      <div class="compare-winner-value">${value}</div>
+      ${sub?`<div class="help">${sub}</div>`:""}
     </div>`;
 
-  } else if(purpose==="bridge"){
-    const rate=val("purchaseBridgeRate")/100, term=val("purchaseBridgeTerm");
-    const interest=finance*rate*term;
-    const market=bridgeMarketPosition(ltv,term,text("purchaseExitQuality")||"reasonable");
-
-    h=`<div class="section"><h3>Short-term purchase view</h3><table class="result-table">
-      <tr><td>Purchase price</td><td>${moneyExact(price)}</td></tr>
-      <tr><td>Cash contribution</td><td>${moneyExact(cash)}</td></tr>
-      <tr><td>Calculated finance required</td><td>${moneyExact(finance)}</td></tr>
-      <tr><td>Initial LTV</td><td>${(ltv*100).toFixed(1)}%</td></tr>
-      <tr><td>Simple retained-interest comparison</td><td>${moneyExact(interest)}</td></tr>
-    </table>
-    ${marketPositionPanel(market.status,market.cls,market.reason,"This quick view does not test a formal valuation, legal charge position, credit profile or the detailed refinance/sale evidence.")}
-    </div>`;
-
-  } else {
-    const works=val("purchaseWorks"), completed=val("purchaseCompletedValue");
-    const totalNeed=finance+works;
-    const projectCost=price+costs+works;
-    const completedLtv=completed?totalNeed/completed:NaN;
-    const fundingToCost=projectCost?totalNeed/projectCost:NaN;
-    const market=developmentMarketPosition(completedLtv,"existing",fundingToCost,totalNeed);
-
-    h=`<div class="section"><h3>Purchase plus works view</h3><table class="result-table">
-      <tr><td>Purchase finance required</td><td>${moneyExact(finance)}</td></tr>
-      <tr><td>Works budget</td><td>${moneyExact(works)}</td></tr>
-      <tr><td>Total funding need before finance costs</td><td>${moneyExact(totalNeed)}</td></tr>
-      <tr><td>Completed value</td><td>${moneyExact(completed)}</td></tr>
-      <tr><td>Total need / completed value</td><td>${Number.isFinite(completedLtv)?(completedLtv*100).toFixed(1)+"%":"—"}</td></tr>
-      <tr><td>Total need / project cost</td><td>${Number.isFinite(fundingToCost)?(fundingToCost*100).toFixed(1)+"%":"—"}</td></tr>
-    </table>
-    ${marketPositionPanel(market.status,market.cls,market.reason,"A proper refurbishment/conversion analysis also needs draw timing, contingency, condition and exit evidence.")}
-    </div>`;
-  }
-
- } else if(["refinance","retain"].includes(state.objective) && document.getElementById("propValue")){
-  const value=val("propValue"), debt=val("propDebt"), need=val("cashNeed"), rate=val("bridgeRate")/100, term=val("bridgeTerm");
-  const gross=debt+need, interest=gross*rate*term, ltv=value?gross/value:0;
-  const market=bridgeMarketPosition(ltv,term,text("exitQuality")||"reasonable");
-
-  h=`<div class="section"><h3>Short-term structure view</h3><table class="result-table">
-   <tr><td>Initial borrowing need before fees</td><td>${moneyExact(gross)}</td></tr>
-   <tr><td>Simple retained-interest comparison</td><td>${moneyExact(interest)}</td></tr>
-   <tr><td>Initial combined LTV</td><td>${(ltv*100).toFixed(1)}%</td></tr>
-   <tr><td>Net new cash</td><td>${moneyExact(need)}</td></tr></table>
-   ${marketPositionPanel(market.status,market.cls,market.reason,"This route is currently being tested as a short-term structure. A longer-term commercial or investment refinance may produce a different lender market.")}
-   </div>`;
-
- } else if(state.objective==="buy_business"){
-  const price=val("bizPrice"), costs=val("bizCosts"), cash=val("buyerCash"), senior=val("seniorDebt"), vendor=val("vendorDebt"), e=val("ebitda");
-  const gap=Math.max(0,price+costs-cash-senior-vendor), debt=senior+vendor, leverage=e?debt/e:0;
-  const annualDebt=(debt*(val("acqRate")/100))+(debt/Math.max(1,val("acqTerm")));
-  const cover=annualDebt?e/annualDebt:0;
-  const market=acquisitionMarketPosition(gap,leverage,cover);
-
-  h=`<div class="section"><h3>Acquisition structure view</h3><table class="result-table">
-   <tr><td>Sources/uses gap</td><td>${moneyExact(gap)}</td></tr>
-   <tr><td>Total acquisition debt/support</td><td>${moneyExact(debt)}</td></tr>
-   <tr><td>Debt / business profit</td><td>${leverage.toFixed(2)}×</td></tr>
-   <tr><td>Approximate repayment cover</td><td>${cover.toFixed(2)}×</td></tr></table>
-   ${marketPositionPanel(market.status,market.cls,market.reason,"Quick view only: the debt cost and repayment period are blended assumptions. A lender submission should model senior debt, vendor loans and deferred consideration separately.")}
-   </div>`;
-
- } else if(state.objective==="business_growth"){
-  const gp=val("grossProfit"), op=val("opCosts"), need=val("wcAmount");
-  const ccc=val("debtorDays")+val("stockDays")-val("creditorDays");
-  const surplus=gp-op;
-  const mrate=val("wcRate")/100/12, n=val("wcTerm");
-  const pay=mrate?need*mrate/(1-Math.pow(1+mrate,-n)):need/n;
-  const existingDebt=val("existingMonthlyDebt");
-  const totalDebt=pay+existingDebt;
-  const coverage=totalDebt?surplus/totalDebt:0;
-  const market=workingCapitalMarketPosition(coverage,ccc);
-
-  h=`<div class="section"><h3>Working-capital view</h3><table class="result-table">
-   <tr><td>Cash conversion cycle</td><td>${ccc} days</td></tr>
-   <tr><td>Monthly operating surplus before debt</td><td>${moneyExact(surplus)}</td></tr>
-   <tr><td>Existing monthly finance repayments</td><td>${moneyExact(existingDebt)}</td></tr>
-   <tr><td>Illustrative new term-loan payment</td><td>${moneyExact(pay)}/month</td></tr>
-   <tr><td>Surplus / total finance repayments</td><td>${coverage.toFixed(2)}×</td></tr></table>
-   ${marketPositionPanel(market.status,market.cls,market.reason,"This does not include tax, drawings or exceptional cash requirements. A full credit view would reconcile to management accounts and bank conduct.")}
-   </div>`;
-
- } else if(state.objective==="asset_finance"){
-  const price=val("assetPrice"), dep=val("deposit"), bal=val("balloon"), financed=price-dep;
-  const r=val("assetRate")/100/12, n=val("assetTerm"), pvBall=bal/Math.pow(1+r,n);
-  const amort=financed-pvBall, pay=r?amort*r/(1-Math.pow(1+r,-n)):amort/n;
-  const market=assetFinanceMarketPosition(pay,val("assetCashSurplus"),price?dep/price:0,price?bal/price:0);
-
-  h=`<div class="section"><h3>Asset-finance view</h3><table class="result-table">
-   <tr><td>Cash deposit</td><td>${moneyExact(dep)}</td></tr>
-   <tr><td>Amount financed</td><td>${moneyExact(financed)}</td></tr>
-   <tr><td>Illustrative monthly payment</td><td>${moneyExact(pay)}</td></tr>
-   <tr><td>Balloon/final payment</td><td>${moneyExact(bal)}</td></tr></table>
-   ${marketPositionPanel(market.status,market.cls,market.reason,"Asset age, type, supplier, residual value, business credit and trading history can materially affect lender appetite.")}
-   </div>`;
-
- } else if(state.objective==="invoice"){
-  const rec=val("receivables"), eligible=rec*val("eligibility")/100, pre=eligible*val("advanceRate")/100;
-  const reserve=pre*val("reserve")/100, base=Math.max(0,pre-reserve), avail=Math.max(0,base-val("currentDrawn"));
-  const market=invoiceMarketPosition(base,val("currentDrawn"),val("eligibility")/100,val("reserve")/100);
-
-  h=`<div class="section"><h3>Borrowing-base view</h3><table class="result-table">
-   <tr><td>Eligible receivables</td><td>${moneyExact(eligible)}</td></tr>
-   <tr><td>Borrowing base after reserve</td><td>${moneyExact(base)}</td></tr>
-   <tr><td>Currently drawn</td><td>${moneyExact(val("currentDrawn"))}</td></tr>
-   <tr><td>Indicative headroom</td><td>${moneyExact(avail)}</td></tr></table>
-   ${marketPositionPanel(market.status,market.cls,market.reason,"Debtor concentration, ageing, disputes, contra arrangements and credit quality are not captured in this quick view.")}
-   </div>`;
- }
-
- if(h){
-   h = `<div class="assumption-key"><span class="key user">Entered by you</span><span class="key model">Illustrative assumption</span><span class="key derived">Calculated result</span></div>` + h;
- }
- p.innerHTML=h;
- updateSide();
- updateUsefulNow();
- rankAssumptions();
- materialityPrompt();
- linkVisibleLabels();
-}
-
-
-
-function validateCurrentCase(){
- const warnings=[]; const strengths=[];
- const o=state.objective;
- if(commonMetrics().cash>0) strengths.push("Cash contribution entered.");
- if(o==="develop"){
-   if(state.developmentEntryMode==="quick"){
-     if(!state.quickProjects.length) warnings.push("Add at least one project.");
-     state.quickProjects.forEach((p,i)=>{
-       const name=p.name||`Project ${i+1}`;const m=quickProjectMetrics(p);
-       if((Number(p.siteValue)||0)<=0) warnings.push(`${name}: enter a purchase price or current site value.`);
-       if((Number(p.works)||0)<=0) warnings.push(`${name}: enter a works/build cost.`);
-       if((Number(p.gdv)||0)<=0) warnings.push(`${name}: enter a completed value / GDV.`);
-       if(m.duration<=0) warnings.push(`${name}: enter a project period.`);
-       if(m.profit<=0) warnings.push(`${name}: the current inputs do not produce a positive profit before finance.`);
-     });
-     return {warnings,strengths};
-   }
-   if(text("siteOwnership")==="buying" && val("sitePurchasePrice")<=0) warnings.push("Enter the site/property purchase price.");
-   if(val("buildCost")<=0) warnings.push("Enter a works budget.");
-   if(val("gdv")<=0) warnings.push("Enter a completed value / GDV.");
-   if(val("buildMonths")<=0) warnings.push("Enter a works period.");
-   if(confidenceVal("gdvConfidence")<.5) warnings.push("Completed value is currently an early estimate.");
-   if(confidenceVal("buildConfidence")<.5) warnings.push("Works cost is currently an early estimate.");
-   if(state.developmentEntryMode==="advanced" && !state.monthlyRows.length) warnings.push("Advanced mode has no monthly cost data yet. This is optional, but monthly data will improve timing analysis.");
- }
- if(o==="buy_property"){
-   if(val("purchasePrice")<=0) warnings.push("Enter the purchase price.");
-   if(val("purchaseCash")<0) warnings.push("Cash contribution cannot be negative.");
-   if(val("purchaseCash")>val("purchasePrice")+val("purchaseCosts")) warnings.push("Cash contribution exceeds the entered purchase price and funded costs.");
-   if(text("purchasePurpose")==="investment" && val("purchaseRent")<=0) warnings.push("Enter the expected rent.");
-   if(text("purchasePurpose")==="owner_occupied" && val("purchaseEbitda")<=0) warnings.push("Enter the approximate annual business profit.");
- }
- if(["refinance","retain"].includes(o)){
-   if(val("propValue")<=0) warnings.push("Enter the lead property value.");
-   if(val("cashNeed")<0) warnings.push("Net cash required cannot be negative.");
- }
- if(o==="buy_business"){
-   if(val("bizPrice")<=0) warnings.push("Enter a purchase price.");
-   if(val("ebitda")<=0) warnings.push("Enter approximate sustainable annual business profit.");
- }
- if(o==="business_growth"){
-   if(val("turnover")<=0) warnings.push("Enter monthly turnover.");
-   if(val("grossProfit")<val("opCosts")) warnings.push("Entered operating costs exceed gross profit.");
- }
- return {warnings,strengths};
-}
-function renderCaseValidation(){
- const el=document.getElementById("caseValidation");if(!el)return;
- const v=validateCurrentCase();
- if(!v.warnings.length){
-   el.innerHTML=`<div class="validation ok"><strong>Enough information for a useful first model</strong><div class="note">This does not mean the case is lender-ready. It means the current arithmetic has the principal inputs required for this route.</div></div>`;
- }else{
-   el.innerHTML=`<div class="validation warn"><strong>${v.warnings.length} item${v.warnings.length===1?"":"s"} worth resolving</strong><div class="note">${v.warnings.join(" ")}</div></div>`;
- }
-}
-
-
-function renderResults(){
- renderCaseValidation();
- const r=document.getElementById("finalResults");
- const preview=document.getElementById("modulePreview");
- let html=preview?preview.innerHTML:"";
- const route=currentRouteLabel();
- html=`<div class="callout"><strong>${route}</strong><br>This is the current base case. Scenario comparisons do not overwrite it.</div>`+html;
- const c=commonMetrics();
- const sec=state.assets.filter(a=>a.security!=="never");
- const secEq=sec.reduce((s,a)=>s+Math.max(0,a.value-a.debt),0);
- const cashLabel=(state.objective==="develop" && state.developmentEntryMode==="quick")?"Stage 2 cash starting point":"Cash entered";
- html+=`<div class="section"><h3>Broader position</h3><table class="result-table">
-  <tr><td>${cashLabel}</td><td>${money(c.cash)}</td></tr>
-  <tr><td>Gross asset equity entered</td><td>${money(c.equity)}</td></tr>
-  <tr><td>Gross equity in assets not excluded from security</td><td>${money(secEq)}</td></tr>
- </table><div class="callout">${state.objective==="develop"&&state.developmentEntryMode==="quick"?"Each quick project uses its own cash contribution. ":""}Equity elsewhere is shown as context only. It does not alter this result unless a specific additional-security or capital-raise structure is modelled.</div></div>`;
- r.innerHTML=html;
-}
-
-
-
-
-function buildCaseSummaryText(){
-  const lines=[];
-  const add=(label,value)=>{
-    if(value!==undefined && value!==null && value!=="") lines.push(label+": "+value);
-  };
-  const section=(title)=>{
-    if(lines.length && lines[lines.length-1]!=="") lines.push("");
-    lines.push(title.toUpperCase());
-  };
-  const marketSection=(market,note="")=>{
-    section("Indicative market position");
-    add("Position",market.status);
-    lines.push("Reason: "+market.reason);
-    if(note) lines.push("Note: "+note);
-  };
-
-  lines.push("EAS Finance Workspace - Case Summary");
-  lines.push("Route: "+currentRouteLabel());
-  lines.push("Generated from the figures currently entered in the workspace.");
-
-  if(state.objective==="develop" && state.developmentEntryMode==="quick"){
-    section("Quick Development Test");
-    add("Projects tested",String(state.quickProjects.length));
-    state.quickProjects.forEach((p,i)=>{
-      const m=quickProjectMetrics(p);
-      lines.push("");
-      lines.push(`${(p.name||`Project ${i+1}`).toUpperCase()}`);
-      add("Project type",quickDevTypeLabel(p.type));
-      add("Site/property position",p.siteStatus==="buying"?"Being purchased":"Already owned");
-      add(p.siteStatus==="buying"?"Purchase price":"Current site/property value",moneyExact(p.siteValue));
-      if(p.siteStatus==="owned") add("Existing debt",moneyExact(p.existingDebt));
-      add("Works/build cost",moneyExact(p.works));
-      add("Professional/other project costs",moneyExact(p.fees));
-      add("Contingency",Number(p.contingency).toFixed(1)+"%");
-      add("Completed value / GDV",moneyExact(p.gdv));
-      add("Works period",p.buildMonths+" months");
-      add("Sales/exit period",p.exitMonths+" months");
-      add("New cash committed",moneyExact(p.cash));
-      add("Economic project cost before finance",moneyExact(m.economicCost));
-      add("Project equity represented in this structure",moneyExact(m.projectEquity));
-      add("Profit before finance and disposal costs",moneyExact(m.profit));
-      add("Profit on cost before finance",(m.poc*100).toFixed(1)+"%");
-      add("Indicative funding need before finance costs",moneyExact(m.fundingNeed));
-      add("Funding / GDV",Number.isFinite(m.ltgdv)?(m.ltgdv*100).toFixed(1)+"%":"—");
-      add("Funding / project cost",Number.isFinite(m.ltc)?(m.ltc*100).toFixed(1)+"%":"—");
-      add("Simple profit / project equity",Number.isFinite(m.returnOnEquity)?m.returnOnEquity.toFixed(2)+"x":"—");
-      add("Total works + exit period",m.duration+" months");
-      add("Indicative gearing position",m.market.status);
-      lines.push("Gearing comment: "+m.market.reason);
-    });
-    if(state.quickProjects.length>1){
-      const ms=state.quickProjects.map(quickProjectMetrics);
-      const leader=(key,mode)=>{const p=comparisonLeader(state.quickProjects,ms,key,mode);return p?p.name:"—"};
-      section("Comparison observations");
-      add("Highest profit",leader("profit","max"));
-      add("Best profit on cost",leader("poc","max"));
-      add("Lowest funding / GDV",leader("ltgdv","min"));
-      add("Lowest funding / project cost",leader("ltc","min"));
-      add("Best simple profit / project equity",leader("returnOnEquity","max"));
-      add("Shortest total period",leader("duration","min"));
-      lines.push("Note: no single project score is imposed. Detailed finance costs and timing may change the relative picture.");
-    }
-  } else if(state.objective==="develop"){
-    const build=val("buildCost");
-    const prof=val("profFees");
-    const cont=build*val("contingency")/100;
-    const jump=val("jumpCost");
-    const buying=text("siteOwnership")==="buying";
-    const siteEconomicValue=buying?val("sitePurchasePrice"):val("siteValue");
-    const acquisitionCosts=buying?val("siteAcquisitionCosts"):0;
-    const economicCost=siteEconomicValue+acquisitionCosts+build+prof+cont+jump;
-    const gdv=val("gdv");
-    const profit=gdv-economicCost;
-    const poc=economicCost?profit/economicCost:0;
-    const fundingNeed=Math.max(0,
-      (buying?val("sitePurchasePrice")+acquisitionCosts:val("siteDebt"))
-      +build+prof+cont+jump-commonMetrics().cash
-    );
-    const ltgdv=gdv?fundingNeed/gdv:NaN;
-    const ltc=economicCost?fundingNeed/economicCost:NaN;
-    const market=developmentMarketPosition(ltgdv,state.developmentFamily==="ground"?"ground":"existing",ltc,fundingNeed);
-
-    section("Transaction");
-    add("Development type",state.developmentFamily==="ground"?"Ground-up development":"Conversion / refurbishment");
-    add("Site/property position",buying?"Being purchased":"Already owned");
-    if(buying){
-      add("Site/property purchase price",moneyExact(val("sitePurchasePrice")));
-      add("Acquisition costs being funded",moneyExact(acquisitionCosts));
-      add("Current site/property value",moneyExact(val("siteValue")));
-    } else {
-      add("Current site/property value",moneyExact(val("siteValue")));
-      add("Existing debt on site/property",moneyExact(val("siteDebt")));
-    }
-    add("Cash available to the transaction",moneyExact(commonMetrics().cash));
-
-    section("Project costs and value");
-    add("Core works budget",moneyExact(build));
-    add("Professional fees",moneyExact(prof));
-    add("Contingency",moneyExact(cont));
-    add("Unexpected cost event",moneyExact(jump));
-    add("Economic project cost before finance",moneyExact(economicCost));
-    add("Completed value / GDV",moneyExact(gdv));
-    add("Build period",val("buildMonths")+" months");
-    add("Sales / exit period",val("salesMonths")+" months");
-
-    section("Calculated structure");
-    add("Profit before finance and disposal costs",moneyExact(profit));
-    add("Profit on cost before finance",(poc*100).toFixed(1)+"%");
-    add("Indicative funding need before finance costs",moneyExact(fundingNeed));
-    add("Funding / GDV",Number.isFinite(ltgdv)?(ltgdv*100).toFixed(1)+"%":"—");
-    add("Funding / project cost",Number.isFinite(ltc)?(ltc*100).toFixed(1)+"%":"—");
-
-    marketSection(
-      market,
-      "This is a headline gearing view. It excludes finance interest, lender fees, VAT/tax effects and the detailed monthly draw profile."
-    );
-
-  } else if(state.objective==="buy_property"){
-    const purpose=text("purchasePurpose");
-    const price=val("purchasePrice");
-    const costs=val("purchaseCosts");
-    const cash=val("purchaseCash");
-    const finance=Math.max(0,price+costs-cash);
-    const ltv=price?finance/price:0;
-
-    const purposeLabels={
-      owner_occupied:"Business premises / owner-occupied commercial",
-      investment:"Investment property",
-      bridge:"Short-term purchase / bridging",
-      refurb:"Purchase with refurbishment or conversion"
-    };
-
-    section("Transaction");
-    add("Purchase purpose",purposeLabels[purpose]||purpose);
-    add("Purchase price",moneyExact(price));
-    add("Cash contribution",moneyExact(cash));
-    add("Purchase costs being funded",moneyExact(costs));
-
-    section("Calculated structure");
-    add("Calculated finance required",moneyExact(finance));
-    add("Initial LTV",price?(ltv*100).toFixed(1)+"%":"—");
-
-    if(purpose==="owner_occupied"){
-      const rate=val("purchaseAnnualRate");
-      const years=val("purchaseTermYears");
-      const repayment=text("purchaseRepayment");
-      const payment=repayment==="interest"
-        ? finance*(rate/100)/12
-        : monthlyPayment(finance,rate,years);
-      const existingAnnualDebt=val("purchaseExistingDebtService");
-      const totalAnnualDebt=payment*12+existingAnnualDebt;
-      const profit=val("purchaseEbitda");
-      const cover=totalAnnualDebt?profit/totalAnnualDebt:0;
-      const market=commercialMarketPosition(ltv,cover,repayment);
-
-      add("Annual interest rate tested",rate.toFixed(2)+"%");
-      add("Mortgage term",years+" years");
-      add("Repayment basis",repayment==="interest"?"Interest only":"Capital and interest");
-      add("Approximate annual business profit before finance repayments",moneyExact(profit));
-      add("Illustrative monthly new mortgage payment",moneyExact(payment));
-      add("Existing annual finance repayments",moneyExact(existingAnnualDebt));
-      add("Approximate total repayment cover",cover.toFixed(2)+"x");
-
-      marketSection(
-        market,
-        "LTV is currently measured against purchase price. Actual lenders may use valuation rules and different definitions of sustainable business profit."
-      );
-
-    } else if(purpose==="investment"){
-      const rate=val("purchaseAnnualRate");
-      const stressRate=Math.max(val("purchaseStressRate"),rate);
-      const years=val("purchaseTermYears");
-      const repayment=text("purchaseRepayment");
-      const payment=repayment==="interest"
-        ? finance*(rate/100)/12
-        : monthlyPayment(finance,rate,years);
-      const annualRent=val("purchaseRent")*12;
-      const payInterest=finance*(rate/100);
-      const stressInterest=finance*(stressRate/100);
-      const payIcr=payInterest?annualRent/payInterest:0;
-      const stressIcr=stressInterest?annualRent/stressInterest:0;
-      const market=investmentMarketPosition(ltv,stressIcr);
-
-      add("Annual rent",moneyExact(annualRent));
-      add("Annual interest rate tested",rate.toFixed(2)+"%");
-      add("Rent-cover stress rate tested",stressRate.toFixed(2)+"%");
-      add("Mortgage term",years+" years");
-      add("Repayment basis",repayment==="interest"?"Interest only":"Capital and interest");
-      add("Illustrative monthly payment",moneyExact(payment));
-      add("Rent / pay-rate interest",payIcr.toFixed(2)+"x");
-      add("Rent cover at stress rate",stressIcr.toFixed(2)+"x");
-
-      marketSection(
-        market,
-        "Actual lender ICR and stress-rate rules vary by borrower, property and product."
-      );
-
-    } else if(purpose==="bridge"){
-      const rate=val("purchaseBridgeRate")/100;
-      const term=val("purchaseBridgeTerm");
-      const interest=finance*rate*term;
-      const exitQuality=text("purchaseExitQuality")||"reasonable";
-      const market=bridgeMarketPosition(ltv,term,exitQuality);
-      const exitLabels={
-        clear:"Clear and evidenced",
-        reasonable:"Reasonable but not fully evidenced",
-        weak:"Uncertain at this stage"
-      };
-
-      add("Monthly interest rate tested",(rate*100).toFixed(2)+"%");
-      add("Term",term+" months");
-      const purchaseInterestLabels={rolled:"Rolled",retained:"Retained",serviced:"Serviced monthly"};
-      add("Interest treatment",purchaseInterestLabels[text("purchaseInterestMode")]||text("purchaseInterestMode"));
-      add("Intended exit",text("purchaseExit"));
-      add("Exit evidence",exitLabels[exitQuality]||exitQuality);
-      add("Simple retained-interest comparison",moneyExact(interest));
-
-      marketSection(
-        market,
-        "This is a quick bridging structure view and does not test formal valuation, legal charge position or detailed exit evidence."
-      );
-
-    } else {
-      const works=val("purchaseWorks");
-      const completed=val("purchaseCompletedValue");
-      const totalNeed=finance+works;
-      const projectCost=price+costs+works;
-      const completedLtv=completed?totalNeed/completed:NaN;
-      const fundingToCost=projectCost?totalNeed/projectCost:NaN;
-      const market=developmentMarketPosition(completedLtv,"existing",fundingToCost,totalNeed);
-
-      add("Works budget",moneyExact(works));
-      add("Works period",val("purchaseWorksMonths")+" months");
-      add("Completed value",moneyExact(completed));
-      add("Intended exit",text("purchaseWorksExit"));
-      add("Total funding need before finance costs",moneyExact(totalNeed));
-      add("Total need / completed value",Number.isFinite(completedLtv)?(completedLtv*100).toFixed(1)+"%":"—");
-      add("Total need / project cost",Number.isFinite(fundingToCost)?(fundingToCost*100).toFixed(1)+"%":"—");
-
-      marketSection(
-        market,
-        "A proper refurbishment/conversion analysis also needs draw timing, condition, contingency, finance costs and exit evidence."
-      );
-    }
-
-  } else if(["refinance","retain"].includes(state.objective)){
-    const value=val("propValue");
-    const debt=val("propDebt");
-    const need=val("cashNeed");
-    const gross=debt+need;
-    const term=val("bridgeTerm");
-    const monthlyRate=val("bridgeRate")/100;
-    const simpleInterest=gross*monthlyRate*term;
-    const ltv=value?gross/value:0;
-    const exitQuality=text("exitQuality")||"reasonable";
-    const market=bridgeMarketPosition(ltv,term,exitQuality);
-    const exitLabels={
-      clear:"Clear and evidenced",
-      reasonable:"Reasonable but not fully evidenced",
-      weak:"Uncertain at this stage"
-    };
-
-    section("Transaction");
-    add("Property value",moneyExact(value));
-    add("Existing debt to repay",moneyExact(debt));
-    add("Net new cash required",moneyExact(need));
-    add("Intended exit / repayment",text("exit"));
-    add("Exit evidence",exitLabels[exitQuality]||exitQuality);
-
-    section("Calculated structure");
-    add("Initial borrowing need before fees",moneyExact(gross));
-    add("Initial combined LTV",value?(ltv*100).toFixed(1)+"%":"—");
-    add("Monthly interest rate tested",(monthlyRate*100).toFixed(2)+"%");
-    add("Tested term",term+" months");
-    const refinanceInterestLabels={rolled:"Rolled",retained:"Retained",serviced:"Serviced monthly"};
-    add("Interest treatment",refinanceInterestLabels[text("interestMode")]||text("interestMode"));
-    add("Simple retained-interest comparison",moneyExact(simpleInterest));
-
-    marketSection(
-      market,
-      "This route is being tested using short-term bridging mechanics. A longer-term refinance can produce a different lender market and repayment profile."
-    );
-
-  } else if(state.objective==="buy_business"){
-    const price=val("bizPrice");
-    const costs=val("bizCosts");
-    const cash=val("buyerCash");
-    const senior=val("seniorDebt");
-    const vendor=val("vendorDebt");
-    const profit=val("ebitda");
-    const uses=price+costs;
-    const sources=cash+senior+vendor;
-    const gap=Math.max(0,uses-sources);
-    const debt=senior+vendor;
-    const leverage=profit?debt/profit:0;
-    const annualDebt=(debt*(val("acqRate")/100))+(debt/Math.max(1,val("acqTerm")));
-    const cover=annualDebt?profit/annualDebt:0;
-    const market=acquisitionMarketPosition(gap,leverage,cover);
-
-    section("Transaction");
-    add("Purchase price",moneyExact(price));
-    add("Transaction costs",moneyExact(costs));
-    add("Total uses",moneyExact(uses));
-    add("Buyer cash",moneyExact(cash));
-    add("Senior debt to test",moneyExact(senior));
-    add("Vendor / deferred support",moneyExact(vendor));
-    add("Total sources",moneyExact(sources));
-    add("Approximate sustainable annual business profit",moneyExact(profit));
-
-    section("Calculated structure");
-    add("Sources / uses funding gap",moneyExact(gap));
-    add("Total acquisition debt / support",moneyExact(debt));
-    add("Debt / business profit",leverage.toFixed(2)+"x");
-    add("Blended annual interest rate tested",val("acqRate").toFixed(2)+"%");
-    add("Blended repayment period tested",val("acqTerm")+" years");
-    add("Approximate annual debt service",moneyExact(annualDebt));
-    add("Approximate repayment cover",cover.toFixed(2)+"x");
-
-    marketSection(
-      market,
-      "The quick view blends senior debt and vendor/deferred support. A detailed acquisition structure should model their rates, terms and repayment profiles separately."
-    );
-
-  } else if(state.objective==="business_growth"){
-    const need=val("wcAmount");
-    const turnover=val("turnover");
-    const gp=val("grossProfit");
-    const op=val("opCosts");
-    const existingDebt=val("existingMonthlyDebt");
-    const ccc=val("debtorDays")+val("stockDays")-val("creditorDays");
-    const surplus=gp-op;
-    const monthlyRate=val("wcRate")/100/12;
-    const n=Math.max(1,val("wcTerm"));
-    const payment=monthlyRate
-      ? need*monthlyRate/(1-Math.pow(1+monthlyRate,-n))
-      : need/n;
-    const totalFinance=payment+existingDebt;
-    const cover=totalFinance?surplus/totalFinance:0;
-    const market=workingCapitalMarketPosition(cover,ccc);
-
-    section("Transaction");
-    add("Funding required",moneyExact(need));
-    add("Monthly turnover",moneyExact(turnover));
-    add("Monthly gross profit",moneyExact(gp));
-    add("Monthly operating costs",moneyExact(op));
-    add("Existing monthly loan / finance repayments",moneyExact(existingDebt));
-    add("Debtor days",val("debtorDays"));
-    add("Stock days",val("stockDays"));
-    add("Creditor days",val("creditorDays"));
-
-    section("Calculated structure");
-    add("Cash conversion cycle",ccc+" days");
-    add("Monthly operating surplus before debt",moneyExact(surplus));
-    add("Annual interest rate tested",val("wcRate").toFixed(2)+"%");
-    add("Term tested",n+" months");
-    add("Illustrative new monthly payment",moneyExact(payment));
-    add("Total monthly finance repayments",moneyExact(totalFinance));
-    add("Operating surplus / total finance repayments",cover.toFixed(2)+"x");
-
-    marketSection(
-      market,
-      "This quick view does not include tax, drawings or exceptional cash requirements and should be reconciled to actual accounts and bank conduct before lender submission."
-    );
-
-  } else if(state.objective==="asset_finance"){
-    const price=val("assetPrice");
-    const deposit=val("deposit");
-    const balloon=val("balloon");
-    const financed=Math.max(0,price-deposit);
-    const n=Math.max(1,val("assetTerm"));
-    const monthlyRate=val("assetRate")/100/12;
-    const pvBalloon=monthlyRate?balloon/Math.pow(1+monthlyRate,n):balloon;
-    const amortisingAmount=Math.max(0,financed-pvBalloon);
-    const payment=monthlyRate
-      ? amortisingAmount*monthlyRate/(1-Math.pow(1+monthlyRate,-n))
-      : amortisingAmount/n;
-    const cashSurplus=val("assetCashSurplus");
-    const depositPct=price?deposit/price:0;
-    const balloonPct=price?balloon/price:0;
-    const cover=payment?cashSurplus/payment:0;
-    const market=assetFinanceMarketPosition(payment,cashSurplus,depositPct,balloonPct);
-
-    section("Transaction");
-    add("Asset price",moneyExact(price));
-    add("Deposit",moneyExact(deposit));
-    add("Structure",text("assetStructure"));
-    add("Finance term",n+" months");
-    add("Balloon / final payment",moneyExact(balloon));
-    add("Approximate monthly cash available for a new payment",moneyExact(cashSurplus));
-
-    section("Calculated structure");
-    add("Amount financed",moneyExact(financed));
-    add("Annual interest rate tested",val("assetRate").toFixed(2)+"%");
-    add("Illustrative monthly payment",moneyExact(payment));
-    add("Cash available / tested payment",cover.toFixed(2)+"x");
-    add("Deposit as % of asset price",(depositPct*100).toFixed(1)+"%");
-    add("Balloon as % of asset price",(balloonPct*100).toFixed(1)+"%");
-
-    marketSection(
-      market,
-      "Asset type, age, supplier, residual value, credit quality and trading history can materially affect actual lender appetite."
-    );
-
-  } else if(state.objective==="invoice"){
-    const receivables=val("receivables");
-    const eligibilityPct=val("eligibility")/100;
-    const advancePct=val("advanceRate")/100;
-    const reservePct=val("reserve")/100;
-    const eligible=receivables*eligibilityPct;
-    const preReserve=eligible*advancePct;
-    const reserve=preReserve*reservePct;
-    const base=Math.max(0,preReserve-reserve);
-    const drawn=val("currentDrawn");
-    const headroom=Math.max(0,base-drawn);
-    const utilisation=base?drawn/base:0;
-    const market=invoiceMarketPosition(base,drawn,eligibilityPct,reservePct);
-
-    section("Transaction");
-    add("Receivables balance entered",moneyExact(receivables));
-    add("Eligibility assumption",val("eligibility").toFixed(1)+"%");
-    add("Advance rate assumption",val("advanceRate").toFixed(1)+"%");
-    add("Reserve / dilution assumption",val("reserve").toFixed(1)+"%");
-    add("Currently drawn",moneyExact(drawn));
-
-    section("Calculated structure");
-    add("Eligible receivables",moneyExact(eligible));
-    add("Availability before reserve",moneyExact(preReserve));
-    add("Reserve / dilution deduction",moneyExact(reserve));
-    add("Borrowing base after reserve",moneyExact(base));
-    add("Indicative headroom",moneyExact(headroom));
-    add("Borrowing-base utilisation",base?(utilisation*100).toFixed(1)+"%":"—");
-
-    marketSection(
-      market,
-      "Debtor concentration, ageing, disputes, contra arrangements, debtor quality and other eligibility rules are not captured in this quick view."
-    );
-  }
-
-  lines.push("");
-  lines.push("IMPORTANT");
-  lines.push("This is an indicative modelling summary, not a lender decision or offer of finance.");
-  lines.push("Actual lender criteria, pricing, valuation and credit decisions vary and require current market assessment.");
-
-  return lines.join("\r\n");
-}
-
-function prepareCaseSummaryDownload(event){
-  const link=event.currentTarget;
-  const status=document.getElementById("downloadStatus");
-  try{
-    const summary=buildCaseSummaryText();
-    if(!summary || summary.length<40){
-      event.preventDefault();
-      if(status) status.textContent="The case summary could not be built. Please check the current case inputs.";
-      return;
-    }
-
-    // Use the user's real link click rather than creating and programmatically
-    // clicking a hidden element. This is more reliable inside WordPress and
-    // security-managed browser contexts.
-    link.href="data:text/plain;charset=utf-8,"+encodeURIComponent("\uFEFF"+summary);
-    link.setAttribute("download","EAS-Finance-Case-Summary.txt");
-
-    if(status) status.textContent="Case summary prepared. Your browser should now download EAS-Finance-Case-Summary.txt.";
-    setTimeout(()=>{
-      link.href="#";
-      link.removeAttribute("download");
-    },1500);
-  }catch(err){
-    event.preventDefault();
-    console.error("EAS case-summary download failed",err);
-    if(status) status.textContent="The case summary could not be downloaded. Please try again or report this message to EAS Finance.";
-  }
-}
-
-function devNumber(x,d=0){const n=Number(x);return Number.isFinite(n)?n:d;}
-function devClamp(x,a,b){return Math.min(b,Math.max(a,x));}
-function devSCurveWeights(months){
-  months=Math.max(1,Math.round(months));
-  const w=[];
-  for(let m=1;m<=months;m++){
-    const x=(m-.5)/months;
-    w.push(.35+Math.sin(Math.PI*x));
-  }
-  const s=w.reduce((a,b)=>a+b,0)||1;
-  return w.map(x=>x/s);
-}
-function devEvenWeights(months){months=Math.max(1,Math.round(months));return Array(months).fill(1/months);}
-function devMonthlyIRR(cashflows){
-  if(!cashflows.some(x=>x<0)||!cashflows.some(x=>x>0))return null;
-  const npv=r=>cashflows.reduce((s,x,i)=>s+x/Math.pow(1+r,i),0);
-  let lo=-.999,hi=10, flo=npv(lo),fhi=npv(hi);
-  if(!Number.isFinite(flo)||!Number.isFinite(fhi)||flo*fhi>0)return null;
-  for(let i=0;i<180;i++){
-    const mid=(lo+hi)/2,fm=npv(mid);
-    if(Math.abs(fm)<1e-7){lo=hi=mid;break;}
-    if(flo*fm<=0){hi=mid;fhi=fm}else{lo=mid;flo=fm}
-  }
-  const r=(lo+hi)/2;
-  return Math.pow(1+r,12)-1;
-}
-function devSaleEvents(cfg){
-  const sellingPct=Math.max(0,devNumber(cfg.salesCostPct))/100;
-  if(cfg.saleEvents&&cfg.saleEvents.length){
-    const events=cfg.saleEvents.map((e,i)=>{
-      const gross=Math.max(0,devNumber(e.gross??e.amount));
-      const cost=e.cost!==undefined?Math.max(0,devNumber(e.cost)):gross*sellingPct;
-      return {month:Math.max(1,Math.round(devNumber(e.month,i+1))),gross,cost,net:Math.max(0,gross-cost),status:e.status||"forecast",description:e.description||""};
-    });
-    const soldValue=events.reduce((s,e)=>s+e.gross,0);
-    return {events,retainedValue:Math.max(0,devNumber(cfg.gdv)-soldValue),soldValue};
-  }
-  const units=Math.max(1,Math.round(devNumber(cfg.units,1)));
-  const retain=Math.min(units,Math.max(0,Math.round(devNumber(cfg.retainUnits,0))));
-  const sold=units-retain;
-  const retainedValue=devNumber(cfg.gdv)*retain/units;
-  if(sold<=0)return {events:[],retainedValue,soldValue:0};
-  const soldValue=devNumber(cfg.gdv)-retainedValue;
-  const exitMonths=Math.max(1,Math.round(devNumber(cfg.exitMonths,1)));
-  const start=Math.max(1,Math.round(devNumber(cfg.buildMonths,1)))+1;
-  const perUnit=soldValue/sold;
-  const events=[];
-  for(let i=0;i<sold;i++){
-    const slot=sold===1?0:Math.round(i*(exitMonths-1)/(sold-1));
-    const month=start+slot;
-    events.push({month,gross:perUnit,cost:perUnit*sellingPct,net:perUnit*(1-sellingPct),status:"forecast"});
-  }
-  return {events,retainedValue,soldValue};
-}
-function buildGeneratedDevCosts(cfg){
-  const months=Math.max(1,Math.round(devNumber(cfg.buildMonths,1)));
-  const profile=cfg.profile==="even"?devEvenWeights(months):devSCurveWeights(months);
-  const works=Math.max(0,devNumber(cfg.works));
-  const prof=Math.max(0,devNumber(cfg.profFees));
-  const contingency=Math.max(0,devNumber(cfg.contingencyBudget));
-  const rows=[];
-  for(let i=0;i<months;i++){
-    rows.push({month:i+1,category:"core_construction",amount:works*profile[i],status:"forecast"});
-    rows.push({month:i+1,category:"professional",amount:prof/months,status:"forecast"});
-    rows.push({month:i+1,category:"contingency",amount:contingency*profile[i],status:"forecast"});
-  }
-  return rows;
-}
-function normaliseDevCostRows(cfg){
-  const rows=(cfg.costRows&&cfg.costRows.length?cfg.costRows:buildGeneratedDevCosts(cfg)).map((r,i)=>({
-    month:Math.max(1,Math.round(devNumber(r.month,i+1))),
-    category:r.category||"other",
-    amount:Math.max(0,devNumber(r.amount)),
-    status:r.status||"forecast",
-    description:r.description||""
-  }));
-  return rows;
-}
-function runDevelopmentCashflowModel(input){
-  const cfg={...input};
-  cfg.buildMonths=Math.max(1,Math.round(devNumber(cfg.buildMonths,1)));
-  cfg.exitMonths=Math.max(0,Math.round(devNumber(cfg.exitMonths,0)));
-  cfg.units=Math.max(1,Math.round(devNumber(cfg.units,1)));
-  cfg.retainUnits=Math.min(cfg.units,Math.max(0,Math.round(devNumber(cfg.retainUnits,0))));
-  cfg.gdv=Math.max(0,devNumber(cfg.gdv));
-  cfg.openingCash=Math.max(0,devNumber(cfg.openingCash));
-  cfg.annualRate=Math.max(0,devNumber(cfg.annualRate,12));
-  cfg.arrangementFeePct=Math.max(0,devNumber(cfg.arrangementFeePct,2));
-  cfg.arrangementFeeBasis=cfg.arrangementFeeBasis==="gross"?"gross":"net";
-  cfg.exitFeeBasis=["gross","gdv"].includes(cfg.exitFeeBasis)?cfg.exitFeeBasis:"net";
-  cfg.acquisitionDrawConvention=cfg.acquisitionDrawConvention==="lender_advance"?"lender_advance":"equity_first";
-  cfg.exitFeePct=Math.max(0,devNumber(cfg.exitFeePct,0));
-  cfg.worksFundingPct=devClamp(devNumber(cfg.worksFundingPct,100),0,100);
-  cfg.professionalFundingPct=devClamp(devNumber(cfg.professionalFundingPct,cfg.worksFundingPct),0,100);
-  cfg.acquisitionFundingPct=devClamp(devNumber(cfg.acquisitionFundingPct,65),0,100);
-  cfg.certificationLag=Math.max(0,Math.round(devNumber(cfg.certificationLag,0)));
-  cfg.releasePct=devClamp(devNumber(cfg.releasePct,100),0,100);
-  cfg.releaseAmountPerUnit=Math.max(0,devNumber(cfg.releaseAmountPerUnit,0));
-  cfg.salesCostPct=Math.max(0,devNumber(cfg.salesCostPct,0));
-  cfg.interestMethod=cfg.interestMethod==="serviced"?"serviced":"rolled";
-  cfg.seniorLimit=Math.max(0,devNumber(cfg.seniorLimit,0));
-  cfg.mezzLimit=Math.max(0,devNumber(cfg.mezzLimit,0));
-  cfg.mezzAnnualRate=Math.max(0,devNumber(cfg.mezzAnnualRate,15));
-  cfg.refiAmount=Math.max(0,devNumber(cfg.refiAmount,0));
-  cfg.refiFeePct=Math.max(0,devNumber(cfg.refiFeePct,0));
-
-  const buying=cfg.siteStatus!=="owned";
-  const siteValue=Math.max(0,devNumber(cfg.siteValue));
-  const existingDebt=Math.max(0,devNumber(cfg.existingDebt));
-  const acquisitionCosts=Math.max(0,devNumber(cfg.acquisitionCosts));
-  const works=Math.max(0,devNumber(cfg.works));
-  const prof=Math.max(0,devNumber(cfg.profFees));
-  const contingencyBudget=Math.max(0,devNumber(cfg.contingencyBudget));
-  const historicLandCost=Math.max(0,devNumber(cfg.landHistoricCost));
-  const economicSite=siteValue;
-  let economicCostBeforeFinance=economicSite+acquisitionCosts+works+prof+contingencyBudget;
-  let profitBeforeFinance=cfg.gdv-economicCostBeforeFinance;
-
-  const prefinanceCashNeed=(buying?siteValue+acquisitionCosts:existingDebt)+works+prof+contingencyBudget;
-  const coreFundingNeed=Math.max(0,prefinanceCashNeed-cfg.openingCash);
-  const feeRate=cfg.arrangementFeePct/100;
-  const grossedFundingNeed=(feeRate>0 && feeRate<1)?coreFundingNeed/(1-feeRate):coreFundingNeed;
-  const feeBasis=cfg.arrangementFeeBasis==="gross"
-    ? (cfg.seniorLimit>0?cfg.seniorLimit:grossedFundingNeed)
-    : coreFundingNeed;
-  const arrangementFee=feeBasis*cfg.arrangementFeePct/100;
-  const exitFeeBasis=cfg.exitFeeBasis==="gdv"
-    ? cfg.gdv
-    : cfg.exitFeeBasis==="gross"
-      ? (cfg.seniorLimit>0?cfg.seniorLimit:grossedFundingNeed)
-      : coreFundingNeed;
-  const exitFee=exitFeeBasis*cfg.exitFeePct/100;
-  const refinanceFee=cfg.refiAmount*cfg.refiFeePct/100;
-
-  let cash=cfg.openingCash;
-  let senior=buying?0:existingDebt;
-  let mezz=0;
-  let seniorPrincipal=buying?0:existingDebt;
-  let mezzPrincipal=0;
-  let interestSenior=0,interestMezz=0;
-  let cashFees=0;
-  const monthlyRate=cfg.annualRate/100/12;
-  const mezzMonthlyRate=cfg.mezzAnnualRate/100/12;
-  const seniorCap=cfg.seniorLimit>0?cfg.seniorLimit:Infinity;
-  const mezzCap=cfg.mezzLimit>0?cfg.mezzLimit:0;
-  const queued={};
-  let extraEquity=0, peakMonthlyEquityInjection=0;
-  let peakDebt=senior+mezz;
-  let peakSenior=senior,peakMezz=mezz;
-  let totalSalesCosts=0;
-  let cashReleased=0;
-  let totalRepayments=0;
-  let arrangementFeeCapitalised=arrangementFee;
-  senior += arrangementFeeCapitalised;
-  peakDebt=Math.max(peakDebt,senior);
-
-  const equityFlows=[];
-  const ownedSiteEquity=buying?0:Math.max(0,siteValue-existingDebt);
-  equityFlows[0]=-(cfg.openingCash+ownedSiteEquity);
-
-  function injectIfNeeded(month){
-    if(cash<-1e-8){
-      const inj=-cash; cash=0; extraEquity+=inj; peakMonthlyEquityInjection=Math.max(peakMonthlyEquityInjection,inj);
-      equityFlows[month]=(equityFlows[month]||0)-inj;
-      return inj;
-    }
-    return 0;
-  }
-  function drawDebt(amount){
-    let remaining=Math.max(0,amount),s=0,m=0;
-    if(remaining>0){
-      const avail=Math.max(0,seniorCap-seniorPrincipal);
-      s=Math.min(remaining,avail); senior+=s; seniorPrincipal+=s; remaining-=s;
-    }
-    if(remaining>0&&mezzCap>0){
-      const avail=Math.max(0,mezzCap-mezzPrincipal);
-      m=Math.min(remaining,avail); mezz+=m; mezzPrincipal+=m; remaining-=m;
-    }
-    cash+=s+m;
-    return {senior:s,mezz:m,unfunded:remaining};
-  }
-  function repayDebt(amount){
-    let rem=Math.max(0,amount),s=0,m=0;
-    s=Math.min(rem,senior);senior-=s;rem-=s;
-    m=Math.min(rem,mezz);mezz-=m;rem-=m;
-    totalRepayments+=s+m;
-    return {senior:s,mezz:m,left:rem};
-  }
-
-  const ledger=[];
-  // Month 0 acquisition / refinance existing debt
-  let acquisitionCost=buying?siteValue+acquisitionCosts:0;
-  let month0Equity=0;
-  if(acquisitionCost>0){
-    const maxAcqDebt=acquisitionCost*cfg.acquisitionFundingPct/100;
-    if(cfg.acquisitionDrawConvention==="lender_advance" && maxAcqDebt>0){
-      drawDebt(maxAcqDebt);
-      cash-=acquisitionCost;
-      month0Equity+=injectIfNeeded(0);
-    }else{
-      cash-=acquisitionCost;
-      if(cash<0){
-        const need=Math.min(-cash,maxAcqDebt);
-        drawDebt(need);
-        month0Equity+=injectIfNeeded(0);
-      }
-    }
-  }
-  // If fee is capitalised above, no cash movement. Record month 0.
-  ledger.push({month:0,status:"forecast",costs:acquisitionCost,drawSenior:seniorPrincipal-existingDebt,drawMezz:mezzPrincipal,interest:0,sales:0,refinance:0,repaymentSenior:0,repaymentMezz:0,repayment:0,equityInjection:month0Equity,closingCash:cash,closingSenior:senior,closingMezz:mezz,closingDebt:senior+mezz});
-
-  const costRows=normaliseDevCostRows(cfg);
-  const jumpMonth=Math.max(1,Math.round(devNumber(cfg.jumpMonth,Math.ceil(cfg.buildMonths/2))));
-  const jumpAmount=Math.max(0,devNumber(cfg.jumpAmount,0));
-  const jumpUsesCont=cfg.jumpUsesContingency!==false;
-  const uncoveredJump=jumpAmount>0?(jumpUsesCont?Math.max(0,jumpAmount-contingencyBudget):jumpAmount):0;
-  if(uncoveredJump>0){costRows.push({month:jumpMonth,category:"jump",amount:uncoveredJump,status:"forecast",description:"Unexpected cost above contingency"});economicCostBeforeFinance+=uncoveredJump;profitBeforeFinance=cfg.gdv-economicCostBeforeFinance;}
-
-  const sales=devSaleEvents(cfg);
-  const salesByMonth={};
-  sales.events.forEach(e=>(salesByMonth[e.month]||(salesByMonth[e.month]=[])).push(e));
-  const maxCostMonth=Math.max(cfg.buildMonths,...costRows.map(r=>r.month));
-  const maxSaleMonth=sales.events.length?Math.max(...sales.events.map(e=>e.month)):maxCostMonth+cfg.exitMonths;
-  const refiMonth=Math.max(maxSaleMonth,maxCostMonth+cfg.exitMonths);
-  const totalMonths=Math.max(1,maxSaleMonth,refiMonth,maxCostMonth+cfg.certificationLag);
-  const actualThrough=Math.max(0,Math.round(devNumber(cfg.actualThroughMonth,0)));
-
-  for(let month=1;month<=totalMonths;month++){
-    const openingDebt=senior+mezz,openingCash=cash;
-    let monthCosts=0,drawS=0,drawM=0,monthInterest=0,monthSales=0,monthRepay=0,monthRepaySenior=0,monthRepayMezz=0,monthEquity=0,monthRefi=0;
-    // queued reimbursements arrive at start of month
-    if(queued[month]){
-      for(const amt of queued[month]){const d=drawDebt(amt);drawS+=d.senior;drawM+=d.mezz;}
-    }
-    // costs during month
-    const rows=costRows.filter(r=>r.month===month);
-    for(const r of rows){
-      const amt=r.amount;monthCosts+=amt;cash-=amt;
-      const fundingPct=r.category==="professional"?cfg.professionalFundingPct:cfg.worksFundingPct;
-      const eligible=amt*fundingPct/100;
-      if(eligible>0){
-        if(cfg.certificationLag>0){
-          const arrival=month+cfg.certificationLag;(queued[arrival]||(queued[arrival]=[])).push(eligible);
-        }else{
-          const d=drawDebt(eligible);drawS+=d.senior;drawM+=d.mezz;
-        }
-      }
-    }
-    monthEquity+=injectIfNeeded(month);
-    // interest month-end
-    const si=senior*monthlyRate,mi=mezz*mezzMonthlyRate;
-    interestSenior+=si;interestMezz+=mi;monthInterest=si+mi;
-    if(cfg.interestMethod==="rolled"){senior+=si;mezz+=mi;}else{cash-=si+mi;monthEquity+=injectIfNeeded(month);}
-    // sales after interest
-    for(const sale of (salesByMonth[month]||[])){
-      totalSalesCosts+=sale.cost;cash+=sale.net;monthSales+=sale.net;
-      let required=cfg.releaseAmountPerUnit>0?Math.min(sale.net,cfg.releaseAmountPerUnit):sale.net*cfg.releasePct/100;
-      required=Math.min(required,sale.net);
-      const rep=repayDebt(required);const paid=rep.senior+rep.mezz;cash-=paid;monthRepay+=paid;monthRepaySenior+=rep.senior;monthRepayMezz+=rep.mezz;
-      cashReleased+=Math.max(0,sale.net-paid);
-    }
-    // retained-unit refinance at final exit month
-    if(month===refiMonth&&cfg.refiAmount>0){
-      const fee=refinanceFee;cash+=cfg.refiAmount-fee;cashFees+=fee;monthRefi=cfg.refiAmount;
-      const rep=repayDebt(cash);const paid=rep.senior+rep.mezz;cash-=paid;monthRepay+=paid;monthRepaySenior+=rep.senior;monthRepayMezz+=rep.mezz;
-    }
-    // exit fee at final month
-    if(month===totalMonths&&exitFee>0){cash-=exitFee;cashFees+=exitFee;monthEquity+=injectIfNeeded(month);}
-    peakDebt=Math.max(peakDebt,senior+mezz);peakSenior=Math.max(peakSenior,senior);peakMezz=Math.max(peakMezz,mezz);
-    ledger.push({month,status:month<=actualThrough?"actual":"forecast",openingCash,costs:monthCosts,drawSenior:drawS,drawMezz:drawM,interest:monthInterest,sales:monthSales,refinance:monthRefi,repaymentSenior:monthRepaySenior,repaymentMezz:monthRepayMezz,repayment:monthRepay,equityInjection:monthEquity,closingCash:cash,closingSenior:senior,closingMezz:mezz,closingDebt:senior+mezz});
-  }
-  const closingDebt=senior+mezz;
-  const totalInterest=interestSenior+interestMezz;
-  const totalFinanceCost=totalInterest+arrangementFee+cashFees;
-  const totalCostAfterFinance=economicCostBeforeFinance+totalFinanceCost+totalSalesCosts;
-  const profitAfterFinance=cfg.gdv-totalCostAfterFinance;
-  const profitOnTotalCost=totalCostAfterFinance?profitAfterFinance/totalCostAfterFinance:0;
-  const totalDeveloperEquity=ownedSiteEquity+cfg.openingCash+extraEquity;
-  const returnOnEquity=totalDeveloperEquity?profitAfterFinance/totalDeveloperEquity:null;
-  const dayOneDebt=ledger.length?ledger[0].closingDebt:0;
-  const dayOneAdvance=ledger.length?(Math.max(0,ledger[0].drawSenior||0)+Math.max(0,ledger[0].drawMezz||0)):0;
-  const retainedEquity=Math.max(0,sales.retainedValue-cfg.refiAmount);
-  equityFlows[totalMonths]=(equityFlows[totalMonths]||0)+cash+retainedEquity;
-  const equityIRR=devMonthlyIRR(equityFlows.map(x=>x||0));
-  const peakLtgdv=cfg.gdv?peakDebt/cfg.gdv:NaN;
-  const peakLtc=economicCostBeforeFinance?peakDebt/economicCostBeforeFinance:NaN;
-  const facilityHeadroom=cfg.seniorLimit>0?cfg.seniorLimit-peakSenior:null;
-  return {
-    economicCostBeforeFinance,profitBeforeFinance,profitOnCostBeforeFinance:economicCostBeforeFinance?profitBeforeFinance/economicCostBeforeFinance:0,
-    arrangementFee,exitFee,refinanceFee,exitFeeBasis,totalInterest,interestSenior,interestMezz,totalSalesCosts,totalFinanceCost,totalCostAfterFinance,profitAfterFinance,profitOnTotalCost,
-    peakDebt,peakSenior,peakMezz,peakLtgdv,peakLtc,closingDebt,exitShortfall:closingDebt,totalDeveloperEquity,ownedSiteEquity,extraEquity,peakMonthlyEquityInjection,returnOnEquity,equityIRR,
-    retainedValue:sales.retainedValue,refiAmount:cfg.refiAmount,facilityHeadroom,cashReleased,closingCash:cash,ledger,totalMonths,coreFundingNeed,feeBasis,dayOneDebt,dayOneAdvance,arrangementFeeBasis:cfg.arrangementFeeBasis,acquisitionDrawConvention:cfg.acquisitionDrawConvention
-  };
-}
-
-
-// ============================================================
-// DEVELOPMENT v3 RESTORATION LAYER
-// One monthly finance engine now drives Quick and Detailed views.
-// ============================================================
-
-state.quickDevFinance = state.quickDevFinance || {
-  annualRate:12,
-  arrangementFeePct:2,
-  arrangementFeeBasis:"net",
-  exitFeePct:0,
-  exitFeeBasis:"net",
-  interestMethod:"rolled",
-  acquisitionDrawConvention:"equity_first",
-  worksFundingPct:100,
-  professionalFundingPct:100,
-  acquisitionFundingPct:65,
-  certificationLag:1,
-  releasePct:100,
-  salesCostPct:0
-};
-state.quickDevStress = state.quickDevStress || {name:"Base",buildCostPct:0,gdvPct:0,buildMonthsAdd:0,exitMonthsAdd:0};
-state.importedSheetName = state.importedSheetName || "";
-state.devContingencyUserEdited = state.devContingencyUserEdited || false;
-
-
-function quickDevTypeDefaultContingency(type){
-  return ["conversion","heavy_refurb","part_complete"].includes(type)?7.5:5;
-}
-function quickDevTypeProfile(type){
-  return type==="light_refurb"?"even":"s_curve";
-}
-function quickDevTypeFamily(type){
-  return type==="ground"?"ground":"existing";
-}
-function quickDevTypeLabel(type){
-  return ({
-    ground:"Ground-up",
-    conversion:"Conversion",
-    heavy_refurb:"Heavy refurbishment",
-    light_refurb:"Light refurbishment",
-    part_complete:"Part-complete"
-  })[type]||"Conversion / refurbishment";
-}
-
-makeQuickProject=function(seed={}){
-  const defaultType=state.developmentFamily==="existing"?(state.developmentType&&state.developmentType!=="ground_up"?state.developmentType:"conversion"):"ground";
-  const type=seed.type||defaultType;
-  const startingCash=state.developmentEntryMode==="quick"?0:(Number(document.getElementById("cashAvailable")?.value)||0);
-  const works=Number(seed.works??800000);
-  state.quickProjectCounter+=1;
-  return {
-    id:`quick-${state.quickProjectCounter}`,
-    name:seed.name||`Project ${state.quickProjectCounter}`,
-    type,
-    siteStatus:seed.siteStatus||"buying",
-    siteValue:Number(seed.siteValue??500000),
-    existingDebt:Number(seed.existingDebt??0),
-    works,
-    fees:Number(seed.fees??works*0.10),
-    contingency:Number(seed.contingency??quickDevTypeDefaultContingency(type)),
-    contingencyUserEdited:Boolean(seed.contingencyUserEdited),
-    gdv:Number(seed.gdv??1800000),
-    buildMonths:Number(seed.buildMonths??14),
-    exitMonths:Number(seed.exitMonths??6),
-    units:Number(seed.units??6),
-    cash:Number(seed.cash??startingCash)
-  };
-};
-
-function devCanonicalCategory(value){
-  const n=normaliseHeader(value);
-  const groups={
-    core_construction:["construction","build","build cost","building costs","works","main contractor","contractor","construction cost","build spend","development works"],
-    professional:["professional","professional fees","consultants","consultant fees","architect","qs","quantity surveyor","engineer","project management","project manager"],
-    abnormal_utilities:["utilities","utility","utility diversion","services diversion","drainage","drainage diversion","service connections"],
-    abnormal_ground:["abnormals","groundworks abnormal","ground conditions","contamination","remediation","piling","foundation abnormal"],
-    contingency:["contingency","risk allowance","risk reserve"],
-    land_acquisition:["land","site purchase","purchase","acquisition","land acquisition"],
-    sales:["sales","sale proceeds","disposals","unit sales","sales proceeds"],
-    finance:["finance","interest","lender fee","arrangement fee","finance costs"]
-  };
-  for(const [k,vals] of Object.entries(groups)) if(vals.includes(n)) return k;
-  for(const [k,vals] of Object.entries(groups)) if(vals.some(v=>n&&((n.includes(v))||(v.includes(n))))) return k;
-  return "other";
-}
-function devPeriodRows(rows){
-  const seen=[],map=new Map();
-  rows.forEach(r=>{const key=String(r.Month??r.Period??"").trim();if(!map.has(key)){seen.push(key);map.set(key,seen.length);}});
-  return rows.map((r,i)=>{
-    const raw=String(r.Month??r.Period??"").trim();
-    const num=Number(raw);
-    const month=Number.isFinite(num)&&num>0?Math.round(num):(map.get(raw)||i+1);
-    return {...r,_month:month};
-  });
-}
-function devImportedRowsToCosts(overrides={}){
-  if(!state.monthlyRows.length)return null;
-  const use=document.getElementById("devUseImportedSchedule");
-  if(use && !use.checked)return null;
-  let rows=devPeriodRows(state.monthlyRows);
-  const out=[],saleEvents=[];
-  let coreFound=false,profFound=false,contFound=false,actualThrough=0;
-  rows.forEach(r=>{
-    const actual=Number(r.Actual)||0, forecast=Number(r.Forecast)||0;
-    const status=(String(r.Status||"").toLowerCase().startsWith("actual")||Math.abs(actual)>0)?"actual":"forecast";
-    let amount=status==="actual"?actual:forecast;
-    const cat=devCanonicalCategory(r.Category||"");
-    let month=r._month;
-    if(cat==="sales"){
-      if(status==="forecast"){
-        amount*=1+(overrides.gdvPct||0);
-        month+=(overrides.buildMonthsAdd||0)+(overrides.exitMonthsAdd||0);
-      }
-      if(status==="actual")actualThrough=Math.max(actualThrough,month);
-      if(amount>0)saleEvents.push({month,gross:amount,status,description:r.Description||r.Subcategory||""});
-      return;
-    }
-    if(["land_acquisition","finance"].includes(cat))return;
-    if(status==="forecast" && cat==="core_construction") amount*=1+(overrides.buildCostPct||0);
-    if(status==="forecast" && overrides.buildMonthsAdd) month+=overrides.buildMonthsAdd;
-    if(status==="actual")actualThrough=Math.max(actualThrough,month);
-    if(cat==="core_construction")coreFound=true;
-    if(cat==="professional")profFound=true;
-    if(cat==="contingency")contFound=true;
-    if(amount) out.push({month,category:cat,amount:Math.max(0,amount),status,description:r.Description||r.Subcategory||""});
-  });
-  const buildMonths=Math.max(1,val("buildMonths")+(overrides.buildMonthsAdd||0),...out.map(r=>r.month));
-  const weights=devSCurveWeights(buildMonths);
-  const coreTotal=out.filter(r=>r.category==="core_construction").reduce((s,r)=>s+r.amount,0);
-  if(!coreFound){
-    const total=val("buildCost")*(1+(overrides.buildCostPct||0));
-    weights.forEach((w,i)=>out.push({month:i+1,category:"core_construction",amount:total*w,status:"forecast",description:"Generated construction profile"}));
-  }
-  if(!profFound){
-    const total=val("profFees");
-    for(let i=0;i<buildMonths;i++)out.push({month:i+1,category:"professional",amount:total/buildMonths,status:"forecast",description:"Generated professional fees"});
-  }
-  if(!contFound){
-    const baseCore=coreFound?coreTotal:val("buildCost")*(1+(overrides.buildCostPct||0));
-    const total=baseCore*val("contingency")/100;
-    weights.forEach((w,i)=>out.push({month:i+1,category:"contingency",amount:total*w,status:"forecast",description:"Generated contingency"}));
-  }
-  return {rows:out,saleEvents,actualThrough,buildMonths};
-}
-function devDetailedPrepared(overrides={}){
-  const imported=devImportedRowsToCosts(overrides);
-  let buildMonths=Math.max(1,val("buildMonths")+(overrides.buildMonthsAdd||0));
-  let rows=null,saleEvents=null,actualThrough=0;
-  if(imported){rows=imported.rows;saleEvents=imported.saleEvents&&imported.saleEvents.length?imported.saleEvents:null;actualThrough=imported.actualThrough;buildMonths=Math.max(buildMonths,imported.buildMonths);}
-  const buying=text("siteOwnership")==="buying";
-  const siteValue=buying?val("sitePurchasePrice"):val("siteValue");
-  const gdv=val("gdv")*(1+(overrides.gdvPct||0));
-  let works=val("buildCost")*(1+(overrides.buildCostPct||0)),prof=val("profFees"),cont=works*val("contingency")/100;
-  if(rows){
-    works=rows.filter(r=>r.category==="core_construction").reduce((s,r)=>s+r.amount,0);
-    prof=rows.filter(r=>!["core_construction","contingency"].includes(r.category)).reduce((s,r)=>s+r.amount,0);
-    cont=rows.filter(r=>r.category==="contingency").reduce((s,r)=>s+r.amount,0);
-  }
-  const cfg={
-    siteStatus:buying?"buying":"owned",siteValue,existingDebt:val("siteDebt"),acquisitionCosts:buying?val("siteAcquisitionCosts"):0,
-    landHistoricCost:val("landHistoricCost"),works,profFees:prof,contingencyBudget:cont,gdv,
-    buildMonths,exitMonths:Math.max(0,val("salesMonths")+(overrides.exitMonthsAdd||0)),units:val("units"),retainUnits:val("retainUnits"),openingCash:val("cashAvailable"),
-    annualRate:val("devSeniorRate")||12,arrangementFeePct:val("devArrangementFee"),arrangementFeeBasis:text("devArrangementFeeBasis")||"net",exitFeePct:val("devExitFee"),exitFeeBasis:text("devExitFeeBasis")||"net",interestMethod:text("devInterestMethod")||"rolled",acquisitionDrawConvention:text("devAcquisitionDrawConvention")||"equity_first",
-    worksFundingPct:val("devWorksFundingPct"),professionalFundingPct:val("devProfessionalFundingPct"),acquisitionFundingPct:val("devAcquisitionFundingPct"),certificationLag:val("devCertificationLag"),releasePct:val("devReleasePct"),releaseAmountPerUnit:val("devReleaseAmount"),salesCostPct:val("devSalesCostPct"),
-    seniorLimit:val("devSeniorLimit"),mezzLimit:val("devMezzLimit"),mezzAnnualRate:val("devMezzRate")||15,refiAmount:val("devRefiAmount"),refiFeePct:val("devRefiFee"),
-    jumpMonth:val("jumpMonth")||Math.ceil(buildMonths/2),jumpAmount:val("jumpCost"),jumpUsesContingency:text("jumpUseContingency")!=="no",
-    costRows:rows||undefined,saleEvents:saleEvents||undefined,actualThroughMonth:actualThrough,profile:(state.developmentType==="light_refurb"?"even":"s_curve")
-  };
-  return {cfg,imported:Boolean(rows),actualThrough};
-}
-function devQuickFinanceCfg(){return {...state.quickDevFinance};}
-function quickProjectMetricsV3(p,stress=state.quickDevStress){
-  const works=Math.max(0,Number(p.works)||0)*(1+(stress.buildCostPct||0));
-  const gdv=Math.max(0,Number(p.gdv)||0)*(1+(stress.gdvPct||0));
-  const buildMonths=Math.max(1,(Number(p.buildMonths)||1)+(stress.buildMonthsAdd||0));
-  const exitMonths=Math.max(0,(Number(p.exitMonths)||0)+(stress.exitMonthsAdd||0));
-  const finance=devQuickFinanceCfg();
-  const cfg={siteStatus:p.siteStatus,siteValue:p.siteValue,existingDebt:p.existingDebt,works,profFees:p.fees,contingencyBudget:works*(Number(p.contingency)||0)/100,gdv,
-    buildMonths,exitMonths,units:p.units,retainUnits:0,openingCash:p.cash,annualRate:finance.annualRate,arrangementFeePct:finance.arrangementFeePct,exitFeePct:finance.exitFeePct,
-    interestMethod:finance.interestMethod,arrangementFeeBasis:finance.arrangementFeeBasis,exitFeeBasis:finance.exitFeeBasis,acquisitionDrawConvention:finance.acquisitionDrawConvention,
-    worksFundingPct:finance.worksFundingPct,professionalFundingPct:finance.professionalFundingPct,acquisitionFundingPct:finance.acquisitionFundingPct,certificationLag:finance.certificationLag,releasePct:finance.releasePct,salesCostPct:finance.salesCostPct,profile:quickDevTypeProfile(p.type)};
-  const model=runDevelopmentCashflowModel(cfg);
-  const market=developmentMarketPosition(model.peakLtgdv,quickDevTypeFamily(p.type),model.peakLtc,model.peakDebt);
-  return {...model,market,site:Math.max(0,Number(p.siteValue)||0),gdv,works,duration:model.totalMonths,cash:Number(p.cash)||0,economicCost:model.economicCostBeforeFinance,profit:model.profitAfterFinance,poc:model.profitOnTotalCost,ltgdv:model.peakLtgdv,ltc:model.peakLtc,projectEquity:model.totalDeveloperEquity};
-}
-function quickProjectMetrics(p){return quickProjectMetricsV3(p);}
-function setQuickStress(name){
-  const map={Base:{name:"Base",buildCostPct:0,gdvPct:0,buildMonthsAdd:0,exitMonthsAdd:0},"Build +10%":{name:"Build +10%",buildCostPct:.10,gdvPct:0,buildMonthsAdd:0,exitMonthsAdd:0},"GDV -10%":{name:"GDV -10%",buildCostPct:0,gdvPct:-.10,buildMonthsAdd:0,exitMonthsAdd:0},"Build +3 months":{name:"Build +3 months",buildCostPct:0,gdvPct:0,buildMonthsAdd:3,exitMonthsAdd:0},"Sales +6 months":{name:"Sales +6 months",buildCostPct:0,gdvPct:0,buildMonthsAdd:0,exitMonthsAdd:6},"Combined downside":{name:"Combined downside",buildCostPct:.10,gdvPct:-.10,buildMonthsAdd:3,exitMonthsAdd:6}};
-  state.quickDevStress=map[name]||map.Base;renderQuickProjectCards();renderQuickDevelopmentResults();updateSide();updateUsefulNow();
-}
-function updateQuickFinanceAssumption(field,value){
-  if(["interestMethod","arrangementFeeBasis","acquisitionDrawConvention"].includes(field)) state.quickDevFinance[field]=value;
-  else state.quickDevFinance[field]=Number(value)||0;
-  renderQuickProjectCards();renderQuickDevelopmentResults();updateSide();updateUsefulNow();
-}
-function quickFinancePanel(){
-  const f=state.quickDevFinance,s=state.quickDevStress;
-  return `<div class="dev-finance-assumptions"><div class="eyebrow">Illustrative assumptions · apply to every project</div><h3>Quick finance assumptions</h3>
-    <div class="note">Time now affects the answer. The quick model generates a monthly construction profile, calculates debt and interest month by month, and uses sales to repay the facility. Detailed modelling can replace these assumptions with the real cost plan and lender structure.</div>
-    <div class="grid3">
-      <div class="field"><label>Interest rate to test (% p.a.)</label><input type="number" min="0" step="0.25" value="${f.annualRate}" onchange="updateQuickFinanceAssumption('annualRate',this.value)"><div class="help">Default 12.0% p.a. (${(f.annualRate/12).toFixed(2)}% per month).</div></div>
-      <div class="field"><label>Arrangement fee (%)</label><input type="number" min="0" step="0.25" value="${f.arrangementFeePct}" onchange="updateQuickFinanceAssumption('arrangementFeePct',this.value)"><div class="help">Capitalised for this quick comparison.</div></div>
-      <div class="field"><label>Arrangement fee basis</label><select onchange="updateQuickFinanceAssumption('arrangementFeeBasis',this.value)"><option value="net" ${f.arrangementFeeBasis==="net"?"selected":""}>Pre-finance funding need</option><option value="gross" ${f.arrangementFeeBasis==="gross"?"selected":""}>Gross facility before interest reserve</option></select><div class="help">Makes the fee basis explicit rather than hiding it in the calculation.</div></div>
-      <div class="field"><label>Exit fee (%)</label><input type="number" min="0" step="0.25" value="${f.exitFeePct}" onchange="updateQuickFinanceAssumption('exitFeePct',this.value)"></div>
-      <div class="field"><label>Exit fee basis</label><select onchange="updateQuickFinanceAssumption('exitFeeBasis',this.value)">
-        <option value="net" ${f.exitFeeBasis==="net"?"selected":""}>Pre-finance funding need</option>
-        <option value="gross" ${f.exitFeeBasis==="gross"?"selected":""}>Gross facility before interest</option>
-        <option value="gdv" ${f.exitFeeBasis==="gdv"?"selected":""}>Completed value / GDV</option>
-      </select><div class="help">Exit fees vary by lender. Choose the basis you want to test rather than assuming it matches the arrangement fee.</div></div>
-      <div class="field"><label>Interest treatment</label><select onchange="updateQuickFinanceAssumption('interestMethod',this.value)"><option value="rolled" ${f.interestMethod==="rolled"?"selected":""}>Rolled</option><option value="serviced" ${f.interestMethod==="serviced"?"selected":""}>Serviced monthly</option></select></div>
-      <div class="field"><label>Acquisition draw convention</label><select onchange="updateQuickFinanceAssumption('acquisitionDrawConvention',this.value)"><option value="equity_first" ${f.acquisitionDrawConvention==="equity_first"?"selected":""}>Equity first</option><option value="lender_advance" ${f.acquisitionDrawConvention==="lender_advance"?"selected":""}>Lender advance at completion</option></select><div class="help">Equity first uses committed cash before the acquisition facility. Lender advance draws up to the acquisition percentage at completion and preserves more cash for works/liquidity.</div></div>
-      <div class="field"><label>Works funding to test (%)</label><input type="number" min="0" max="100" step="5" value="${f.worksFundingPct}" onchange="updateQuickFinanceAssumption('worksFundingPct',this.value)"><div class="help">100% is allowed as a modelling assumption; this is not a lender promise.</div></div>
-      <div class="field"><label>Works draw timing</label><select onchange="updateQuickFinanceAssumption('certificationLag',this.value)"><option value="0" ${f.certificationLag===0?"selected":""}>Same month</option><option value="1" ${f.certificationLag===1?"selected":""}>1 month in arrears</option><option value="2" ${f.certificationLag===2?"selected":""}>2 months in arrears</option></select></div>
+  wrap.innerHTML=`<div class="section">
+    <h2>Compare your projects</h2>
+    <p class="help comparison-intro">The primary comparison is profit after estimated finance. The measures underneath explain capital efficiency, funding pressure and time rather than producing a single opaque score.</p>
+
+    <div class="comparison-headline">
+      <div class="eyebrow">Current leader after finance</div>
+      <h3>${projectName(leader)}</h3>
+      <div class="comparison-profit">${moneyExact(leader.m.profitAfterFinance)}</div>
+      <p>${profitLead>0?`${moneyExact(profitLead)} ahead of ${projectName(runner)} on the current assumptions.`:"Projects are level on estimated profit after finance."}</p>
     </div>
-    <details class="disclosure"><summary>More quick-finance assumptions</summary><div class="grid2" style="margin-top:8px">
-      <div class="field"><label>Purchase / acquisition funding to test (%)</label><input type="number" min="0" max="100" step="5" value="${f.acquisitionFundingPct}" onchange="updateQuickFinanceAssumption('acquisitionFundingPct',this.value)"><div class="help">Default 65%. This is a modelling assumption, not a lender maximum or promise.</div></div>
-      <div class="field"><label>Professional fees funding to test (%)</label><input type="number" min="0" max="100" step="5" value="${f.professionalFundingPct}" onchange="updateQuickFinanceAssumption('professionalFundingPct',this.value)"></div>
-      <div class="field"><label>Sale proceeds applied to debt (%)</label><input type="number" min="0" max="100" step="5" value="${f.releasePct}" onchange="updateQuickFinanceAssumption('releasePct',this.value)"></div>
-      <div class="field"><label>Sales / disposal costs (% of sales)</label><input type="number" min="0" step="0.25" value="${f.salesCostPct}" onchange="updateQuickFinanceAssumption('salesCostPct',this.value)"></div>
-    </div></details>
-    <div class="dev-stress-row"><span class="note" style="align-self:center"><strong>Compare all projects under:</strong></span>${["Base","Build +10%","GDV -10%","Build +3 months","Sales +6 months","Combined downside"].map(x=>`<button class="dev-stress-btn ${s.name===x?"active":""}" type="button" onclick="setQuickStress('${x}')">${x}</button>`).join("")}</div>
+
+    <div class="comparison-explanation">
+      <h3>What the comparison is telling you</h3>
+      <p>${explainParts.join(" ")}</p>
+      <p class="help">This is a financial comparison, not a recommendation to proceed. Planning, experience, evidence, security, execution risk and lender appetite still matter.</p>
+    </div>
+
+    <div class="compare-winners-grid">
+      ${winnerCard("Highest profit after finance",leader,moneyExact(leader.m.profitAfterFinance),profitLead>0?`${moneyExact(profitLead)} ahead of ${projectName(runner)}`:"")}
+      ${winnerCard("Strongest margin after finance",winners.margin,pct(winners.margin.m.profitOnTotalCost))}
+      ${winners.irr?winnerCard("Highest equity IRR",winners.irr,pct(winners.irr.m.equityIrr)):""}
+      ${winners.equityEfficiency?winnerCard("Best profit / developer equity",winners.equityEfficiency,winners.equityEfficiency.m.profitEquityMultiple.toFixed(2)+"×"):""}
+      ${winnerCard("Lowest developer equity required",winners.equityRequired,moneyExact(winners.equityRequired.m.totalDeveloperEquity))}
+      ${winnerCard("Lowest estimated finance cost",winners.financeCost,moneyExact(winners.financeCost.m.totalFinanceCost))}
+      ${winnerCard("Lowest peak debt / GDV",winners.ltgdv,pct(winners.ltgdv.m.peakLtgdv))}
+      ${winnerCard("Shortest total period",winners.duration,`${winners.duration.m.totalMonths} months`)}
+    </div>
+
+    <h3>Indicative funding position</h3>
+    <div class="comparison-market-grid">${fundingPosition}</div>
+
+    <div class="comparison-table-wrap">
+      <table class="comparison-table">
+        <thead><tr>
+          <th>Project</th>
+          <th>Profit after finance</th>
+          <th>Margin after finance</th>
+          <th>Equity IRR</th>
+          <th>Developer equity</th>
+          <th>Profit / equity</th>
+          <th>Finance cost</th>
+          <th>Peak debt / GDV</th>
+          <th>Peak debt / cost</th>
+          <th>Total period</th>
+          <th>Profit before finance</th>
+        </tr></thead>
+        <tbody>${metrics.map(({p,m})=>`<tr>
+          <td><strong>${escapeHtml(p.name)}</strong><br><span class="help">${escapeHtml(quickDevTypeLabel(p.type))}</span></td>
+          <td><strong>${moneyExact(m.profitAfterFinance)}</strong></td>
+          <td>${pct(m.profitOnTotalCost)}</td>
+          <td>${Number.isFinite(m.equityIrr)?pct(m.equityIrr):"—"}</td>
+          <td>${moneyExact(m.totalDeveloperEquity)}</td>
+          <td>${Number.isFinite(m.profitEquityMultiple)?m.profitEquityMultiple.toFixed(2)+"×":"—"}</td>
+          <td>${moneyExact(m.totalFinanceCost)}</td>
+          <td>${pct(m.peakLtgdv)}</td>
+          <td>${pct(m.peakLtc)}</td>
+          <td>${m.totalMonths} months</td>
+          <td class="secondary-metric">${moneyExact(m.profitBeforeFinance)}</td>
+        </tr>`).join("")}</tbody>
+      </table>
+    </div>
+
+    <div class="callout"><strong>Quick comparison convention:</strong> costs use a generated monthly profile, lender fees follow the assumptions selected above, interest is calculated monthly on outstanding debt, and equal-value unit sales repay debt during the exit period. Profit before finance is shown as supporting context; the comparison is led by post-finance economics.</div>
   </div>`;
 }
 function updateQuickProjectCardSummary(i){
@@ -3355,13 +1516,13 @@ function renderComparisonInsights(){
  if(state.quickProjects.length<2)return "";const ms=state.quickProjects.map(quickProjectMetrics);
  const items=[["Highest profit after finance",comparisonLeader(state.quickProjects,ms,"profitAfterFinance","max")],["Lowest estimated finance cost",comparisonLeader(state.quickProjects,ms,"totalFinanceCost","min")],["Lowest peak debt / GDV",comparisonLeader(state.quickProjects,ms,"peakLtgdv","min")],["Lowest peak debt / project cost",comparisonLeader(state.quickProjects,ms,"peakLtc","min")],["Best profit / developer equity",comparisonLeader(state.quickProjects,ms,"returnOnEquity","max")],["Shortest total period",comparisonLeader(state.quickProjects,ms,"totalMonths","min")]].filter(x=>x[1]);
  const rank={mainstream:3,borderline:2,specialist:1};let bestRank=Math.max(...ms.map(m=>rank[m.market.cls]||0));const broadest=state.quickProjects.filter((p,i)=>(rank[ms[i].market.cls]||0)===bestRank).map(p=>p.name).join(", ");
- return `<div class="comparison-insights">${items.map(x=>`<div class="comparison-insight"><strong>${x[0]}</strong>${escapeHtml(x[1].name)}</div>`).join("")}<div class="comparison-insight"><strong>Broadest indicative gearing range</strong>${escapeHtml(broadest)}</div></div>`;
+ return `<div class="comparison-insights">${items.map(x=>`<div class="comparison-insight"><strong>${x[0]}</strong>${escapeHtml(x[1].name)}</div>`).join("")}<div class="comparison-insight"><strong>Indicative funding position</strong>${escapeHtml(broadest)}</div></div>`;
 }
 function renderQuickDevelopmentResults(){
  const preview=document.getElementById("modulePreview");if(!preview)return;ensureQuickProjects();const topAdd=document.querySelector("#step3 .quick-project-add");if(topAdd)topAdd.innerHTML=state.quickProjects.length<4?`<button class="btn secondary" type="button" onclick="addQuickProject()">+ Add another project</button>`:`<span class="note">Maximum four projects in Quick Development Test.</span>`;
  if(state.quickProjects.length===1){const p=state.quickProjects[0],m=quickProjectMetrics(p);const market=developmentMarketPosition(m.peakLtgdv,p.type==="ground"?"ground":"existing",m.peakLtc,m.peakDebt);let alerts="";if(m.extraEquity>0)alerts+=`<div class="dev-alert"><strong>Additional liquidity required: ${moneyExact(m.extraEquity)}</strong><div class="note">With the cash entered and ${state.quickDevFinance.certificationLag}-month works draw lag, the quick model needs extra temporary/developer equity during the project.</div></div>`;if(m.exitShortfall>1)alerts+=`<div class="dev-alert danger"><strong>Exit shortfall: ${moneyExact(m.exitShortfall)}</strong><div class="note">The model reaches the end of the sale/refinance period with development debt still outstanding.</div></div>`;
  preview.innerHTML=`<div class="section"><h3>Quick project result ${state.quickDevStress.name!=="Base"?`· ${state.quickDevStress.name}`:""}</h3><table class="result-table">
- <tr><td>Economic project cost before finance</td><td>${moneyExact(m.economicCostBeforeFinance)}</td></tr><tr><td>Completed value / GDV</td><td>${moneyExact(m.gdv)}</td></tr><tr><td>Profit before finance</td><td>${moneyExact(m.profitBeforeFinance)}</td></tr><tr><td>Project funding need before finance costs</td><td>${moneyExact(m.coreFundingNeed)}</td></tr><tr><td>Day-one lender cash advance</td><td>${moneyExact(m.dayOneAdvance)}</td></tr><tr><td>Day-one debt after capitalised fee</td><td>${moneyExact(m.dayOneDebt)}</td></tr><tr><td>Arrangement fee basis amount</td><td>${moneyExact(m.feeBasis)}</td></tr><tr><td>Arrangement fee</td><td>${moneyExact(m.arrangementFee)}</td></tr>${m.exitFee>0?`<tr><td>Exit fee basis amount</td><td>${moneyExact(m.exitFeeBasis)}</td></tr><tr><td>Exit fee</td><td>${moneyExact(m.exitFee)}</td></tr>`:""}${m.refinanceFee>0?`<tr><td>Refinance fee</td><td>${moneyExact(m.refinanceFee)}</td></tr>`:""}<tr><td>Total finance fees</td><td>${moneyExact(m.arrangementFee+m.exitFee+m.refinanceFee)}</td></tr><tr><td>Indicative gross facility requirement (peak debt)</td><td>${moneyExact(m.peakDebt)}</td></tr><tr><td>Estimated interest</td><td>${moneyExact(m.totalInterest)}</td></tr><tr><td><strong>Profit after estimated finance</strong></td><td><strong>${moneyExact(m.profitAfterFinance)}</strong></td></tr><tr><td>Profit on total cost after finance</td><td>${(m.profitOnTotalCost*100).toFixed(1)}%</td></tr><tr><td>Peak development debt</td><td>${moneyExact(m.peakDebt)}</td></tr><tr><td>Peak debt / GDV</td><td>${(m.peakLtgdv*100).toFixed(1)}%</td></tr><tr><td>Peak debt / project cost</td><td>${(m.peakLtc*100).toFixed(1)}%</td></tr><tr><td>Developer equity represented / required</td><td>${moneyExact(m.totalDeveloperEquity)}</td></tr><tr><td>Profit / developer equity</td><td>${Number.isFinite(m.returnOnEquity)?m.returnOnEquity.toFixed(2)+"×":"—"}</td></tr><tr><td>Indicative equity IRR</td><td>${Number.isFinite(m.equityIRR)?(m.equityIRR*100).toFixed(1)+"%":"—"}</td></tr><tr><td>Total works + exit period</td><td>${m.totalMonths} months</td></tr></table>${alerts}${marketPositionPanel(market.status,market.cls,market.reason,"Finance is estimated month by month from the common assumptions above. The Detailed Development Model can replace the generated profile with actual Excel/monthly data and lender-specific terms.")}<div class="toolbar"><button class="btn primary" type="button" onclick="modelQuickProjectInDetail(0)">Model this project in detail</button></div></div>`;return;}
+ <tr><td>Economic project cost before finance</td><td>${moneyExact(m.economicCostBeforeFinance)}</td></tr><tr><td>Completed value / GDV</td><td>${moneyExact(m.gdv)}</td></tr><tr><td>Profit before finance</td><td>${moneyExact(m.profitBeforeFinance)}</td></tr><tr><td>Project funding need before finance costs</td><td>${moneyExact(m.coreFundingNeed)}</td></tr><tr><td>Day-one lender cash advance</td><td>${moneyExact(m.dayOneAdvance)}</td></tr><tr><td>Day-one debt after capitalised fee</td><td>${moneyExact(m.dayOneDebt)}</td></tr><tr><td>How is the arrangement fee calculated? amount</td><td>${moneyExact(m.feeBasis)}</td></tr><tr><td>Arrangement fee</td><td>${moneyExact(m.arrangementFee)}</td></tr>${m.exitFee>0?`<tr><td>What is the exit fee calculated on? amount</td><td>${moneyExact(m.exitFeeBasis)}</td></tr><tr><td>Exit fee</td><td>${moneyExact(m.exitFee)}</td></tr>`:""}${m.refinanceFee>0?`<tr><td>Refinance fee</td><td>${moneyExact(m.refinanceFee)}</td></tr>`:""}<tr><td>Total finance fees</td><td>${moneyExact(m.arrangementFee+m.exitFee+m.refinanceFee)}</td></tr><tr><td>Indicative gross facility requirement (peak debt)</td><td>${moneyExact(m.peakDebt)}</td></tr><tr><td>Estimated interest</td><td>${moneyExact(m.totalInterest)}</td></tr><tr><td><strong>Profit after estimated finance</strong></td><td><strong>${moneyExact(m.profitAfterFinance)}</strong></td></tr><tr><td>Profit on total cost after finance</td><td>${(m.profitOnTotalCost*100).toFixed(1)}%</td></tr><tr><td>Peak development debt</td><td>${moneyExact(m.peakDebt)}</td></tr><tr><td>Peak debt / GDV</td><td>${(m.peakLtgdv*100).toFixed(1)}%</td></tr><tr><td>Peak debt / project cost</td><td>${(m.peakLtc*100).toFixed(1)}%</td></tr><tr><td>Developer equity represented / required</td><td>${moneyExact(m.totalDeveloperEquity)}</td></tr><tr><td>Profit / developer equity</td><td>${Number.isFinite(m.returnOnEquity)?m.returnOnEquity.toFixed(2)+"×":"—"}</td></tr><tr><td>Indicative equity IRR</td><td>${Number.isFinite(m.equityIRR)?(m.equityIRR*100).toFixed(1)+"%":"—"}</td></tr><tr><td>Total works + exit period</td><td>${m.totalMonths} months</td></tr></table>${alerts}${marketPositionPanel(market.status,market.cls,market.reason,"Finance is estimated month by month from the common assumptions above. The Detailed Development Model can replace the generated profile with actual Excel/monthly data and lender-specific terms.")}<div class="toolbar"><button class="btn primary" type="button" onclick="modelQuickProjectInDetail(0)">Model this project in detail</button></div></div>`;return;}
  const rows=state.quickProjects.map((p,i)=>{const m=quickProjectMetrics(p);return `<tr><td><strong>${escapeHtml(p.name)}</strong><br><span class="note">${quickDevTypeLabel(p.type)}</span></td><td>${moneyExact(m.profitBeforeFinance)}</td><td>${moneyExact(m.totalFinanceCost)}</td><td><strong>${moneyExact(m.profitAfterFinance)}</strong></td><td>${(m.profitOnTotalCost*100).toFixed(1)}%</td><td>${(m.peakLtgdv*100).toFixed(1)}%</td><td>${(m.peakLtc*100).toFixed(1)}%</td><td>${moneyExact(m.totalDeveloperEquity)}</td><td>${Number.isFinite(m.returnOnEquity)?m.returnOnEquity.toFixed(2)+"×":"—"}</td><td>${m.totalMonths} mo</td><td><span class="quick-market-badge ${m.market.cls}">${quickMarketShort(m.market)}</span></td><td><button class="mini-btn" type="button" onclick="modelQuickProjectInDetail(${i})">Model in detail</button></td></tr>`;}).join("");
  preview.innerHTML=`<div class="section"><h3>Compare your projects ${state.quickDevStress.name!=="Base"?`· ${state.quickDevStress.name}`:""}</h3><div class="note">All projects use the same finance assumptions. Time affects interest, draw timing affects liquidity, and sales reduce debt through the exit period.</div>${renderComparisonInsights()}<div class="quick-compare-scroll"><table class="quick-compare-table" style="min-width:1350px"><thead><tr><th>Project</th><th>Profit before finance</th><th>Finance cost</th><th>Profit after finance</th><th>Profit on total cost</th><th>Peak debt / GDV</th><th>Peak debt / cost</th><th>Developer equity</th><th>Profit / equity</th><th>Duration</th><th>Gearing view</th><th></th></tr></thead><tbody>${rows}</tbody></table></div><div class="callout"><strong>Quick comparison convention:</strong> costs use a generated monthly profile, the arrangement fee is capitalised on the selected fee basis, the acquisition draw follows the selected convention, interest is calculated monthly on outstanding debt, and equal-value unit sales repay debt during the exit period. The detailed model can replace every one of these assumptions.</div></div>`;
 }
@@ -3377,7 +1538,7 @@ function augmentDetailedDevelopmentUI(){
  if(state.objective!=="develop"||state.developmentEntryMode!=="advanced"||document.getElementById("devFinancePanel"))return;
  const excel=document.getElementById("excelAssistPanel");if(!excel)return;
  const panel=document.createElement("div");panel.id="devFinancePanel";panel.className="section advanced-only";panel.innerHTML=`<h3>Development finance structure</h3><div class="callout">These are modelling assumptions, not lender quotes. They drive the monthly debt, interest and liquidity calculation.</div><div class="grid3">
- <div class="field"><label>Senior interest rate (% p.a.)</label><input id="devSeniorRate" type="number" min="0" step="0.25" value="12"><div class="help">Default 12.0% p.a.</div></div><div class="field"><label>Arrangement fee (%)</label><input id="devArrangementFee" type="number" min="0" step="0.25" value="2"></div><div class="field"><label>Arrangement fee basis</label><select id="devArrangementFeeBasis"><option value="net">Pre-finance funding need</option><option value="gross">Gross facility before interest reserve</option></select></div><div class="field"><label>Exit fee (%)</label><input id="devExitFee" type="number" min="0" step="0.25" value="0"></div><div class="field"><label>Exit fee basis</label><select id="devExitFeeBasis"><option value="net">Pre-finance funding need</option><option value="gross">Gross facility before interest</option><option value="gdv">Completed value / GDV</option></select><div class="help">Keeps the exit-fee convention explicit.</div></div>
+ <div class="field"><label>Senior interest rate (% p.a.)</label><input id="devSeniorRate" type="number" min="0" step="0.25" value="12"><div class="help">Default 12.0% p.a.</div></div><div class="field"><label>Arrangement fee (%)</label><input id="devArrangementFee" type="number" min="0" step="0.25" value="2"></div><div class="field"><label>How is the arrangement fee calculated?</label><select id="devArrangementFeeBasis"><option value="net">On the project funding required</option><option value="gross">Fee included within the facility</option></select></div><div class="field"><label>Exit fee (%)</label><input id="devExitFee" type="number" min="0" step="0.25" value="0"></div><div class="field"><label>What is the exit fee calculated on?</label><select id="devExitFeeBasis"><option value="net">On the project funding required</option><option value="gross">Fee included within the facility</option><option value="gdv">Completed value / GDV</option></select><div class="help">Keeps the exit-fee convention explicit.</div></div>
  <div class="field"><label>Interest treatment</label><select id="devInterestMethod"><option value="rolled">Rolled</option><option value="serviced">Serviced monthly</option></select></div><div class="field"><label>Acquisition draw convention</label><select id="devAcquisitionDrawConvention"><option value="equity_first">Equity first</option><option value="lender_advance">Lender advance at completion</option></select></div><div class="field"><label>Works funding to test (%)</label><input id="devWorksFundingPct" type="number" min="0" max="100" step="5" value="100"></div><div class="field"><label>Professional fees funding to test (%)</label><input id="devProfessionalFundingPct" type="number" min="0" max="100" step="5" value="100"></div><div class="field"><label>Purchase / acquisition funding to test (%)</label><input id="devAcquisitionFundingPct" type="number" min="0" max="100" step="5" value="65"><div class="help">A modelling input, not a lender maximum.</div></div><div class="field"><label>Certification / reimbursement lag</label><select id="devCertificationLag"><option value="0">Same month</option><option value="1" selected>1 month in arrears</option><option value="2">2 months in arrears</option></select></div>
  <div class="field"><label>Senior facility limit to test (£)</label><input id="devSeniorLimit" type="number" min="0" step="10000" value="0"><div class="help">0 = no artificial cap. Enter a facility size to test headroom/liquidity.</div></div><div class="field"><label>Optional mezzanine limit (£)</label><input id="devMezzLimit" type="number" min="0" step="10000" value="0"></div><div class="field"><label>Mezzanine rate (% p.a.)</label><input id="devMezzRate" type="number" min="0" step="0.5" value="15"></div>
  <div class="field"><label>Sale proceeds applied to debt (%)</label><input id="devReleasePct" type="number" min="0" max="100" step="5" value="100"></div><div class="field"><label>Or minimum release per sold unit (£)</label><input id="devReleaseAmount" type="number" min="0" step="10000" value="0"><div class="help">If entered, this overrides the percentage for each sale.</div></div><div class="field"><label>Sales / disposal costs (% of sales)</label><input id="devSalesCostPct" type="number" min="0" step="0.25" value="0"></div>
@@ -3420,7 +1581,7 @@ function renderDetailedDevelopmentPreview(){
  const ledger=`<details class="disclosure"><summary>Monthly funding ledger (${r.ledger.length} periods)</summary><div class="dev-ledger-wrap"><table class="dev-ledger"><thead><tr><th>Month</th><th>Status</th><th>Costs</th><th>Senior draw</th><th>Mezz draw</th><th>Interest</th><th>Sales</th><th>Refinance</th><th>Senior repaid</th><th>Mezz repaid</th><th>Equity injection</th><th>Closing cash</th><th>Senior balance</th><th>Mezz balance</th><th>Closing debt</th></tr></thead><tbody>${r.ledger.map(x=>`<tr><td>${x.month}</td><td><span class="dev-data-badge ${x.status}">${x.status}</span></td><td>${moneyExact(x.costs)}</td><td>${moneyExact(x.drawSenior)}</td><td>${moneyExact(x.drawMezz)}</td><td>${moneyExact(x.interest)}</td><td>${moneyExact(x.sales)}</td><td>${moneyExact(x.refinance)}</td><td>${moneyExact(x.repaymentSenior||0)}</td><td>${moneyExact(x.repaymentMezz||0)}</td><td>${moneyExact(x.equityInjection)}</td><td>${moneyExact(x.closingCash)}</td><td>${moneyExact(x.closingSenior||0)}</td><td>${moneyExact(x.closingMezz||0)}</td><td>${moneyExact(x.closingDebt)}</td></tr>`).join("")}</tbody></table></div></details>`;
  const exitHtml=exitComp?`<div class="section"><h3>Development exit-finance comparison</h3><table class="result-table"><tr><td>Debt at end of works</td><td>${moneyExact(exitComp.opening)}</td></tr><tr><td>Stay on development finance: interest during exit</td><td>${moneyExact(exitComp.stay.total)}</td></tr><tr><td>Switch to tested exit finance: interest + fee</td><td>${moneyExact(exitComp.exit.total)}</td></tr><tr><td>Indicative saving / (extra cost)</td><td>${moneyExact(exitComp.stay.total-exitComp.exit.total)}</td></tr><tr><td>First sale horizon where exit finance is cheaper</td><td>${exitComp.breakEvenMonths?exitComp.breakEvenMonths+" months":"Not within 36 months on these assumptions"}</td></tr></table></div>`:"";
  p.innerHTML=`<div class="assumption-key"><span class="key user">Entered by you</span><span class="key model">Illustrative assumption</span><span class="key derived">Calculated result</span></div><div class="section"><h3>Detailed development finance view</h3><table class="result-table">
- <tr><td>Economic project cost before finance</td><td>${moneyExact(r.economicCostBeforeFinance)}</td></tr><tr><td>Completed value / GDV</td><td>${moneyExact(prep.cfg.gdv)}</td></tr><tr><td>Profit before finance</td><td>${moneyExact(r.profitBeforeFinance)}</td></tr><tr><td>Project funding need before finance costs</td><td>${moneyExact(r.coreFundingNeed)}</td></tr><tr><td>Day-one lender cash advance</td><td>${moneyExact(r.dayOneAdvance)}</td></tr><tr><td>Day-one debt after capitalised fee</td><td>${moneyExact(r.dayOneDebt)}</td></tr><tr><td>Arrangement fee basis amount</td><td>${moneyExact(r.feeBasis)}</td></tr><tr><td>Arrangement fee</td><td>${moneyExact(r.arrangementFee)}</td></tr>${r.exitFee>0?`<tr><td>Exit fee basis amount</td><td>${moneyExact(r.exitFeeBasis)}</td></tr><tr><td>Exit fee</td><td>${moneyExact(r.exitFee)}</td></tr>`:""}${r.refinanceFee>0?`<tr><td>Refinance fee</td><td>${moneyExact(r.refinanceFee)}</td></tr>`:""}<tr><td>Total finance fees</td><td>${moneyExact(r.arrangementFee+r.exitFee+r.refinanceFee)}</td></tr><tr><td>Indicative gross facility requirement (peak debt)</td><td>${moneyExact(r.peakDebt)}</td></tr><tr><td>Total interest</td><td>${moneyExact(r.totalInterest)}</td></tr><tr><td>Total finance cost</td><td>${moneyExact(r.totalFinanceCost)}</td></tr><tr><td>Sales / disposal costs</td><td>${moneyExact(r.totalSalesCosts)}</td></tr><tr><td><strong>Profit after finance</strong></td><td><strong>${moneyExact(r.profitAfterFinance)}</strong></td></tr><tr><td>Profit on total cost after finance</td><td>${(r.profitOnTotalCost*100).toFixed(1)}%</td></tr><tr><td>Peak development debt</td><td>${moneyExact(r.peakDebt)}</td></tr><tr><td>Peak debt / GDV</td><td>${Number.isFinite(r.peakLtgdv)?(r.peakLtgdv*100).toFixed(1)+"%":"—"}</td></tr><tr><td>Peak debt / project cost</td><td>${Number.isFinite(r.peakLtc)?(r.peakLtc*100).toFixed(1)+"%":"—"}</td></tr><tr><td>Total developer equity represented / required</td><td>${moneyExact(r.totalDeveloperEquity)}</td></tr><tr><td>Additional equity above opening cash</td><td>${moneyExact(r.extraEquity)}</td></tr><tr><td>Indicative developer equity IRR</td><td>${Number.isFinite(r.equityIRR)?(r.equityIRR*100).toFixed(1)+"%":"—"}</td></tr><tr><td>Closing development debt / exit shortfall</td><td>${moneyExact(r.exitShortfall)}</td></tr>${r.facilityHeadroom!==null?`<tr><td>Senior facility headroom at peak</td><td>${moneyExact(r.facilityHeadroom)}</td></tr>`:""}</table>${alerts}${marketPositionPanel(market.status,market.cls,market.reason,prep.imported?`Monthly imported/generated data is authoritative for finance timing. Actual history through month ${prep.actualThrough||0} remains fixed in scenario tests.`:"The monthly cost profile has been generated from the current assumptions. Import Excel/CSV to replace it with project-specific timing.")}</div>${exitHtml}${scenarioHtml}${ledger}`;
+ <tr><td>Economic project cost before finance</td><td>${moneyExact(r.economicCostBeforeFinance)}</td></tr><tr><td>Completed value / GDV</td><td>${moneyExact(prep.cfg.gdv)}</td></tr><tr><td>Profit before finance</td><td>${moneyExact(r.profitBeforeFinance)}</td></tr><tr><td>Project funding need before finance costs</td><td>${moneyExact(r.coreFundingNeed)}</td></tr><tr><td>Day-one lender cash advance</td><td>${moneyExact(r.dayOneAdvance)}</td></tr><tr><td>Day-one debt after capitalised fee</td><td>${moneyExact(r.dayOneDebt)}</td></tr><tr><td>How is the arrangement fee calculated? amount</td><td>${moneyExact(r.feeBasis)}</td></tr><tr><td>Arrangement fee</td><td>${moneyExact(r.arrangementFee)}</td></tr>${r.exitFee>0?`<tr><td>What is the exit fee calculated on? amount</td><td>${moneyExact(r.exitFeeBasis)}</td></tr><tr><td>Exit fee</td><td>${moneyExact(r.exitFee)}</td></tr>`:""}${r.refinanceFee>0?`<tr><td>Refinance fee</td><td>${moneyExact(r.refinanceFee)}</td></tr>`:""}<tr><td>Total finance fees</td><td>${moneyExact(r.arrangementFee+r.exitFee+r.refinanceFee)}</td></tr><tr><td>Indicative gross facility requirement (peak debt)</td><td>${moneyExact(r.peakDebt)}</td></tr><tr><td>Total interest</td><td>${moneyExact(r.totalInterest)}</td></tr><tr><td>Total finance cost</td><td>${moneyExact(r.totalFinanceCost)}</td></tr><tr><td>Sales / disposal costs</td><td>${moneyExact(r.totalSalesCosts)}</td></tr><tr><td><strong>Profit after finance</strong></td><td><strong>${moneyExact(r.profitAfterFinance)}</strong></td></tr><tr><td>Profit on total cost after finance</td><td>${(r.profitOnTotalCost*100).toFixed(1)}%</td></tr><tr><td>Peak development debt</td><td>${moneyExact(r.peakDebt)}</td></tr><tr><td>Peak debt / GDV</td><td>${Number.isFinite(r.peakLtgdv)?(r.peakLtgdv*100).toFixed(1)+"%":"—"}</td></tr><tr><td>Peak debt / project cost</td><td>${Number.isFinite(r.peakLtc)?(r.peakLtc*100).toFixed(1)+"%":"—"}</td></tr><tr><td>Total developer equity represented / required</td><td>${moneyExact(r.totalDeveloperEquity)}</td></tr><tr><td>Additional equity above opening cash</td><td>${moneyExact(r.extraEquity)}</td></tr><tr><td>Indicative developer equity IRR</td><td>${Number.isFinite(r.equityIRR)?(r.equityIRR*100).toFixed(1)+"%":"—"}</td></tr><tr><td>Closing development debt / exit shortfall</td><td>${moneyExact(r.exitShortfall)}</td></tr>${r.facilityHeadroom!==null?`<tr><td>Senior facility headroom at peak</td><td>${moneyExact(r.facilityHeadroom)}</td></tr>`:""}</table>${alerts}${marketPositionPanel(market.status,market.cls,market.reason,prep.imported?`Monthly imported/generated data is authoritative for finance timing. Actual history through month ${prep.actualThrough||0} remains fixed in scenario tests.`:"The monthly cost profile has been generated from the current assumptions. Import Excel/CSV to replace it with project-specific timing.")}</div>${exitHtml}${scenarioHtml}${ledger}`;
  updateSide();updateUsefulNow();rankAssumptions();materialityPrompt();
 }
 const _legacyUpdateModulePreviewV13=updateModulePreview;
@@ -3435,7 +1596,7 @@ function downloadDevelopmentExcelTemplate(){if(typeof XLSX==="undefined"){alert(
 function generateMonthlyPlan(){const months=Math.max(1,Math.round(val("buildMonths")||12)),works=val("buildCost"),prof=val("profFees"),cont=works*val("contingency")/100,w=devSCurveWeights(months);state.monthlyRows=[];for(let i=0;i<months;i++){state.monthlyRows.push({Month:i+1,Status:"Forecast",Category:"Core construction",Subcategory:"",Description:`Build month ${i+1}`,Forecast:works*w[i],Actual:0,Source:"Generated"});state.monthlyRows.push({Month:i+1,Status:"Forecast",Category:"Professional",Subcategory:"",Description:`Professional fees month ${i+1}`,Forecast:prof/months,Actual:0,Source:"Generated"});state.monthlyRows.push({Month:i+1,Status:"Forecast",Category:"Contingency",Subcategory:"",Description:`Contingency month ${i+1}`,Forecast:cont*w[i],Actual:0,Source:"Generated"});}renderMonthlyPreview();const use=document.getElementById("devUseImportedSchedule");if(use)use.checked=true;const s=document.getElementById("importStatus");if(s)s.textContent="Generated EAS monthly schedule is now driving finance timing. Export to Excel to amend it, then re-import if required.";updateModulePreview();}
 renderMonthlyPreview=function(){const el=document.getElementById("monthlyPreview");if(!el)return;if(!state.monthlyRows.length){el.innerHTML="";return;}const forecast=state.monthlyRows.reduce((s,r)=>s+(Number(r.Forecast)||0),0),actual=state.monthlyRows.reduce((s,r)=>s+(Number(r.Actual)||0),0);el.innerHTML=`<div class="summary-grid"><div class="summary-box"><span>Rows</span><strong>${state.monthlyRows.length}</strong></div><div class="summary-box"><span>Forecast total</span><strong>${money(forecast)}</strong></div><div class="summary-box"><span>Actual total</span><strong>${money(actual)}</strong></div></div><div class="monthly-preview"><table><thead><tr><th>Period</th><th>Status</th><th>Category</th><th>Description</th><th>Forecast</th><th>Actual</th></tr></thead><tbody>${state.monthlyRows.slice(0,120).map(r=>`<tr><td>${escapeHtml(r.Month)}</td><td>${escapeHtml(r.Status||"")}</td><td>${escapeHtml(r.Category)}</td><td>${escapeHtml(r.Description)}</td><td>${money(r.Forecast)}</td><td>${money(r.Actual)}</td></tr>`).join("")}</tbody></table></div>`;};
 function downloadDevelopmentManifest(){const prep=devDetailedPrepared();const payload={schema_version:"1.3.1",generated_at:new Date().toISOString(),project:{development_type:state.developmentType,development_family:state.developmentFamily,inputs:prep.cfg,monthly_rows:state.monthlyRows}};downloadText("EAS-Development-Model-v1.3.1.json",JSON.stringify(payload,null,2),"application/json");}
-function exportDetailedDevelopmentWorkbook(){if(typeof XLSX==="undefined"){alert("Excel support has not loaded yet. Please retry in a moment.");return;}const prep=devDetailedPrepared(),r=runDevelopmentCashflowModel(prep.cfg),sc=devScenarioRows();const inputs=[["Field","Value"],...[ ["Development type",state.developmentType],["Site position",prep.cfg.siteStatus],["Site/current value",prep.cfg.siteValue],["Historic land cost",prep.cfg.landHistoricCost],["Existing debt",prep.cfg.existingDebt],["Acquisition costs",prep.cfg.acquisitionCosts],["GDV",prep.cfg.gdv],["Opening cash",prep.cfg.openingCash],["Senior rate %",prep.cfg.annualRate],["Arrangement fee %",prep.cfg.arrangementFeePct],["Arrangement fee basis",prep.cfg.arrangementFeeBasis],["Exit fee %",prep.cfg.exitFeePct],["Exit fee basis",prep.cfg.exitFeeBasis],["Acquisition draw convention",prep.cfg.acquisitionDrawConvention],["Works funding %",prep.cfg.worksFundingPct],["Professional fees funding %",prep.cfg.professionalFundingPct],["Acquisition funding %",prep.cfg.acquisitionFundingPct],["Certification lag months",prep.cfg.certificationLag] ]];const ledger=[Object.keys(r.ledger[0]||{}),...r.ledger.map(x=>Object.values(x))];const scenarios=[["Scenario","Profit after finance","Finance cost","Peak debt","Peak debt / GDV","Exit shortfall"],...sc.map(x=>[x.name,x.r.profitAfterFinance,x.r.totalFinanceCost,x.r.peakDebt,x.r.peakLtgdv,x.r.exitShortfall])];const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(inputs),"Inputs");XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ledger),"Monthly Ledger");XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(scenarios),"Scenarios");if(state.monthlyRows.length)XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(state.monthlyRows),"Imported Cost Plan");XLSX.writeFile(wb,"EAS-Development-Model.xlsx");}
+function exportDetailedDevelopmentWorkbook(){if(typeof XLSX==="undefined"){alert("Excel support has not loaded yet. Please retry in a moment.");return;}const prep=devDetailedPrepared(),r=runDevelopmentCashflowModel(prep.cfg),sc=devScenarioRows();const inputs=[["Field","Value"],...[ ["Development type",state.developmentType],["Site position",prep.cfg.siteStatus],["Site/current value",prep.cfg.siteValue],["Historic land cost",prep.cfg.landHistoricCost],["Existing debt",prep.cfg.existingDebt],["Acquisition costs",prep.cfg.acquisitionCosts],["GDV",prep.cfg.gdv],["Opening cash",prep.cfg.openingCash],["Senior rate %",prep.cfg.annualRate],["Arrangement fee %",prep.cfg.arrangementFeePct],["How is the arrangement fee calculated?",prep.cfg.arrangementFeeBasis],["Exit fee %",prep.cfg.exitFeePct],["What is the exit fee calculated on?",prep.cfg.exitFeeBasis],["Acquisition draw convention",prep.cfg.acquisitionDrawConvention],["Works funding %",prep.cfg.worksFundingPct],["Professional fees funding %",prep.cfg.professionalFundingPct],["Acquisition funding %",prep.cfg.acquisitionFundingPct],["Certification lag months",prep.cfg.certificationLag] ]];const ledger=[Object.keys(r.ledger[0]||{}),...r.ledger.map(x=>Object.values(x))];const scenarios=[["Scenario","Profit after finance","Finance cost","Peak debt","Peak debt / GDV","Exit shortfall"],...sc.map(x=>[x.name,x.r.profitAfterFinance,x.r.totalFinanceCost,x.r.peakDebt,x.r.peakLtgdv,x.r.exitShortfall])];const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(inputs),"Inputs");XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ledger),"Monthly Ledger");XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(scenarios),"Scenarios");if(state.monthlyRows.length)XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(state.monthlyRows),"Imported Cost Plan");XLSX.writeFile(wb,"EAS-Development-Model.xlsx");}
 
 const _legacyRenderResultsV13=renderResults;
 renderResults=function(){if(state.objective==="develop"&&state.developmentEntryMode==="quick"){renderCaseValidation();const r=document.getElementById("finalResults"),preview=document.getElementById("modulePreview");let html=`<div class="callout"><strong>${currentRouteLabel()}</strong><br>This is the current quick comparison. Each project uses its own cash contribution; wider borrower/security information is deliberately deferred until a project is taken into the Detailed Development Model.</div>`+(preview?preview.innerHTML:"");if(state.assets.length){const c=commonMetrics(),sec=state.assets.filter(a=>a.security!=="never"),secEq=sec.reduce((s,a)=>s+Math.max(0,a.value-a.debt),0);html+=`<div class="section"><h3>Optional wider assets entered</h3><table class="result-table"><tr><td>Gross asset equity entered</td><td>${money(c.equity)}</td></tr><tr><td>Gross equity not excluded from security</td><td>${money(secEq)}</td></tr></table><div class="callout">This equity is context only and has not been treated as project cash or automatic borrowing capacity.</div></div>`;}r.innerHTML=html;return;}return _legacyRenderResultsV13();};
