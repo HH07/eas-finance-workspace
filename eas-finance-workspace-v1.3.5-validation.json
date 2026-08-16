@@ -1,0 +1,30 @@
+{
+  "version": "1.3.5",
+  "purpose": "Post-finance-first multi-project comparison and borrower-friendly fee language",
+  "checks": {
+    "post_finance_headline": true,
+    "profit_difference": true,
+    "comparison_explanation": true,
+    "margin_after_finance": true,
+    "equity_irr": true,
+    "developer_equity": true,
+    "profit_before_secondary": true,
+    "funding_position_per_project": true,
+    "no_old_broadest_label": true,
+    "plain_fee_language": true,
+    "version_title": true,
+    "js_syntax": true
+  },
+  "comparison_priority": [
+    "profit after finance",
+    "margin after finance",
+    "equity IRR",
+    "profit/developer equity",
+    "developer equity required",
+    "finance cost",
+    "peak debt/GDV and peak debt/project cost",
+    "total period",
+    "profit before finance as supporting context only"
+  ],
+  "javascript_syntax": "pass"
+}
