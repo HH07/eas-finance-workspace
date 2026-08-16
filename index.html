@@ -1,4 +1,4 @@
-<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>EAS Finance Workspace v1.3.6</title></head><body><!-- EAS Finance Workspace v1.3.6 - GitHub development build · Development v2 -->
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>EAS Finance Workspace v1.3.7</title></head><body><!-- EAS Finance Workspace v1.3.7 - GitHub development build · Development v2 -->
 <div id="eas-finance-workspace" class="intro-only">
 <a class="floating-experts-cta" href="https://easfinance.co.uk/contact-us/" aria-label="Discuss your finance case with the EAS Finance team">Discuss with the experts</a>
 <style>
@@ -340,6 +340,20 @@
 @media(max-width:950px){#eas-finance-workspace .compare-winners-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#eas-finance-workspace .comparison-market-grid{grid-template-columns:1fr}}
 @media(max-width:620px){#eas-finance-workspace .compare-winners-grid{grid-template-columns:1fr}#eas-finance-workspace .comparison-profit{font-size:34px}}
 
+
+#eas-finance-workspace .quick-finance-grid select{font-size:15px}
+#eas-finance-workspace .funding-position-status{font-weight:700;margin:7px 0 5px;line-height:1.35}
+#eas-finance-workspace .primary-comparison-scroll{overflow-x:visible}
+#eas-finance-workspace .comparison-primary-table{min-width:0!important;table-layout:fixed}
+#eas-finance-workspace .comparison-primary-table th,
+#eas-finance-workspace .comparison-primary-table td{white-space:normal}
+#eas-finance-workspace .comparison-supporting{margin-top:12px}
+#eas-finance-workspace .comparison-secondary-table{min-width:850px}
+@media(max-width:850px){
+  #eas-finance-workspace .primary-comparison-scroll{overflow-x:auto}
+  #eas-finance-workspace .comparison-primary-table{min-width:760px!important;table-layout:auto}
+}
+
 </style>
 
 <div class="shell">
@@ -492,7 +506,7 @@
         <div class="metric"><b id="mEquity">£0</b><span id="mEquityLabel">Gross equity</span></div>
       </div>
       <div id="sideModule" class="callout">Choose an objective and the relevant finance module will open here. Everything else stays hidden.</div>
-<div class="version">Case version: <strong id="caseVersion">Base 1 · Development v3.1 reviewed build v1.3.6</strong> · assumptions remain traceable</div>
+<div class="version">Case version: <strong id="caseVersion">Base 1 · Development v3.1 reviewed build v1.3.7</strong> · assumptions remain traceable</div>
       <div id="sideInsights" aria-live="polite"></div><div id="assumptionPriorities" aria-live="polite"></div>
     </aside>
   </div>
@@ -1286,23 +1300,45 @@ function comparisonLeader(projects,metrics,key,mode="max"){
 }
 function renderComparisonInsights(){
  if(state.quickProjects.length<2)return "";
- const ms=state.quickProjects.map(quickProjectMetrics);
- const items=[
-   ["Highest profit",comparisonLeader(state.quickProjects,ms,"profit","max")],
-   ["Best profit on cost",comparisonLeader(state.quickProjects,ms,"poc","max")],
-   ["Lowest funding / GDV",comparisonLeader(state.quickProjects,ms,"ltgdv","min")],
-   ["Lowest funding / project cost",comparisonLeader(state.quickProjects,ms,"ltc","min")],
-   ["Best simple profit / project equity",comparisonLeader(state.quickProjects,ms,"returnOnEquity","max")],
-   ["Shortest total period",comparisonLeader(state.quickProjects,ms,"duration","min")]
- ].filter(x=>x[1]);
- const fundedIndexes=ms.map((m,i)=>m.market.noFunding?-1:i).filter(i=>i>=0);
- let broadest="No external funding required";
- if(fundedIndexes.length){
-   const rank={mainstream:3,borderline:2,specialist:1};
-   const bestRank=Math.max(...fundedIndexes.map(i=>rank[ms[i].market.cls]||0));
-   broadest=state.quickProjects.filter((p,i)=>fundedIndexes.includes(i)&&(rank[ms[i].market.cls]||0)===bestRank).map(p=>p.name).join(", ");
+ const pairs=state.quickProjects.map((p,i)=>({p,m:quickProjectMetrics(p),i}));
+ const byProfit=[...pairs].sort((a,b)=>b.m.profitAfterFinance-a.m.profitAfterFinance);
+ const leader=byProfit[0],runner=byProfit[1],profitGap=leader.m.profitAfterFinance-runner.m.profitAfterFinance;
+ const by=(key,dir="max")=>[...pairs].filter(x=>Number.isFinite(x.m[key])).sort((a,b)=>dir==="max"?b.m[key]-a.m[key]:a.m[key]-b.m[key])[0];
+ const margin=by("profitOnTotalCost"),irr=by("equityIRR"),roe=by("returnOnEquity"),equity=by("totalDeveloperEquity","min"),finance=by("totalFinanceCost","min"),ltgdv=by("peakLtgdv","min"),duration=by("totalMonths","min");
+ const name=x=>escapeHtml(x.p.name||`Project ${x.i+1}`);
+
+ const explanation=[];
+ explanation.push(`${name(leader)} produces ${moneyExact(leader.m.profitAfterFinance)} estimated profit after finance${profitGap>0?`, ${moneyExact(profitGap)} more than ${name(runner)}`:""}.`);
+ const financeDiff=runner.m.totalFinanceCost-leader.m.totalFinanceCost;
+ if(financeDiff>1)explanation.push(`${name(leader)} uses ${moneyExact(financeDiff)} less estimated finance cost than ${name(runner)}.`);
+ else if(financeDiff<-1)explanation.push(`${name(runner)} uses ${moneyExact(Math.abs(financeDiff))} less estimated finance cost, so the profit lead is not simply a cheaper-funding result.`);
+ if(leader.m.totalMonths!==runner.m.totalMonths){
+   const fast=leader.m.totalMonths<runner.m.totalMonths?leader:runner,slow=fast===leader?runner:leader;
+   explanation.push(`${name(fast)} has a ${slow.m.totalMonths-fast.m.totalMonths}-month shorter works-and-exit period.`);
  }
- return `<div class="comparison-insights">${items.map(x=>`<div class="comparison-insight"><strong>${x[0]}</strong>${escapeHtml(x[1].name)}</div>`).join("")}<div class="comparison-insight"><strong>Broadest indicative gearing range</strong>${escapeHtml(broadest)}</div></div>`;
+ if(leader.m.peakLtgdv<runner.m.peakLtgdv)explanation.push(`${name(leader)} also carries lower peak debt relative to GDV.`);
+
+ const card=(label,x,value,sub="")=>x?`<div class="compare-winner"><div class="compare-winner-label">${label}</div><strong>${name(x)}</strong><div class="compare-winner-value">${value}</div>${sub?`<div class="note">${sub}</div>`:""}</div>`:"";
+
+ const funding=pairs.map(x=>`<div class="comparison-market ${x.m.market.cls}">
+   <strong>${name(x)}</strong>
+   <div class="funding-position-status">${escapeHtml(x.m.market.status)}</div>
+   <div class="note">Peak debt / GDV ${(x.m.peakLtgdv*100).toFixed(1)}% · Peak debt / project cost ${(x.m.peakLtc*100).toFixed(1)}%</div>
+ </div>`).join("");
+
+ return `<div class="comparison-headline"><div class="eyebrow">Current leader after finance</div><h3>${name(leader)}</h3><div class="comparison-profit">${moneyExact(leader.m.profitAfterFinance)}</div><p>${profitGap>0?`${moneyExact(profitGap)} ahead of ${name(runner)} on the current assumptions.`:"Projects are level on estimated profit after finance."}</p></div>
+ <div class="comparison-explanation"><h3>What the comparison is telling you</h3><p>${explanation.join(" ")}</p><div class="note">This is a financial comparison, not a recommendation to proceed. Planning, experience, evidence, security, execution risk and lender appetite still matter.</div></div>
+ <div class="compare-winners-grid">
+   ${card("Highest profit after finance",leader,moneyExact(leader.m.profitAfterFinance),profitGap>0?`${moneyExact(profitGap)} ahead of ${name(runner)}`:"")}
+   ${card("Strongest margin after finance",margin,(margin.m.profitOnTotalCost*100).toFixed(1)+"%")}
+   ${card("Highest equity IRR",irr,Number.isFinite(irr?.m.equityIRR)?(irr.m.equityIRR*100).toFixed(1)+"%":"—")}
+   ${card("Best profit / developer equity",roe,Number.isFinite(roe?.m.returnOnEquity)?roe.m.returnOnEquity.toFixed(2)+"×":"—")}
+   ${card("Lowest developer equity required",equity,moneyExact(equity.m.totalDeveloperEquity))}
+   ${card("Lowest estimated finance cost",finance,moneyExact(finance.m.totalFinanceCost))}
+   ${card("Lowest peak debt / GDV",ltgdv,(ltgdv.m.peakLtgdv*100).toFixed(1)+"%")}
+   ${card("Shortest total period",duration,duration.m.totalMonths+" months")}
+ </div>
+ <h3>Indicative funding position</h3><div class="comparison-market-grid">${funding}</div>`;
 }
 function renderQuickDevelopmentResults(){
  const preview=document.getElementById("modulePreview");if(!preview)return;
@@ -1328,20 +1364,49 @@ function renderQuickDevelopmentResults(){
    <div class="toolbar"><button class="btn primary" type="button" onclick="modelQuickProjectInDetail(0)">Model this project in detail</button></div></div>`;
    return;
  }
- const rows=state.quickProjects.map((p,i)=>{const m=quickProjectMetrics(p);return `<tr>
+ const primaryRows=state.quickProjects.map((p,i)=>{const m=quickProjectMetrics(p);return `<tr>
    <td><strong>${escapeHtml(p.name)}</strong><br><span class="note">${quickDevTypeLabel(p.type)}</span></td>
-   <td>${moneyExact(m.profit)}</td><td>${(m.poc*100).toFixed(1)}%</td>
-   <td>${Number.isFinite(m.ltgdv)?(m.ltgdv*100).toFixed(1)+"%":"—"}</td>
-   <td>${Number.isFinite(m.ltc)?(m.ltc*100).toFixed(1)+"%":"—"}</td>
-   <td>${moneyExact(m.cash)}</td><td>${moneyExact(m.projectEquity)}</td>
-   <td>${Number.isFinite(m.returnOnEquity)?m.returnOnEquity.toFixed(2)+"×":"—"}</td><td>${m.duration} mo</td>
-   <td><span class="quick-market-badge ${m.market.cls}">${quickMarketShort(m.market)}</span></td>
+   <td><strong>${moneyExact(m.profitAfterFinance)}</strong></td>
+   <td>${(m.profitOnTotalCost*100).toFixed(1)}%</td>
+   <td>${Number.isFinite(m.equityIRR)?(m.equityIRR*100).toFixed(1)+"%":"—"}</td>
+   <td>${moneyExact(m.totalDeveloperEquity)}</td>
+   <td>${m.totalMonths} mo</td>
+ </tr>`;}).join("");
+
+ const secondaryRows=state.quickProjects.map((p,i)=>{const m=quickProjectMetrics(p);return `<tr>
+   <td><strong>${escapeHtml(p.name)}</strong></td>
+   <td>${Number.isFinite(m.returnOnEquity)?m.returnOnEquity.toFixed(2)+"×":"—"}</td>
+   <td>${moneyExact(m.totalFinanceCost)}</td>
+   <td>${(m.peakLtgdv*100).toFixed(1)}%</td>
+   <td>${(m.peakLtc*100).toFixed(1)}%</td>
+   <td class="secondary-metric">${moneyExact(m.profitBeforeFinance)}</td>
    <td><button class="mini-btn" type="button" onclick="modelQuickProjectInDetail(${i})">Model in detail</button></td>
-  </tr>`;}).join("");
- preview.innerHTML=`<div class="section"><h3>Compare your projects</h3><div class="note">No single score is imposed. Compare margin, project equity, headline gearing, time and indicative funding range separately.</div>
-  ${renderComparisonInsights()}
-  <div class="quick-compare-scroll"><table class="quick-compare-table"><thead><tr><th>Project</th><th>Profit</th><th>Profit on cost</th><th>Funding / GDV</th><th>Funding / cost</th><th>New cash</th><th>Project equity</th><th>Profit / equity</th><th>Duration</th><th>Gearing view</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
-  <div class="callout"><strong>Comparison note:</strong> project equity includes existing site equity where relevant. Profit / equity is a simple first-pass capital-efficiency measure, not an IRR. Detailed finance costs and monthly timing can change the relative picture.</div></div>`;
+ </tr>`;}).join("");
+
+ preview.innerHTML=`<div class="section">
+   <h3>Compare your projects ${state.quickDevStress.name!=="Base"?`· ${state.quickDevStress.name}`:""}</h3>
+   <div class="note">The primary comparison is profit after estimated finance. The measures underneath explain margin, capital efficiency, funding pressure and time rather than producing a single opaque score.</div>
+   ${renderComparisonInsights()}
+
+   <div class="quick-compare-scroll primary-comparison-scroll">
+     <table class="quick-compare-table comparison-primary-table">
+       <thead><tr><th>Project</th><th>Profit after finance</th><th>Margin after finance</th><th>Equity IRR</th><th>Developer equity</th><th>Duration</th></tr></thead>
+       <tbody>${primaryRows}</tbody>
+     </table>
+   </div>
+
+   <details class="disclosure comparison-supporting">
+     <summary>Show funding and supporting measures</summary>
+     <div class="quick-compare-scroll">
+       <table class="quick-compare-table comparison-secondary-table">
+         <thead><tr><th>Project</th><th>Profit / equity</th><th>Finance cost</th><th>Peak debt / GDV</th><th>Peak debt / cost</th><th>Profit before finance</th><th></th></tr></thead>
+         <tbody>${secondaryRows}</tbody>
+       </table>
+     </div>
+   </details>
+
+   <div class="callout"><strong>Quick comparison convention:</strong> costs use a generated monthly profile, lender fees follow the assumptions selected above, the acquisition draw follows the selected convention, interest is calculated monthly on outstanding debt, and equal-value unit sales repay debt during the exit period. Profit before finance is supporting context; the comparison is led by post-finance economics.</div>
+ </div>`;
 }
 function renderQuickDevelopmentWorkspace(el){
  ensureQuickProjects();
@@ -3299,35 +3364,53 @@ function setQuickStress(name){
   state.quickDevStress=map[name]||map.Base;renderQuickProjectCards();renderQuickDevelopmentResults();updateSide();updateUsefulNow();
 }
 function updateQuickFinanceAssumption(field,value){
-  if(["interestMethod","arrangementFeeBasis","acquisitionDrawConvention"].includes(field)) state.quickDevFinance[field]=value;
+  if(["interestMethod","arrangementFeeBasis","exitFeeBasis","acquisitionDrawConvention"].includes(field)) state.quickDevFinance[field]=value;
   else state.quickDevFinance[field]=Number(value)||0;
+  if(field==="exitFeePct"){
+    const basisField=document.getElementById("quickExitFeeBasisField");
+    if(basisField)basisField.style.display=Number(value)>0?"":"none";
+  }
   renderQuickProjectCards();renderQuickDevelopmentResults();updateSide();updateUsefulNow();
 }
 function quickFinancePanel(){
   const f=state.quickDevFinance,s=state.quickDevStress;
   return `<div class="dev-finance-assumptions"><div class="eyebrow">Illustrative assumptions · apply to every project</div><h3>Quick finance assumptions</h3>
     <div class="note">Time now affects the answer. The quick model generates a monthly construction profile, calculates debt and interest month by month, and uses sales to repay the facility. Detailed modelling can replace these assumptions with the real cost plan and lender structure.</div>
-    <div class="grid3">
+
+    <div class="grid2 quick-finance-grid">
       <div class="field"><label>Interest rate to test (% p.a.)</label><input type="number" min="0" step="0.25" value="${f.annualRate}" onchange="updateQuickFinanceAssumption('annualRate',this.value)"><div class="help">Default 12.0% p.a. (${(f.annualRate/12).toFixed(2)}% per month).</div></div>
+
       <div class="field"><label>Arrangement fee (%)</label><input type="number" min="0" step="0.25" value="${f.arrangementFeePct}" onchange="updateQuickFinanceAssumption('arrangementFeePct',this.value)"><div class="help">Capitalised for this quick comparison.</div></div>
-      <div class="field"><label>How is the arrangement fee calculated?</label><select onchange="updateQuickFinanceAssumption('arrangementFeeBasis',this.value)"><option value="net" ${f.arrangementFeeBasis==="net"?"selected":""}>On the project funding required</option><option value="gross" ${f.arrangementFeeBasis==="gross"?"selected":""}>Fee included within the facility</option></select><div class="help">Makes the fee basis explicit rather than hiding it in the calculation.</div></div>
-      <div class="field"><label>Exit fee (%)</label><input type="number" min="0" step="0.25" value="${f.exitFeePct}" onchange="updateQuickFinanceAssumption('exitFeePct',this.value)"></div>
-      <div class="field"><label>What is the exit fee calculated on?</label><select onchange="updateQuickFinanceAssumption('exitFeeBasis',this.value)">
+
+      <div class="field"><label>How is the arrangement fee calculated?</label><select onchange="updateQuickFinanceAssumption('arrangementFeeBasis',this.value)">
+        <option value="net" ${f.arrangementFeeBasis==="net"?"selected":""}>On the project funding required</option>
+        <option value="gross" ${f.arrangementFeeBasis==="gross"?"selected":""}>Fee included within the facility</option>
+      </select><div class="help">Choose whether the fee is charged on the project funding required or added to the facility and financed.</div></div>
+
+      <div class="field"><label>Exit fee (%)</label><input type="number" min="0" step="0.25" value="${f.exitFeePct}" onchange="updateQuickFinanceAssumption('exitFeePct',this.value)"><div class="help">${Number(f.exitFeePct)>0?"The calculation basis is shown because an exit fee is being tested.":"Leave at 0% if no exit fee is being tested."}</div></div>
+
+      <div class="field" id="quickExitFeeBasisField" style="${Number(f.exitFeePct)>0?"":"display:none"}"><label>What is the exit fee calculated on?</label><select onchange="updateQuickFinanceAssumption('exitFeeBasis',this.value)">
         <option value="net" ${f.exitFeeBasis==="net"?"selected":""}>On the project funding required</option>
         <option value="gross" ${f.exitFeeBasis==="gross"?"selected":""}>Fee included within the facility</option>
         <option value="gdv" ${f.exitFeeBasis==="gdv"?"selected":""}>Completed value / GDV</option>
-      </select><div class="help">Exit fees vary by lender. Choose the basis you want to test rather than assuming it matches the arrangement fee.</div></div>
+      </select><div class="help">Exit fees vary by lender, so the calculation basis remains explicit whenever a fee is entered.</div></div>
+
       <div class="field"><label>Interest treatment</label><select onchange="updateQuickFinanceAssumption('interestMethod',this.value)"><option value="rolled" ${f.interestMethod==="rolled"?"selected":""}>Rolled</option><option value="serviced" ${f.interestMethod==="serviced"?"selected":""}>Serviced monthly</option></select></div>
+
       <div class="field"><label>Acquisition draw convention</label><select onchange="updateQuickFinanceAssumption('acquisitionDrawConvention',this.value)"><option value="equity_first" ${f.acquisitionDrawConvention==="equity_first"?"selected":""}>Equity first</option><option value="lender_advance" ${f.acquisitionDrawConvention==="lender_advance"?"selected":""}>Lender advance at completion</option></select><div class="help">Equity first uses committed cash before the acquisition facility. Lender advance draws up to the acquisition percentage at completion and preserves more cash for works/liquidity.</div></div>
+
       <div class="field"><label>Works funding to test (%)</label><input type="number" min="0" max="100" step="5" value="${f.worksFundingPct}" onchange="updateQuickFinanceAssumption('worksFundingPct',this.value)"><div class="help">100% is allowed as a modelling assumption; this is not a lender promise.</div></div>
+
       <div class="field"><label>Works draw timing</label><select onchange="updateQuickFinanceAssumption('certificationLag',this.value)"><option value="0" ${f.certificationLag===0?"selected":""}>Same month</option><option value="1" ${f.certificationLag===1?"selected":""}>1 month in arrears</option><option value="2" ${f.certificationLag===2?"selected":""}>2 months in arrears</option></select></div>
     </div>
+
     <details class="disclosure"><summary>More quick-finance assumptions</summary><div class="grid2" style="margin-top:8px">
       <div class="field"><label>Purchase / acquisition funding to test (%)</label><input type="number" min="0" max="100" step="5" value="${f.acquisitionFundingPct}" onchange="updateQuickFinanceAssumption('acquisitionFundingPct',this.value)"><div class="help">Default 65%. This is a modelling assumption, not a lender maximum or promise.</div></div>
       <div class="field"><label>Professional fees funding to test (%)</label><input type="number" min="0" max="100" step="5" value="${f.professionalFundingPct}" onchange="updateQuickFinanceAssumption('professionalFundingPct',this.value)"></div>
       <div class="field"><label>Sale proceeds applied to debt (%)</label><input type="number" min="0" max="100" step="5" value="${f.releasePct}" onchange="updateQuickFinanceAssumption('releasePct',this.value)"></div>
       <div class="field"><label>Sales / disposal costs (% of sales)</label><input type="number" min="0" step="0.25" value="${f.salesCostPct}" onchange="updateQuickFinanceAssumption('salesCostPct',this.value)"></div>
     </div></details>
+
     <div class="dev-stress-row"><span class="note" style="align-self:center"><strong>Compare all projects under:</strong></span>${["Base","Build +10%","GDV -10%","Build +3 months","Sales +6 months","Combined downside"].map(x=>`<button class="dev-stress-btn ${s.name===x?"active":""}" type="button" onclick="setQuickStress('${x}')">${x}</button>`).join("")}</div>
   </div>`;
 }
