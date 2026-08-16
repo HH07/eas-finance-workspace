@@ -476,7 +476,7 @@
         <div class="metric"><b id="mEquity">£0</b><span id="mEquityLabel">Gross equity</span></div>
       </div>
       <div id="sideModule" class="callout">Choose an objective and the relevant finance module will open here. Everything else stays hidden.</div>
-<div class="version">Case version: <strong id="caseVersion">Base 1 · Development v3.1 reviewed build v1.3.2</strong> · assumptions remain traceable</div>
+<div class="version">Case version: <strong id="caseVersion">Base 1 · Development v3.1 reviewed build v1.3.3</strong> · assumptions remain traceable</div>
       <div id="sideInsights" aria-live="polite"></div><div id="assumptionPriorities" aria-live="polite"></div>
     </aside>
   </div>
@@ -3263,7 +3263,8 @@ function quickProjectMetricsV3(p,stress=state.quickDevStress){
   const finance=devQuickFinanceCfg();
   const cfg={siteStatus:p.siteStatus,siteValue:p.siteValue,existingDebt:p.existingDebt,works,profFees:p.fees,contingencyBudget:works*(Number(p.contingency)||0)/100,gdv,
     buildMonths,exitMonths,units:p.units,retainUnits:0,openingCash:p.cash,annualRate:finance.annualRate,arrangementFeePct:finance.arrangementFeePct,exitFeePct:finance.exitFeePct,
-    interestMethod:finance.interestMethod,worksFundingPct:finance.worksFundingPct,professionalFundingPct:finance.professionalFundingPct,acquisitionFundingPct:finance.acquisitionFundingPct,certificationLag:finance.certificationLag,releasePct:finance.releasePct,salesCostPct:finance.salesCostPct,profile:quickDevTypeProfile(p.type)};
+    interestMethod:finance.interestMethod,arrangementFeeBasis:finance.arrangementFeeBasis,acquisitionDrawConvention:finance.acquisitionDrawConvention,
+    worksFundingPct:finance.worksFundingPct,professionalFundingPct:finance.professionalFundingPct,acquisitionFundingPct:finance.acquisitionFundingPct,certificationLag:finance.certificationLag,releasePct:finance.releasePct,salesCostPct:finance.salesCostPct,profile:quickDevTypeProfile(p.type)};
   const model=runDevelopmentCashflowModel(cfg);
   const market=developmentMarketPosition(model.peakLtgdv,quickDevTypeFamily(p.type),model.peakLtc,model.peakDebt);
   return {...model,market,site:Math.max(0,Number(p.siteValue)||0),gdv,works,duration:model.totalMonths,cash:Number(p.cash)||0,economicCost:model.economicCostBeforeFinance,profit:model.profitAfterFinance,poc:model.profitOnTotalCost,ltgdv:model.peakLtgdv,ltc:model.peakLtc,projectEquity:model.totalDeveloperEquity};
