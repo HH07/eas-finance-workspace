@@ -1,13 +1,4 @@
-<!doctype html>
-<html lang="en-GB">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
-  <title>EAS Finance Workspace - Development Test</title>
-</head>
-<body>
-<!-- EAS Finance Workspace v1.2.6 - WordPress Custom HTML version · Development v2 -->
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>EAS Finance Workspace v1.3.1</title></head><body><!-- EAS Finance Workspace v1.3.1 - WordPress Custom HTML version · Development v2 -->
 <div id="eas-finance-workspace" class="intro-only">
 <a class="floating-experts-cta" href="https://easfinance.co.uk/contact-us/" aria-label="Discuss your finance case with the EAS Finance team">Discuss with the experts</a>
 <style>
@@ -302,6 +293,31 @@
 #eas-finance-workspace .promoted-banner strong{display:block}
 #eas-finance-workspace .promoted-banner .note{margin-top:2px}
 @media(max-width:900px){#eas-finance-workspace .quick-projects{grid-template-columns:1fr}}
+
+#eas-finance-workspace .dev-finance-assumptions{border:1px solid var(--gold);background:#fffaf0;border-radius:12px;padding:16px;margin:16px 0}
+#eas-finance-workspace .dev-finance-assumptions h3{margin-bottom:6px}
+#eas-finance-workspace .dev-finance-summary{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+#eas-finance-workspace .dev-assumption-pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 9px;font-size:12px;font-weight:700}
+#eas-finance-workspace .dev-stress-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+#eas-finance-workspace .dev-stress-btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 10px;cursor:pointer;font-size:12px;font-weight:700;color:var(--navy)}
+#eas-finance-workspace .dev-stress-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+#eas-finance-workspace .dev-ledger-wrap{max-height:390px;overflow:auto;border:1px solid var(--line);border-radius:10px;background:#fff;margin-top:12px}
+#eas-finance-workspace .dev-ledger{width:100%;min-width:980px;border-collapse:collapse;font-size:12px}
+#eas-finance-workspace .dev-ledger th,#eas-finance-workspace .dev-ledger td{padding:7px 8px;border-bottom:1px solid #eee8db;text-align:right;white-space:nowrap}
+#eas-finance-workspace .dev-ledger th{position:sticky;top:0;background:#f1ebdd;z-index:2}
+#eas-finance-workspace .dev-ledger th:first-child,#eas-finance-workspace .dev-ledger td:first-child{text-align:left}
+#eas-finance-workspace .dev-scenario-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+#eas-finance-workspace .dev-scenario-table th,#eas-finance-workspace .dev-scenario-table td{padding:9px;border-bottom:1px solid var(--line);text-align:right}
+#eas-finance-workspace .dev-scenario-table th:first-child,#eas-finance-workspace .dev-scenario-table td:first-child{text-align:left}
+#eas-finance-workspace .dev-alert{border-left:4px solid var(--warn);background:#fffaf1;padding:12px 14px;border-radius:0 8px 8px 0;margin:12px 0}
+#eas-finance-workspace .dev-alert.danger{border-left-color:var(--danger);background:#fff7f5}
+#eas-finance-workspace .dev-data-badge{display:inline-block;border-radius:999px;padding:4px 7px;font-size:11px;font-weight:700;background:#eef2f5;margin-left:5px}
+#eas-finance-workspace .dev-data-badge.actual{background:#edf6f0;color:var(--good)}
+#eas-finance-workspace .dev-data-badge.forecast{background:#fff4df;color:var(--warn)}
+#eas-finance-workspace .dev-xlsx-note{font-size:12px;color:var(--muted);margin-top:7px}
+#eas-finance-workspace .quick-project-mini{grid-template-columns:repeat(4,1fr)}
+@media(max-width:700px){#eas-finance-workspace .quick-project-mini{grid-template-columns:1fr 1fr}}
+
 @media(max-width:650px){
  #eas-finance-workspace .quick-dev-head,#eas-finance-workspace .promoted-banner{flex-direction:column}
  #eas-finance-workspace .quick-project-mini{grid-template-columns:1fr 1fr}
@@ -468,6 +484,7 @@
 
 </div>
 
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script>
 
 const objectives = [
@@ -1184,7 +1201,13 @@ function renderQuickProjectCards(){
     </div>
     <div class="grid2">
       <div class="field"><label>Project name</label><input data-qfield="name" data-index="${i}" value="${escapeHtml(p.name)}"></div>
-      <div class="field"><label>Project type</label><select data-qfield="type" data-index="${i}"><option value="ground" ${p.type==="ground"?"selected":""}>Ground-up</option><option value="existing" ${p.type==="existing"?"selected":""}>Conversion / refurbishment</option></select></div>
+      <div class="field"><label>Project type</label><select data-qfield="type" data-index="${i}">
+    <option value="ground" ${p.type==="ground"?"selected":""}>Ground-up</option>
+    <option value="conversion" ${p.type==="conversion"?"selected":""}>Conversion</option>
+    <option value="heavy_refurb" ${p.type==="heavy_refurb"?"selected":""}>Heavy refurbishment</option>
+    <option value="light_refurb" ${p.type==="light_refurb"?"selected":""}>Light refurbishment</option>
+    <option value="part_complete" ${p.type==="part_complete"?"selected":""}>Part-complete</option>
+  </select></div>
       <div class="field"><label>Site / property position</label><select data-qfield="siteStatus" data-index="${i}"><option value="buying" ${p.siteStatus==="buying"?"selected":""}>Being purchased</option><option value="owned" ${p.siteStatus==="owned"?"selected":""}>Already owned</option></select></div>
       <div class="field"><label>${p.siteStatus==="buying"?"Purchase price":"Current site / property value"}</label><input type="number" min="0" step="10000" data-qfield="siteValue" data-index="${i}" value="${p.siteValue}">${p.siteStatus==="owned"?`<div class="help">Used as the economic land/property contribution for this comparison. Existing debt is shown separately.</div>`:""}</div>
       <div class="field ${debtHidden}" data-debt-field="${i}"><label>Existing debt on site / property</label><input type="number" min="0" step="10000" data-qfield="existingDebt" data-index="${i}" value="${p.existingDebt}"></div>
@@ -1290,7 +1313,7 @@ function renderQuickDevelopmentResults(){
    return;
  }
  const rows=state.quickProjects.map((p,i)=>{const m=quickProjectMetrics(p);return `<tr>
-   <td><strong>${escapeHtml(p.name)}</strong><br><span class="note">${p.type==="ground"?"Ground-up":"Conversion / refurbishment"}</span></td>
+   <td><strong>${escapeHtml(p.name)}</strong><br><span class="note">${quickDevTypeLabel(p.type)}</span></td>
    <td>${moneyExact(m.profit)}</td><td>${(m.poc*100).toFixed(1)}%</td>
    <td>${Number.isFinite(m.ltgdv)?(m.ltgdv*100).toFixed(1)+"%":"—"}</td>
    <td>${Number.isFinite(m.ltc)?(m.ltc*100).toFixed(1)+"%":"—"}</td>
@@ -1340,8 +1363,8 @@ function applyDevelopmentSeed(){
 function modelQuickProjectInDetail(index){
  const p=state.quickProjects[index];if(!p)return;
  state.developmentSeed={...p};state.developmentSeedApplied=false;
- state.developmentFamily=p.type==="ground"?"ground":"existing";
- state.developmentType=p.type==="ground"?"ground_up":"conversion";
+ state.developmentFamily=quickDevTypeFamily(p.type);
+ state.developmentType=p.type==="ground"?"ground_up":p.type;
  state.developmentEntryMode="advanced";
  const cash=document.getElementById("cashAvailable");if(cash)cash.value=p.cash;
  const quick=document.getElementById("devQuickChoice"),advanced=document.getElementById("devAdvancedChoice");
@@ -1377,7 +1400,8 @@ function renderSpecialist(){
       </select>
     </div>
     <div class="grid2">
-     <div class="field"><label>Current site / property value</label><input id="siteValue" type="number" value="500000" step="10000" min="0"></div>
+     <div class="field"><label>Current site / property value</label><input id="siteValue" type="number" value="500000" step="10000" min="0"><div class="help">For an already-owned site, this is the economic land/property contribution used in the appraisal.</div></div>
+     <div class="field" id="landHistoricCostField"><label>Historic amount originally paid (context only)</label><input id="landHistoricCost" type="number" value="0" step="10000" min="0"><div class="help">Kept separate from current value and current cash requirement.</div></div>
      <div class="field" id="siteDebtField"><label>Existing debt on site</label><input id="siteDebt" type="number" value="0" step="10000" min="0"></div>
      <div class="field hidden" id="sitePurchasePriceField"><label>Site / property purchase price</label><input id="sitePurchasePrice" type="number" value="500000" step="10000" min="0"></div>
      <div class="field hidden" id="siteAcquisitionCostsField"><label>Acquisition costs being funded</label><input id="siteAcquisitionCosts" type="number" value="0" step="1000" min="0"></div>
@@ -1397,22 +1421,28 @@ function renderSpecialist(){
    </div>
    <div class="section advanced-only">
     <h3>Test an unexpected cost</h3>
-    <div class="jump-row"><div class="field"><label>Type</label><select id="jumpType"></select></div>
-    <div class="field"><label>Amount</label><input id="jumpCost" type="number" value="0" step="5000"></div></div>
-    <div class="help">A specific unexpected-cost test is kept separate from ordinary cost inflation and contingency.</div>
+    <div class="grid2"><div class="field"><label>Type</label><select id="jumpType"></select></div>
+    <div class="field"><label>Amount</label><input id="jumpCost" type="number" value="0" step="5000"></div>
+    <div class="field"><label>Month of cost</label><input id="jumpMonth" type="number" value="7" min="1" max="60" step="1"></div>
+    <div class="field"><label>Use contingency first?</label><select id="jumpUseContingency"><option value="yes" selected>Yes</option><option value="no">No</option></select></div></div>
+    <div class="help">If contingency is used first, only the amount above the budgeted contingency increases total project cost.</div>
    </div>
    <div class="section advanced-only hidden" id="excelAssistPanel">
     <h3>Monthly cost plan / Excel-assisted mode</h3>
-    <div class="callout">Use detailed monthly data when timing matters. You can export a standard CSV, amend it in Excel, and re-import it. Existing CSV files can also be mapped even when their headings differ.</div>
+    <div class="callout">The monthly schedule drives the finance model. Import an Excel or CSV cost plan, or generate an EAS schedule from the current assumptions. Actual rows remain fixed when scenarios are tested.</div>
     <div class="import-box">
       <strong>Monthly development data</strong>
-      <div class="note">Standard fields: Month, Category, Description, Forecast, Actual. CSV is used in this browser prototype; the production wrapper can also accept Excel workbooks.</div>
+      <div class="note">Supported fields: Period, Status, Category, Subcategory, Description, Forecast, Actual and Source. Existing headings are mapped before use.</div>
       <div class="import-actions">
+        <button class="btn secondary" type="button" onclick="downloadDevelopmentExcelTemplate()">Download Excel template</button>
         <button class="btn secondary" type="button" onclick="downloadDevelopmentTemplate()">Download CSV template</button>
-        <label class="btn secondary" for="developmentCsv">Import CSV</label>
-        <input class="file-input" id="developmentCsv" type="file" accept=".csv,text/csv">
-        <button class="btn secondary" type="button" onclick="generateMonthlyPlan()">Generate from current assumptions</button>
+        <label class="btn secondary" for="developmentCsv">Import Excel / CSV</label>
+        <input class="file-input" id="developmentCsv" type="file" accept=".csv,.xlsx,.xls,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
+        <button class="btn secondary" type="button" onclick="generateMonthlyPlan()">Generate EAS monthly plan</button>
+        <button class="btn secondary" type="button" onclick="exportDetailedDevelopmentWorkbook()">Export current model to Excel</button>
+        <button class="btn secondary" type="button" onclick="downloadDevelopmentManifest()">Download model data (JSON)</button>
       </div>
+      <div class="dev-xlsx-note">Excel is processed in the browser. Imported monthly data is used for finance timing once the column mapping is confirmed.</div>
       <div id="importStatus" class="note" style="margin-top:8px"></div>
       <div id="mappingArea"></div>
       <div id="monthlyPreview"></div>
@@ -1560,7 +1590,7 @@ function renderSpecialist(){
  if(state.objective==="develop"){
    const panel=document.getElementById("excelAssistPanel");
    const file=document.getElementById("developmentCsv");
-   if(file) file.addEventListener("change",e=>{if(e.target.files&&e.target.files[0])handleCsvFile(e.target.files[0])});
+   if(file) file.addEventListener("change",e=>{if(e.target.files&&e.target.files[0])handleDevelopmentFile(e.target.files[0])});
    if(state.developmentEntryMode==="advanced"){
      document.getElementById('eas-finance-workspace').classList.add("advanced");
      if(panel) panel.classList.remove("hidden");
@@ -2318,7 +2348,7 @@ function buildCaseSummaryText(){
       const m=quickProjectMetrics(p);
       lines.push("");
       lines.push(`${(p.name||`Project ${i+1}`).toUpperCase()}`);
-      add("Project type",p.type==="ground"?"Ground-up":"Conversion / refurbishment");
+      add("Project type",quickDevTypeLabel(p.type));
       add("Site/property position",p.siteStatus==="buying"?"Being purchased":"Already owned");
       add(p.siteStatus==="buying"?"Purchase price":"Current site/property value",moneyExact(p.siteValue));
       if(p.siteStatus==="owned") add("Existing debt",moneyExact(p.existingDebt));
@@ -2766,6 +2796,620 @@ function prepareCaseSummaryDownload(event){
   }
 }
 
+function devNumber(x,d=0){const n=Number(x);return Number.isFinite(n)?n:d;}
+function devClamp(x,a,b){return Math.min(b,Math.max(a,x));}
+function devSCurveWeights(months){
+  months=Math.max(1,Math.round(months));
+  const w=[];
+  for(let m=1;m<=months;m++){
+    const x=(m-.5)/months;
+    w.push(.35+Math.sin(Math.PI*x));
+  }
+  const s=w.reduce((a,b)=>a+b,0)||1;
+  return w.map(x=>x/s);
+}
+function devEvenWeights(months){months=Math.max(1,Math.round(months));return Array(months).fill(1/months);}
+function devMonthlyIRR(cashflows){
+  if(!cashflows.some(x=>x<0)||!cashflows.some(x=>x>0))return null;
+  const npv=r=>cashflows.reduce((s,x,i)=>s+x/Math.pow(1+r,i),0);
+  let lo=-.999,hi=10, flo=npv(lo),fhi=npv(hi);
+  if(!Number.isFinite(flo)||!Number.isFinite(fhi)||flo*fhi>0)return null;
+  for(let i=0;i<180;i++){
+    const mid=(lo+hi)/2,fm=npv(mid);
+    if(Math.abs(fm)<1e-7){lo=hi=mid;break;}
+    if(flo*fm<=0){hi=mid;fhi=fm}else{lo=mid;flo=fm}
+  }
+  const r=(lo+hi)/2;
+  return Math.pow(1+r,12)-1;
+}
+function devSaleEvents(cfg){
+  const sellingPct=Math.max(0,devNumber(cfg.salesCostPct))/100;
+  if(cfg.saleEvents&&cfg.saleEvents.length){
+    const events=cfg.saleEvents.map((e,i)=>{
+      const gross=Math.max(0,devNumber(e.gross??e.amount));
+      const cost=e.cost!==undefined?Math.max(0,devNumber(e.cost)):gross*sellingPct;
+      return {month:Math.max(1,Math.round(devNumber(e.month,i+1))),gross,cost,net:Math.max(0,gross-cost),status:e.status||"forecast",description:e.description||""};
+    });
+    const soldValue=events.reduce((s,e)=>s+e.gross,0);
+    return {events,retainedValue:Math.max(0,devNumber(cfg.gdv)-soldValue),soldValue};
+  }
+  const units=Math.max(1,Math.round(devNumber(cfg.units,1)));
+  const retain=Math.min(units,Math.max(0,Math.round(devNumber(cfg.retainUnits,0))));
+  const sold=units-retain;
+  const retainedValue=devNumber(cfg.gdv)*retain/units;
+  if(sold<=0)return {events:[],retainedValue,soldValue:0};
+  const soldValue=devNumber(cfg.gdv)-retainedValue;
+  const exitMonths=Math.max(1,Math.round(devNumber(cfg.exitMonths,1)));
+  const start=Math.max(1,Math.round(devNumber(cfg.buildMonths,1)))+1;
+  const perUnit=soldValue/sold;
+  const events=[];
+  for(let i=0;i<sold;i++){
+    const slot=sold===1?0:Math.round(i*(exitMonths-1)/(sold-1));
+    const month=start+slot;
+    events.push({month,gross:perUnit,cost:perUnit*sellingPct,net:perUnit*(1-sellingPct),status:"forecast"});
+  }
+  return {events,retainedValue,soldValue};
+}
+function buildGeneratedDevCosts(cfg){
+  const months=Math.max(1,Math.round(devNumber(cfg.buildMonths,1)));
+  const profile=cfg.profile==="even"?devEvenWeights(months):devSCurveWeights(months);
+  const works=Math.max(0,devNumber(cfg.works));
+  const prof=Math.max(0,devNumber(cfg.profFees));
+  const contingency=Math.max(0,devNumber(cfg.contingencyBudget));
+  const rows=[];
+  for(let i=0;i<months;i++){
+    rows.push({month:i+1,category:"core_construction",amount:works*profile[i],status:"forecast"});
+    rows.push({month:i+1,category:"professional",amount:prof/months,status:"forecast"});
+    rows.push({month:i+1,category:"contingency",amount:contingency*profile[i],status:"forecast"});
+  }
+  return rows;
+}
+function normaliseDevCostRows(cfg){
+  const rows=(cfg.costRows&&cfg.costRows.length?cfg.costRows:buildGeneratedDevCosts(cfg)).map((r,i)=>({
+    month:Math.max(1,Math.round(devNumber(r.month,i+1))),
+    category:r.category||"other",
+    amount:Math.max(0,devNumber(r.amount)),
+    status:r.status||"forecast",
+    description:r.description||""
+  }));
+  return rows;
+}
+function runDevelopmentCashflowModel(input){
+  const cfg={...input};
+  cfg.buildMonths=Math.max(1,Math.round(devNumber(cfg.buildMonths,1)));
+  cfg.exitMonths=Math.max(0,Math.round(devNumber(cfg.exitMonths,0)));
+  cfg.units=Math.max(1,Math.round(devNumber(cfg.units,1)));
+  cfg.retainUnits=Math.min(cfg.units,Math.max(0,Math.round(devNumber(cfg.retainUnits,0))));
+  cfg.gdv=Math.max(0,devNumber(cfg.gdv));
+  cfg.openingCash=Math.max(0,devNumber(cfg.openingCash));
+  cfg.annualRate=Math.max(0,devNumber(cfg.annualRate,12));
+  cfg.arrangementFeePct=Math.max(0,devNumber(cfg.arrangementFeePct,2));
+  cfg.exitFeePct=Math.max(0,devNumber(cfg.exitFeePct,0));
+  cfg.worksFundingPct=devClamp(devNumber(cfg.worksFundingPct,100),0,100);
+  cfg.professionalFundingPct=devClamp(devNumber(cfg.professionalFundingPct,cfg.worksFundingPct),0,100);
+  cfg.acquisitionFundingPct=devClamp(devNumber(cfg.acquisitionFundingPct,65),0,100);
+  cfg.certificationLag=Math.max(0,Math.round(devNumber(cfg.certificationLag,0)));
+  cfg.releasePct=devClamp(devNumber(cfg.releasePct,100),0,100);
+  cfg.releaseAmountPerUnit=Math.max(0,devNumber(cfg.releaseAmountPerUnit,0));
+  cfg.salesCostPct=Math.max(0,devNumber(cfg.salesCostPct,0));
+  cfg.interestMethod=cfg.interestMethod==="serviced"?"serviced":"rolled";
+  cfg.seniorLimit=Math.max(0,devNumber(cfg.seniorLimit,0));
+  cfg.mezzLimit=Math.max(0,devNumber(cfg.mezzLimit,0));
+  cfg.mezzAnnualRate=Math.max(0,devNumber(cfg.mezzAnnualRate,15));
+  cfg.refiAmount=Math.max(0,devNumber(cfg.refiAmount,0));
+  cfg.refiFeePct=Math.max(0,devNumber(cfg.refiFeePct,0));
+
+  const buying=cfg.siteStatus!=="owned";
+  const siteValue=Math.max(0,devNumber(cfg.siteValue));
+  const existingDebt=Math.max(0,devNumber(cfg.existingDebt));
+  const acquisitionCosts=Math.max(0,devNumber(cfg.acquisitionCosts));
+  const works=Math.max(0,devNumber(cfg.works));
+  const prof=Math.max(0,devNumber(cfg.profFees));
+  const contingencyBudget=Math.max(0,devNumber(cfg.contingencyBudget));
+  const historicLandCost=Math.max(0,devNumber(cfg.landHistoricCost));
+  const economicSite=siteValue;
+  let economicCostBeforeFinance=economicSite+acquisitionCosts+works+prof+contingencyBudget;
+  let profitBeforeFinance=cfg.gdv-economicCostBeforeFinance;
+
+  const prefinanceCashNeed=(buying?siteValue+acquisitionCosts:existingDebt)+works+prof+contingencyBudget;
+  const coreFundingNeed=Math.max(0,prefinanceCashNeed-cfg.openingCash);
+  const feeBasis=cfg.seniorLimit>0?cfg.seniorLimit:Math.max(0,coreFundingNeed);
+  const arrangementFee=feeBasis*cfg.arrangementFeePct/100;
+  const exitFee=feeBasis*cfg.exitFeePct/100;
+
+  let cash=cfg.openingCash;
+  let senior=buying?0:existingDebt;
+  let mezz=0;
+  let seniorPrincipal=buying?0:existingDebt;
+  let mezzPrincipal=0;
+  let interestSenior=0,interestMezz=0;
+  let cashFees=0;
+  const monthlyRate=cfg.annualRate/100/12;
+  const mezzMonthlyRate=cfg.mezzAnnualRate/100/12;
+  const seniorCap=cfg.seniorLimit>0?cfg.seniorLimit:Infinity;
+  const mezzCap=cfg.mezzLimit>0?cfg.mezzLimit:0;
+  const queued={};
+  let extraEquity=0, peakMonthlyEquityInjection=0;
+  let peakDebt=senior+mezz;
+  let peakSenior=senior,peakMezz=mezz;
+  let totalSalesCosts=0;
+  let cashReleased=0;
+  let totalRepayments=0;
+  let arrangementFeeCapitalised=arrangementFee;
+  senior += arrangementFeeCapitalised;
+  peakDebt=Math.max(peakDebt,senior);
+
+  const equityFlows=[];
+  const ownedSiteEquity=buying?0:Math.max(0,siteValue-existingDebt);
+  equityFlows[0]=-(cfg.openingCash+ownedSiteEquity);
+
+  function injectIfNeeded(month){
+    if(cash<-1e-8){
+      const inj=-cash; cash=0; extraEquity+=inj; peakMonthlyEquityInjection=Math.max(peakMonthlyEquityInjection,inj);
+      equityFlows[month]=(equityFlows[month]||0)-inj;
+      return inj;
+    }
+    return 0;
+  }
+  function drawDebt(amount){
+    let remaining=Math.max(0,amount),s=0,m=0;
+    if(remaining>0){
+      const avail=Math.max(0,seniorCap-seniorPrincipal);
+      s=Math.min(remaining,avail); senior+=s; seniorPrincipal+=s; remaining-=s;
+    }
+    if(remaining>0&&mezzCap>0){
+      const avail=Math.max(0,mezzCap-mezzPrincipal);
+      m=Math.min(remaining,avail); mezz+=m; mezzPrincipal+=m; remaining-=m;
+    }
+    cash+=s+m;
+    return {senior:s,mezz:m,unfunded:remaining};
+  }
+  function repayDebt(amount){
+    let rem=Math.max(0,amount),s=0,m=0;
+    s=Math.min(rem,senior);senior-=s;rem-=s;
+    m=Math.min(rem,mezz);mezz-=m;rem-=m;
+    totalRepayments+=s+m;
+    return {senior:s,mezz:m,left:rem};
+  }
+
+  const ledger=[];
+  // Month 0 acquisition / refinance existing debt
+  let acquisitionCost=buying?siteValue+acquisitionCosts:0;
+  let month0Equity=0;
+  if(acquisitionCost>0){
+    cash-=acquisitionCost;
+    if(cash<0){const maxAcqDebt=acquisitionCost*cfg.acquisitionFundingPct/100;const need=Math.min(-cash,maxAcqDebt);drawDebt(need);month0Equity+=injectIfNeeded(0);}
+  }
+  // If fee is capitalised above, no cash movement. Record month 0.
+  ledger.push({month:0,status:"forecast",costs:acquisitionCost,drawSenior:seniorPrincipal-existingDebt,drawMezz:mezzPrincipal,interest:0,sales:0,refinance:0,repaymentSenior:0,repaymentMezz:0,repayment:0,equityInjection:month0Equity,closingCash:cash,closingSenior:senior,closingMezz:mezz,closingDebt:senior+mezz});
+
+  const costRows=normaliseDevCostRows(cfg);
+  const jumpMonth=Math.max(1,Math.round(devNumber(cfg.jumpMonth,Math.ceil(cfg.buildMonths/2))));
+  const jumpAmount=Math.max(0,devNumber(cfg.jumpAmount,0));
+  const jumpUsesCont=cfg.jumpUsesContingency!==false;
+  const uncoveredJump=jumpAmount>0?(jumpUsesCont?Math.max(0,jumpAmount-contingencyBudget):jumpAmount):0;
+  if(uncoveredJump>0){costRows.push({month:jumpMonth,category:"jump",amount:uncoveredJump,status:"forecast",description:"Unexpected cost above contingency"});economicCostBeforeFinance+=uncoveredJump;profitBeforeFinance=cfg.gdv-economicCostBeforeFinance;}
+
+  const sales=devSaleEvents(cfg);
+  const salesByMonth={};
+  sales.events.forEach(e=>(salesByMonth[e.month]||(salesByMonth[e.month]=[])).push(e));
+  const maxCostMonth=Math.max(cfg.buildMonths,...costRows.map(r=>r.month));
+  const maxSaleMonth=sales.events.length?Math.max(...sales.events.map(e=>e.month)):maxCostMonth+cfg.exitMonths;
+  const refiMonth=Math.max(maxSaleMonth,maxCostMonth+cfg.exitMonths);
+  const totalMonths=Math.max(1,maxSaleMonth,refiMonth,maxCostMonth+cfg.certificationLag);
+  const actualThrough=Math.max(0,Math.round(devNumber(cfg.actualThroughMonth,0)));
+
+  for(let month=1;month<=totalMonths;month++){
+    const openingDebt=senior+mezz,openingCash=cash;
+    let monthCosts=0,drawS=0,drawM=0,monthInterest=0,monthSales=0,monthRepay=0,monthRepaySenior=0,monthRepayMezz=0,monthEquity=0,monthRefi=0;
+    // queued reimbursements arrive at start of month
+    if(queued[month]){
+      for(const amt of queued[month]){const d=drawDebt(amt);drawS+=d.senior;drawM+=d.mezz;}
+    }
+    // costs during month
+    const rows=costRows.filter(r=>r.month===month);
+    for(const r of rows){
+      const amt=r.amount;monthCosts+=amt;cash-=amt;
+      const fundingPct=r.category==="professional"?cfg.professionalFundingPct:cfg.worksFundingPct;
+      const eligible=amt*fundingPct/100;
+      if(eligible>0){
+        if(cfg.certificationLag>0){
+          const arrival=month+cfg.certificationLag;(queued[arrival]||(queued[arrival]=[])).push(eligible);
+        }else{
+          const d=drawDebt(eligible);drawS+=d.senior;drawM+=d.mezz;
+        }
+      }
+    }
+    monthEquity+=injectIfNeeded(month);
+    // interest month-end
+    const si=senior*monthlyRate,mi=mezz*mezzMonthlyRate;
+    interestSenior+=si;interestMezz+=mi;monthInterest=si+mi;
+    if(cfg.interestMethod==="rolled"){senior+=si;mezz+=mi;}else{cash-=si+mi;monthEquity+=injectIfNeeded(month);}
+    // sales after interest
+    for(const sale of (salesByMonth[month]||[])){
+      totalSalesCosts+=sale.cost;cash+=sale.net;monthSales+=sale.net;
+      let required=cfg.releaseAmountPerUnit>0?Math.min(sale.net,cfg.releaseAmountPerUnit):sale.net*cfg.releasePct/100;
+      required=Math.min(required,sale.net);
+      const rep=repayDebt(required);const paid=rep.senior+rep.mezz;cash-=paid;monthRepay+=paid;monthRepaySenior+=rep.senior;monthRepayMezz+=rep.mezz;
+      cashReleased+=Math.max(0,sale.net-paid);
+    }
+    // retained-unit refinance at final exit month
+    if(month===refiMonth&&cfg.refiAmount>0){
+      const fee=cfg.refiAmount*cfg.refiFeePct/100;cash+=cfg.refiAmount-fee;cashFees+=fee;monthRefi=cfg.refiAmount;
+      const rep=repayDebt(cash);const paid=rep.senior+rep.mezz;cash-=paid;monthRepay+=paid;monthRepaySenior+=rep.senior;monthRepayMezz+=rep.mezz;
+    }
+    // exit fee at final month
+    if(month===totalMonths&&exitFee>0){cash-=exitFee;cashFees+=exitFee;monthEquity+=injectIfNeeded(month);}
+    peakDebt=Math.max(peakDebt,senior+mezz);peakSenior=Math.max(peakSenior,senior);peakMezz=Math.max(peakMezz,mezz);
+    ledger.push({month,status:month<=actualThrough?"actual":"forecast",openingCash,costs:monthCosts,drawSenior:drawS,drawMezz:drawM,interest:monthInterest,sales:monthSales,refinance:monthRefi,repaymentSenior:monthRepaySenior,repaymentMezz:monthRepayMezz,repayment:monthRepay,equityInjection:monthEquity,closingCash:cash,closingSenior:senior,closingMezz:mezz,closingDebt:senior+mezz});
+  }
+  const closingDebt=senior+mezz;
+  const totalInterest=interestSenior+interestMezz;
+  const totalFinanceCost=totalInterest+arrangementFee+cashFees;
+  const totalCostAfterFinance=economicCostBeforeFinance+totalFinanceCost+totalSalesCosts;
+  const profitAfterFinance=cfg.gdv-totalCostAfterFinance;
+  const profitOnTotalCost=totalCostAfterFinance?profitAfterFinance/totalCostAfterFinance:0;
+  const totalDeveloperEquity=ownedSiteEquity+cfg.openingCash+extraEquity;
+  const returnOnEquity=totalDeveloperEquity?profitAfterFinance/totalDeveloperEquity:null;
+  const dayOneDebt=ledger.length?ledger[0].closingDebt:0;
+  const dayOneAdvance=ledger.length?(Math.max(0,ledger[0].drawSenior||0)+Math.max(0,ledger[0].drawMezz||0)):0;
+  const retainedEquity=Math.max(0,sales.retainedValue-cfg.refiAmount);
+  equityFlows[totalMonths]=(equityFlows[totalMonths]||0)+cash+retainedEquity;
+  const equityIRR=devMonthlyIRR(equityFlows.map(x=>x||0));
+  const peakLtgdv=cfg.gdv?peakDebt/cfg.gdv:NaN;
+  const peakLtc=economicCostBeforeFinance?peakDebt/economicCostBeforeFinance:NaN;
+  const facilityHeadroom=cfg.seniorLimit>0?cfg.seniorLimit-peakSenior:null;
+  return {
+    economicCostBeforeFinance,profitBeforeFinance,profitOnCostBeforeFinance:economicCostBeforeFinance?profitBeforeFinance/economicCostBeforeFinance:0,
+    arrangementFee,exitFee,totalInterest,interestSenior,interestMezz,totalSalesCosts,totalFinanceCost,totalCostAfterFinance,profitAfterFinance,profitOnTotalCost,
+    peakDebt,peakSenior,peakMezz,peakLtgdv,peakLtc,closingDebt,exitShortfall:closingDebt,totalDeveloperEquity,ownedSiteEquity,extraEquity,peakMonthlyEquityInjection,returnOnEquity,equityIRR,
+    retainedValue:sales.retainedValue,refiAmount:cfg.refiAmount,facilityHeadroom,cashReleased,closingCash:cash,ledger,totalMonths,coreFundingNeed,feeBasis,dayOneDebt,dayOneAdvance
+  };
+}
+
+
+// ============================================================
+// DEVELOPMENT v3 RESTORATION LAYER
+// One monthly finance engine now drives Quick and Detailed views.
+// ============================================================
+
+state.quickDevFinance = state.quickDevFinance || {
+  annualRate:12,
+  arrangementFeePct:2,
+  exitFeePct:0,
+  interestMethod:"rolled",
+  worksFundingPct:100,
+  professionalFundingPct:100,
+  acquisitionFundingPct:65,
+  certificationLag:1,
+  releasePct:100,
+  salesCostPct:0
+};
+state.quickDevStress = state.quickDevStress || {name:"Base",buildCostPct:0,gdvPct:0,buildMonthsAdd:0,exitMonthsAdd:0};
+state.importedSheetName = state.importedSheetName || "";
+state.devContingencyUserEdited = state.devContingencyUserEdited || false;
+
+
+function quickDevTypeDefaultContingency(type){
+  return ["conversion","heavy_refurb","part_complete"].includes(type)?7.5:5;
+}
+function quickDevTypeProfile(type){
+  return type==="light_refurb"?"even":"s_curve";
+}
+function quickDevTypeFamily(type){
+  return type==="ground"?"ground":"existing";
+}
+function quickDevTypeLabel(type){
+  return ({
+    ground:"Ground-up",
+    conversion:"Conversion",
+    heavy_refurb:"Heavy refurbishment",
+    light_refurb:"Light refurbishment",
+    part_complete:"Part-complete"
+  })[type]||"Conversion / refurbishment";
+}
+
+makeQuickProject=function(seed={}){
+  const defaultType=state.developmentFamily==="existing"?(state.developmentType&&state.developmentType!=="ground_up"?state.developmentType:"conversion"):"ground";
+  const type=seed.type||defaultType;
+  const startingCash=state.developmentEntryMode==="quick"?0:(Number(document.getElementById("cashAvailable")?.value)||0);
+  const works=Number(seed.works??800000);
+  state.quickProjectCounter+=1;
+  return {
+    id:`quick-${state.quickProjectCounter}`,
+    name:seed.name||`Project ${state.quickProjectCounter}`,
+    type,
+    siteStatus:seed.siteStatus||"buying",
+    siteValue:Number(seed.siteValue??500000),
+    existingDebt:Number(seed.existingDebt??0),
+    works,
+    fees:Number(seed.fees??works*0.10),
+    contingency:Number(seed.contingency??quickDevTypeDefaultContingency(type)),
+    contingencyUserEdited:Boolean(seed.contingencyUserEdited),
+    gdv:Number(seed.gdv??1800000),
+    buildMonths:Number(seed.buildMonths??14),
+    exitMonths:Number(seed.exitMonths??6),
+    units:Number(seed.units??6),
+    cash:Number(seed.cash??startingCash)
+  };
+};
+
+function devCanonicalCategory(value){
+  const n=normaliseHeader(value);
+  const groups={
+    core_construction:["construction","build","build cost","building costs","works","main contractor","contractor","construction cost","build spend","development works"],
+    professional:["professional","professional fees","consultants","consultant fees","architect","qs","quantity surveyor","engineer","project management","project manager"],
+    abnormal_utilities:["utilities","utility","utility diversion","services diversion","drainage","drainage diversion","service connections"],
+    abnormal_ground:["abnormals","groundworks abnormal","ground conditions","contamination","remediation","piling","foundation abnormal"],
+    contingency:["contingency","risk allowance","risk reserve"],
+    land_acquisition:["land","site purchase","purchase","acquisition","land acquisition"],
+    sales:["sales","sale proceeds","disposals","unit sales","sales proceeds"],
+    finance:["finance","interest","lender fee","arrangement fee","finance costs"]
+  };
+  for(const [k,vals] of Object.entries(groups)) if(vals.includes(n)) return k;
+  for(const [k,vals] of Object.entries(groups)) if(vals.some(v=>n&&((n.includes(v))||(v.includes(n))))) return k;
+  return "other";
+}
+function devPeriodRows(rows){
+  const seen=[],map=new Map();
+  rows.forEach(r=>{const key=String(r.Month??r.Period??"").trim();if(!map.has(key)){seen.push(key);map.set(key,seen.length);}});
+  return rows.map((r,i)=>{
+    const raw=String(r.Month??r.Period??"").trim();
+    const num=Number(raw);
+    const month=Number.isFinite(num)&&num>0?Math.round(num):(map.get(raw)||i+1);
+    return {...r,_month:month};
+  });
+}
+function devImportedRowsToCosts(overrides={}){
+  if(!state.monthlyRows.length)return null;
+  const use=document.getElementById("devUseImportedSchedule");
+  if(use && !use.checked)return null;
+  let rows=devPeriodRows(state.monthlyRows);
+  const out=[],saleEvents=[];
+  let coreFound=false,profFound=false,contFound=false,actualThrough=0;
+  rows.forEach(r=>{
+    const actual=Number(r.Actual)||0, forecast=Number(r.Forecast)||0;
+    const status=(String(r.Status||"").toLowerCase().startsWith("actual")||Math.abs(actual)>0)?"actual":"forecast";
+    let amount=status==="actual"?actual:forecast;
+    const cat=devCanonicalCategory(r.Category||"");
+    let month=r._month;
+    if(cat==="sales"){
+      if(status==="forecast"){
+        amount*=1+(overrides.gdvPct||0);
+        month+=(overrides.buildMonthsAdd||0)+(overrides.exitMonthsAdd||0);
+      }
+      if(status==="actual")actualThrough=Math.max(actualThrough,month);
+      if(amount>0)saleEvents.push({month,gross:amount,status,description:r.Description||r.Subcategory||""});
+      return;
+    }
+    if(["land_acquisition","finance"].includes(cat))return;
+    if(status==="forecast" && cat==="core_construction") amount*=1+(overrides.buildCostPct||0);
+    if(status==="forecast" && overrides.buildMonthsAdd) month+=overrides.buildMonthsAdd;
+    if(status==="actual")actualThrough=Math.max(actualThrough,month);
+    if(cat==="core_construction")coreFound=true;
+    if(cat==="professional")profFound=true;
+    if(cat==="contingency")contFound=true;
+    if(amount) out.push({month,category:cat,amount:Math.max(0,amount),status,description:r.Description||r.Subcategory||""});
+  });
+  const buildMonths=Math.max(1,val("buildMonths")+(overrides.buildMonthsAdd||0),...out.map(r=>r.month));
+  const weights=devSCurveWeights(buildMonths);
+  const coreTotal=out.filter(r=>r.category==="core_construction").reduce((s,r)=>s+r.amount,0);
+  if(!coreFound){
+    const total=val("buildCost")*(1+(overrides.buildCostPct||0));
+    weights.forEach((w,i)=>out.push({month:i+1,category:"core_construction",amount:total*w,status:"forecast",description:"Generated construction profile"}));
+  }
+  if(!profFound){
+    const total=val("profFees");
+    for(let i=0;i<buildMonths;i++)out.push({month:i+1,category:"professional",amount:total/buildMonths,status:"forecast",description:"Generated professional fees"});
+  }
+  if(!contFound){
+    const baseCore=coreFound?coreTotal:val("buildCost")*(1+(overrides.buildCostPct||0));
+    const total=baseCore*val("contingency")/100;
+    weights.forEach((w,i)=>out.push({month:i+1,category:"contingency",amount:total*w,status:"forecast",description:"Generated contingency"}));
+  }
+  return {rows:out,saleEvents,actualThrough,buildMonths};
+}
+function devDetailedPrepared(overrides={}){
+  const imported=devImportedRowsToCosts(overrides);
+  let buildMonths=Math.max(1,val("buildMonths")+(overrides.buildMonthsAdd||0));
+  let rows=null,saleEvents=null,actualThrough=0;
+  if(imported){rows=imported.rows;saleEvents=imported.saleEvents&&imported.saleEvents.length?imported.saleEvents:null;actualThrough=imported.actualThrough;buildMonths=Math.max(buildMonths,imported.buildMonths);}
+  const buying=text("siteOwnership")==="buying";
+  const siteValue=buying?val("sitePurchasePrice"):val("siteValue");
+  const gdv=val("gdv")*(1+(overrides.gdvPct||0));
+  let works=val("buildCost")*(1+(overrides.buildCostPct||0)),prof=val("profFees"),cont=works*val("contingency")/100;
+  if(rows){
+    works=rows.filter(r=>r.category==="core_construction").reduce((s,r)=>s+r.amount,0);
+    prof=rows.filter(r=>!["core_construction","contingency"].includes(r.category)).reduce((s,r)=>s+r.amount,0);
+    cont=rows.filter(r=>r.category==="contingency").reduce((s,r)=>s+r.amount,0);
+  }
+  const cfg={
+    siteStatus:buying?"buying":"owned",siteValue,existingDebt:val("siteDebt"),acquisitionCosts:buying?val("siteAcquisitionCosts"):0,
+    landHistoricCost:val("landHistoricCost"),works,profFees:prof,contingencyBudget:cont,gdv,
+    buildMonths,exitMonths:Math.max(0,val("salesMonths")+(overrides.exitMonthsAdd||0)),units:val("units"),retainUnits:val("retainUnits"),openingCash:val("cashAvailable"),
+    annualRate:val("devSeniorRate")||12,arrangementFeePct:val("devArrangementFee"),exitFeePct:val("devExitFee"),interestMethod:text("devInterestMethod")||"rolled",
+    worksFundingPct:val("devWorksFundingPct"),professionalFundingPct:val("devProfessionalFundingPct"),acquisitionFundingPct:val("devAcquisitionFundingPct"),certificationLag:val("devCertificationLag"),releasePct:val("devReleasePct"),releaseAmountPerUnit:val("devReleaseAmount"),salesCostPct:val("devSalesCostPct"),
+    seniorLimit:val("devSeniorLimit"),mezzLimit:val("devMezzLimit"),mezzAnnualRate:val("devMezzRate")||15,refiAmount:val("devRefiAmount"),refiFeePct:val("devRefiFee"),
+    jumpMonth:val("jumpMonth")||Math.ceil(buildMonths/2),jumpAmount:val("jumpCost"),jumpUsesContingency:text("jumpUseContingency")!=="no",
+    costRows:rows||undefined,saleEvents:saleEvents||undefined,actualThroughMonth:actualThrough,profile:(state.developmentType==="light_refurb"?"even":"s_curve")
+  };
+  return {cfg,imported:Boolean(rows),actualThrough};
+}
+function devQuickFinanceCfg(){return {...state.quickDevFinance};}
+function quickProjectMetricsV3(p,stress=state.quickDevStress){
+  const works=Math.max(0,Number(p.works)||0)*(1+(stress.buildCostPct||0));
+  const gdv=Math.max(0,Number(p.gdv)||0)*(1+(stress.gdvPct||0));
+  const buildMonths=Math.max(1,(Number(p.buildMonths)||1)+(stress.buildMonthsAdd||0));
+  const exitMonths=Math.max(0,(Number(p.exitMonths)||0)+(stress.exitMonthsAdd||0));
+  const finance=devQuickFinanceCfg();
+  const cfg={siteStatus:p.siteStatus,siteValue:p.siteValue,existingDebt:p.existingDebt,works,profFees:p.fees,contingencyBudget:works*(Number(p.contingency)||0)/100,gdv,
+    buildMonths,exitMonths,units:p.units,retainUnits:0,openingCash:p.cash,annualRate:finance.annualRate,arrangementFeePct:finance.arrangementFeePct,exitFeePct:finance.exitFeePct,
+    interestMethod:finance.interestMethod,worksFundingPct:finance.worksFundingPct,professionalFundingPct:finance.professionalFundingPct,acquisitionFundingPct:finance.acquisitionFundingPct,certificationLag:finance.certificationLag,releasePct:finance.releasePct,salesCostPct:finance.salesCostPct,profile:quickDevTypeProfile(p.type)};
+  const model=runDevelopmentCashflowModel(cfg);
+  const market=developmentMarketPosition(model.peakLtgdv,quickDevTypeFamily(p.type),model.peakLtc,model.peakDebt);
+  return {...model,market,site:Math.max(0,Number(p.siteValue)||0),gdv,works,duration:model.totalMonths,cash:Number(p.cash)||0,economicCost:model.economicCostBeforeFinance,profit:model.profitAfterFinance,poc:model.profitOnTotalCost,ltgdv:model.peakLtgdv,ltc:model.peakLtc,projectEquity:model.totalDeveloperEquity};
+}
+function quickProjectMetrics(p){return quickProjectMetricsV3(p);}
+function setQuickStress(name){
+  const map={Base:{name:"Base",buildCostPct:0,gdvPct:0,buildMonthsAdd:0,exitMonthsAdd:0},"Build +10%":{name:"Build +10%",buildCostPct:.10,gdvPct:0,buildMonthsAdd:0,exitMonthsAdd:0},"GDV -10%":{name:"GDV -10%",buildCostPct:0,gdvPct:-.10,buildMonthsAdd:0,exitMonthsAdd:0},"Build +3 months":{name:"Build +3 months",buildCostPct:0,gdvPct:0,buildMonthsAdd:3,exitMonthsAdd:0},"Sales +6 months":{name:"Sales +6 months",buildCostPct:0,gdvPct:0,buildMonthsAdd:0,exitMonthsAdd:6},"Combined downside":{name:"Combined downside",buildCostPct:.10,gdvPct:-.10,buildMonthsAdd:3,exitMonthsAdd:6}};
+  state.quickDevStress=map[name]||map.Base;renderQuickProjectCards();renderQuickDevelopmentResults();updateSide();updateUsefulNow();
+}
+function updateQuickFinanceAssumption(field,value){
+  if(["interestMethod"].includes(field))state.quickDevFinance[field]=value;else state.quickDevFinance[field]=Number(value)||0;
+  renderQuickProjectCards();renderQuickDevelopmentResults();updateSide();updateUsefulNow();
+}
+function quickFinancePanel(){
+  const f=state.quickDevFinance,s=state.quickDevStress;
+  return `<div class="dev-finance-assumptions"><div class="eyebrow">Illustrative assumptions · apply to every project</div><h3>Quick finance assumptions</h3>
+    <div class="note">Time now affects the answer. The quick model generates a monthly construction profile, calculates debt and interest month by month, and uses sales to repay the facility. Detailed modelling can replace these assumptions with the real cost plan and lender structure.</div>
+    <div class="grid3">
+      <div class="field"><label>Interest rate to test (% p.a.)</label><input type="number" min="0" step="0.25" value="${f.annualRate}" onchange="updateQuickFinanceAssumption('annualRate',this.value)"><div class="help">Default 12.0% p.a. (${(f.annualRate/12).toFixed(2)}% per month).</div></div>
+      <div class="field"><label>Arrangement fee (%)</label><input type="number" min="0" step="0.25" value="${f.arrangementFeePct}" onchange="updateQuickFinanceAssumption('arrangementFeePct',this.value)"><div class="help">Capitalised for this quick comparison.</div></div>
+      <div class="field"><label>Exit fee (%)</label><input type="number" min="0" step="0.25" value="${f.exitFeePct}" onchange="updateQuickFinanceAssumption('exitFeePct',this.value)"></div>
+      <div class="field"><label>Interest treatment</label><select onchange="updateQuickFinanceAssumption('interestMethod',this.value)"><option value="rolled" ${f.interestMethod==="rolled"?"selected":""}>Rolled</option><option value="serviced" ${f.interestMethod==="serviced"?"selected":""}>Serviced monthly</option></select></div>
+      <div class="field"><label>Works funding to test (%)</label><input type="number" min="0" max="100" step="5" value="${f.worksFundingPct}" onchange="updateQuickFinanceAssumption('worksFundingPct',this.value)"><div class="help">100% is allowed as a modelling assumption; this is not a lender promise.</div></div>
+      <div class="field"><label>Works draw timing</label><select onchange="updateQuickFinanceAssumption('certificationLag',this.value)"><option value="0" ${f.certificationLag===0?"selected":""}>Same month</option><option value="1" ${f.certificationLag===1?"selected":""}>1 month in arrears</option><option value="2" ${f.certificationLag===2?"selected":""}>2 months in arrears</option></select></div>
+    </div>
+    <details class="disclosure"><summary>More quick-finance assumptions</summary><div class="grid2" style="margin-top:8px">
+      <div class="field"><label>Purchase / acquisition funding to test (%)</label><input type="number" min="0" max="100" step="5" value="${f.acquisitionFundingPct}" onchange="updateQuickFinanceAssumption('acquisitionFundingPct',this.value)"><div class="help">Default 65%. This is a modelling assumption, not a lender maximum or promise.</div></div>
+      <div class="field"><label>Professional fees funding to test (%)</label><input type="number" min="0" max="100" step="5" value="${f.professionalFundingPct}" onchange="updateQuickFinanceAssumption('professionalFundingPct',this.value)"></div>
+      <div class="field"><label>Sale proceeds applied to debt (%)</label><input type="number" min="0" max="100" step="5" value="${f.releasePct}" onchange="updateQuickFinanceAssumption('releasePct',this.value)"></div>
+      <div class="field"><label>Sales / disposal costs (% of sales)</label><input type="number" min="0" step="0.25" value="${f.salesCostPct}" onchange="updateQuickFinanceAssumption('salesCostPct',this.value)"></div>
+    </div></details>
+    <div class="dev-stress-row"><span class="note" style="align-self:center"><strong>Compare all projects under:</strong></span>${["Base","Build +10%","GDV -10%","Build +3 months","Sales +6 months","Combined downside"].map(x=>`<button class="dev-stress-btn ${s.name===x?"active":""}" type="button" onclick="setQuickStress('${x}')">${x}</button>`).join("")}</div>
+  </div>`;
+}
+function updateQuickProjectCardSummary(i){
+  const card=document.querySelector(`.quick-project-card[data-project-index="${i}"]`);if(!card||!state.quickProjects[i])return;
+  const m=quickProjectMetrics(state.quickProjects[i]);
+  const values={after:moneyExact(m.profitAfterFinance),finance:moneyExact(m.totalFinanceCost),gdv:Number.isFinite(m.peakLtgdv)?(m.peakLtgdv*100).toFixed(1)+"%":"—",cost:Number.isFinite(m.peakLtc)?(m.peakLtc*100).toFixed(1)+"%":"—"};
+  Object.entries(values).forEach(([k,v])=>{const e=card.querySelector(`[data-qsummary="${k}"]`);if(e)e.textContent=v;});
+}
+function renderQuickProjectCards(){
+ const holder=document.getElementById("quickProjectCards");if(!holder)return;ensureQuickProjects();
+ holder.innerHTML=state.quickProjects.map((p,i)=>{const m=quickProjectMetrics(p),debtHidden=p.siteStatus==="buying"?"hidden":"";return `<div class="quick-project-card" data-project-index="${i}">
+  <div class="quick-project-card-head"><div><div class="eyebrow">Project ${i+1}</div><h3>${escapeHtml(p.name||`Project ${i+1}`)}</h3></div><div class="quick-project-actions"><button class="mini-btn" type="button" data-action="duplicate" data-index="${i}">Duplicate</button>${state.quickProjects.length>1?`<button class="mini-btn danger" type="button" data-action="remove" data-index="${i}">Remove</button>`:""}</div></div>
+  <div class="grid2">
+   <div class="field"><label>Project name</label><input data-qfield="name" data-index="${i}" value="${escapeHtml(p.name)}"></div>
+   <div class="field"><label>Project type</label><select data-qfield="type" data-index="${i}">
+   <option value="ground" ${p.type==="ground"?"selected":""}>Ground-up</option>
+   <option value="conversion" ${p.type==="conversion"?"selected":""}>Conversion</option>
+   <option value="heavy_refurb" ${p.type==="heavy_refurb"?"selected":""}>Heavy refurbishment</option>
+   <option value="light_refurb" ${p.type==="light_refurb"?"selected":""}>Light refurbishment</option>
+   <option value="part_complete" ${p.type==="part_complete"?"selected":""}>Part-complete</option>
+  </select></div>
+   <div class="field"><label>Site / property position</label><select data-qfield="siteStatus" data-index="${i}"><option value="buying" ${p.siteStatus==="buying"?"selected":""}>Being purchased</option><option value="owned" ${p.siteStatus==="owned"?"selected":""}>Already owned</option></select></div>
+   <div class="field"><label>${p.siteStatus==="buying"?"Purchase price":"Current site / property value"}</label><input type="number" min="0" step="10000" data-qfield="siteValue" data-index="${i}" value="${p.siteValue}">${p.siteStatus==="owned"?`<div class="help">Current value is the economic site contribution; historic cost is not used as available cash.</div>`:""}</div>
+   <div class="field ${debtHidden}"><label>Existing debt on site / property</label><input type="number" min="0" step="10000" data-qfield="existingDebt" data-index="${i}" value="${p.existingDebt}"></div>
+   <div class="field"><label>Works / build cost</label><input type="number" min="0" step="10000" data-qfield="works" data-index="${i}" value="${p.works}"></div>
+   <div class="field"><label>Professional / other project costs</label><input type="number" min="0" step="5000" data-qfield="fees" data-index="${i}" value="${p.fees}"></div>
+   <div class="field"><label>Contingency %</label><input type="number" min="0" max="20" step="0.5" data-qfield="contingency" data-index="${i}" value="${p.contingency}"></div>
+   <div class="field"><label>Completed value / GDV</label><input type="number" min="0" step="25000" data-qfield="gdv" data-index="${i}" value="${p.gdv}"></div>
+   <div class="field"><label>Works period</label><input type="number" min="1" max="48" step="1" data-qfield="buildMonths" data-index="${i}" value="${p.buildMonths}"><div class="help">Months. This directly affects finance cost.</div></div>
+   <div class="field"><label>Sales / exit period</label><input type="number" min="0" max="36" step="1" data-qfield="exitMonths" data-index="${i}" value="${p.exitMonths}"><div class="help">Months after works. Interest continues until debt is repaid.</div></div>
+   <div class="field"><label>Number of units</label><input type="number" min="1" max="200" step="1" data-qfield="units" data-index="${i}" value="${p.units}"></div>
+   <div class="field"><label>Cash you intend to commit to this project</label><input type="number" min="0" step="5000" data-qfield="cash" data-index="${i}" value="${p.cash}"><div class="help">If arrears draw timing creates a temporary cash gap, the result will show the extra liquidity required.</div></div>
+  </div>
+  <div class="quick-project-mini"><div><span>Profit after finance</span><strong data-qsummary="after">${moneyExact(m.profitAfterFinance)}</strong></div><div><span>Estimated finance cost</span><strong data-qsummary="finance">${moneyExact(m.totalFinanceCost)}</strong></div><div><span>Peak debt / GDV</span><strong data-qsummary="gdv">${Number.isFinite(m.peakLtgdv)?(m.peakLtgdv*100).toFixed(1)+"%":"—"}</strong></div><div><span>Peak debt / project cost</span><strong data-qsummary="cost">${Number.isFinite(m.peakLtc)?(m.peakLtc*100).toFixed(1)+"%":"—"}</strong></div></div>
+ </div>`;}).join("");
+ holder.querySelectorAll("[data-qfield]").forEach(control=>{const ev=control.tagName==="SELECT"?"change":"input";control.addEventListener(ev,()=>{const i=Number(control.dataset.index),field=control.dataset.qfield;if(!state.quickProjects[i])return;const p=state.quickProjects[i];const oldType=p.type;p[field]=control.type==="number"?Number(control.value)||0:control.value;if(field==="contingency")p.contingencyUserEdited=true;if(field==="type"&&!p.contingencyUserEdited){const oldDefault=quickDevTypeDefaultContingency(oldType);if(Math.abs(Number(p.contingency)-oldDefault)<0.001)p.contingency=quickDevTypeDefaultContingency(p.type);}if(field==="siteStatus"||field==="type")renderQuickProjectCards();else updateQuickProjectCardSummary(i);renderQuickDevelopmentResults();updateSide();updateUsefulNow();});});
+ holder.querySelectorAll("[data-action='duplicate']").forEach(b=>b.onclick=()=>duplicateQuickProject(Number(b.dataset.index)));holder.querySelectorAll("[data-action='remove']").forEach(b=>b.onclick=()=>removeQuickProject(Number(b.dataset.index)));linkVisibleLabels(holder);
+}
+function renderComparisonInsights(){
+ if(state.quickProjects.length<2)return "";const ms=state.quickProjects.map(quickProjectMetrics);
+ const items=[["Highest profit after finance",comparisonLeader(state.quickProjects,ms,"profitAfterFinance","max")],["Lowest estimated finance cost",comparisonLeader(state.quickProjects,ms,"totalFinanceCost","min")],["Lowest peak debt / GDV",comparisonLeader(state.quickProjects,ms,"peakLtgdv","min")],["Lowest peak debt / project cost",comparisonLeader(state.quickProjects,ms,"peakLtc","min")],["Best profit / developer equity",comparisonLeader(state.quickProjects,ms,"returnOnEquity","max")],["Shortest total period",comparisonLeader(state.quickProjects,ms,"totalMonths","min")]].filter(x=>x[1]);
+ const rank={mainstream:3,borderline:2,specialist:1};let bestRank=Math.max(...ms.map(m=>rank[m.market.cls]||0));const broadest=state.quickProjects.filter((p,i)=>(rank[ms[i].market.cls]||0)===bestRank).map(p=>p.name).join(", ");
+ return `<div class="comparison-insights">${items.map(x=>`<div class="comparison-insight"><strong>${x[0]}</strong>${escapeHtml(x[1].name)}</div>`).join("")}<div class="comparison-insight"><strong>Broadest indicative gearing range</strong>${escapeHtml(broadest)}</div></div>`;
+}
+function renderQuickDevelopmentResults(){
+ const preview=document.getElementById("modulePreview");if(!preview)return;ensureQuickProjects();const topAdd=document.querySelector("#step3 .quick-project-add");if(topAdd)topAdd.innerHTML=state.quickProjects.length<4?`<button class="btn secondary" type="button" onclick="addQuickProject()">+ Add another project</button>`:`<span class="note">Maximum four projects in Quick Development Test.</span>`;
+ if(state.quickProjects.length===1){const p=state.quickProjects[0],m=quickProjectMetrics(p);const market=developmentMarketPosition(m.peakLtgdv,p.type==="ground"?"ground":"existing",m.peakLtc,m.peakDebt);let alerts="";if(m.extraEquity>0)alerts+=`<div class="dev-alert"><strong>Additional liquidity required: ${moneyExact(m.extraEquity)}</strong><div class="note">With the cash entered and ${state.quickDevFinance.certificationLag}-month works draw lag, the quick model needs extra temporary/developer equity during the project.</div></div>`;if(m.exitShortfall>1)alerts+=`<div class="dev-alert danger"><strong>Exit shortfall: ${moneyExact(m.exitShortfall)}</strong><div class="note">The model reaches the end of the sale/refinance period with development debt still outstanding.</div></div>`;
+ preview.innerHTML=`<div class="section"><h3>Quick project result ${state.quickDevStress.name!=="Base"?`· ${state.quickDevStress.name}`:""}</h3><table class="result-table">
+ <tr><td>Economic project cost before finance</td><td>${moneyExact(m.economicCostBeforeFinance)}</td></tr><tr><td>Completed value / GDV</td><td>${moneyExact(m.gdv)}</td></tr><tr><td>Profit before finance</td><td>${moneyExact(m.profitBeforeFinance)}</td></tr><tr><td>Project funding need before finance costs</td><td>${moneyExact(m.coreFundingNeed)}</td></tr><tr><td>Day-one advance / debt created</td><td>${moneyExact(m.dayOneAdvance)}</td></tr><tr><td>Indicative gross facility requirement (peak debt)</td><td>${moneyExact(m.peakDebt)}</td></tr><tr><td>Estimated interest</td><td>${moneyExact(m.totalInterest)}</td></tr><tr><td>Arrangement / exit / refinance fees</td><td>${moneyExact(m.totalFinanceCost-m.totalInterest)}</td></tr><tr><td><strong>Profit after estimated finance</strong></td><td><strong>${moneyExact(m.profitAfterFinance)}</strong></td></tr><tr><td>Profit on total cost after finance</td><td>${(m.profitOnTotalCost*100).toFixed(1)}%</td></tr><tr><td>Peak development debt</td><td>${moneyExact(m.peakDebt)}</td></tr><tr><td>Peak debt / GDV</td><td>${(m.peakLtgdv*100).toFixed(1)}%</td></tr><tr><td>Peak debt / project cost</td><td>${(m.peakLtc*100).toFixed(1)}%</td></tr><tr><td>Developer equity represented / required</td><td>${moneyExact(m.totalDeveloperEquity)}</td></tr><tr><td>Profit / developer equity</td><td>${Number.isFinite(m.returnOnEquity)?m.returnOnEquity.toFixed(2)+"×":"—"}</td></tr><tr><td>Indicative equity IRR</td><td>${Number.isFinite(m.equityIRR)?(m.equityIRR*100).toFixed(1)+"%":"—"}</td></tr><tr><td>Total works + exit period</td><td>${m.totalMonths} months</td></tr></table>${alerts}${marketPositionPanel(market.status,market.cls,market.reason,"Finance is estimated month by month from the common assumptions above. The Detailed Development Model can replace the generated profile with actual Excel/monthly data and lender-specific terms.")}<div class="toolbar"><button class="btn primary" type="button" onclick="modelQuickProjectInDetail(0)">Model this project in detail</button></div></div>`;return;}
+ const rows=state.quickProjects.map((p,i)=>{const m=quickProjectMetrics(p);return `<tr><td><strong>${escapeHtml(p.name)}</strong><br><span class="note">${quickDevTypeLabel(p.type)}</span></td><td>${moneyExact(m.profitBeforeFinance)}</td><td>${moneyExact(m.totalFinanceCost)}</td><td><strong>${moneyExact(m.profitAfterFinance)}</strong></td><td>${(m.profitOnTotalCost*100).toFixed(1)}%</td><td>${(m.peakLtgdv*100).toFixed(1)}%</td><td>${(m.peakLtc*100).toFixed(1)}%</td><td>${moneyExact(m.totalDeveloperEquity)}</td><td>${Number.isFinite(m.returnOnEquity)?m.returnOnEquity.toFixed(2)+"×":"—"}</td><td>${m.totalMonths} mo</td><td><span class="quick-market-badge ${m.market.cls}">${quickMarketShort(m.market)}</span></td><td><button class="mini-btn" type="button" onclick="modelQuickProjectInDetail(${i})">Model in detail</button></td></tr>`;}).join("");
+ preview.innerHTML=`<div class="section"><h3>Compare your projects ${state.quickDevStress.name!=="Base"?`· ${state.quickDevStress.name}`:""}</h3><div class="note">All projects use the same finance assumptions. Time affects interest, draw timing affects liquidity, and sales reduce debt through the exit period.</div>${renderComparisonInsights()}<div class="quick-compare-scroll"><table class="quick-compare-table" style="min-width:1350px"><thead><tr><th>Project</th><th>Profit before finance</th><th>Finance cost</th><th>Profit after finance</th><th>Profit on total cost</th><th>Peak debt / GDV</th><th>Peak debt / cost</th><th>Developer equity</th><th>Profit / equity</th><th>Duration</th><th>Gearing view</th><th></th></tr></thead><tbody>${rows}</tbody></table></div><div class="callout"><strong>Quick comparison convention:</strong> costs use an S-curve, the arrangement fee is capitalised, interest is calculated monthly on outstanding debt, and equal-value unit sales repay debt during the exit period. The detailed model can replace every one of these assumptions.</div></div>`;
+}
+function renderQuickDevelopmentWorkspace(el){ensureQuickProjects();document.getElementById('eas-finance-workspace').classList.remove("advanced");el.innerHTML=`<div class="quick-dev-head"><div><div class="eyebrow">Development v3</div><h3>Quick Development Test</h3><div class="note">Start with one project and add up to three more. The quick model now includes finance cost and liquidity timing, so works and exit periods change the financial result.</div></div></div>${quickFinancePanel()}<div id="quickProjectCards" class="quick-projects"></div><div class="quick-project-add"></div><div id="modulePreview"></div>`;renderQuickProjectCards();renderQuickDevelopmentResults();updateSide();updateUsefulNow();}
+
+const _legacyModelQuickProjectInDetailV13=modelQuickProjectInDetail;
+modelQuickProjectInDetail=function(index){state.developmentFinanceSeed={...state.quickDevFinance};return _legacyModelQuickProjectInDetailV13(index);};
+const _legacyUpdateSideV13=updateSide;
+updateSide=function(){_legacyUpdateSideV13();if(state.objective==="develop"&&state.developmentEntryMode==="quick"&&state.step>=3&&state.quickProjects.length){const ms=state.quickProjects.map(quickProjectMetrics);let labels,vals;if(ms.length===1){labels=["Project cost before finance","Completed value / GDV","Profit after finance","Peak debt / GDV"];vals=[ms[0].economicCostBeforeFinance,ms[0].gdv,ms[0].profitAfterFinance,(ms[0].peakLtgdv*100).toFixed(1)+"%"];}else{labels=["Projects being tested","Highest profit after finance","Lowest finance cost","Lowest peak debt / GDV"];const valid=ms.map(x=>x.peakLtgdv).filter(Number.isFinite);vals=[String(ms.length),Math.max(...ms.map(x=>x.profitAfterFinance)),Math.min(...ms.map(x=>x.totalFinanceCost)),valid.length?(Math.min(...valid)*100).toFixed(1)+"%":"—"];}[["mCash","mCashLabel"],["mAssets","mAssetsLabel"],["mDebt","mDebtLabel"],["mEquity","mEquityLabel"]].forEach((ids,i)=>{document.getElementById(ids[1]).textContent=labels[i];document.getElementById(ids[0]).textContent=typeof vals[i]==="string"?vals[i]:money(vals[i]);});}};
+const _legacyUpdateUsefulNowV13=updateUsefulNow;
+updateUsefulNow=function(){if(state.objective==="develop"&&state.developmentEntryMode==="quick"&&state.step>=3&&state.quickProjects.length){let box=document.getElementById("usefulNow");if(!box){box=document.createElement("div");box.id="usefulNow";document.getElementById("sideInsights").before(box);}const ms=state.quickProjects.map(quickProjectMetrics);const value=ms.length===1?ms[0].profitAfterFinance:Math.max(...ms.map(x=>x.profitAfterFinance));box.innerHTML=`<div class="quick-result"><div class="eyebrow">Useful now</div><span>${ms.length===1?"Profit after estimated finance":"Highest profit after estimated finance"}</span><strong>${moneyExact(value)}</strong><span style="font-size:12px;opacity:.8">Using the common quick-finance assumptions</span></div>`;return;}return _legacyUpdateUsefulNowV13();};
+function augmentDetailedDevelopmentUI(){
+ if(state.objective!=="develop"||state.developmentEntryMode!=="advanced"||document.getElementById("devFinancePanel"))return;
+ const excel=document.getElementById("excelAssistPanel");if(!excel)return;
+ const panel=document.createElement("div");panel.id="devFinancePanel";panel.className="section advanced-only";panel.innerHTML=`<h3>Development finance structure</h3><div class="callout">These are modelling assumptions, not lender quotes. They drive the monthly debt, interest and liquidity calculation.</div><div class="grid3">
+ <div class="field"><label>Senior interest rate (% p.a.)</label><input id="devSeniorRate" type="number" min="0" step="0.25" value="12"><div class="help">Default 12.0% p.a.</div></div><div class="field"><label>Arrangement fee (%)</label><input id="devArrangementFee" type="number" min="0" step="0.25" value="2"></div><div class="field"><label>Exit fee (%)</label><input id="devExitFee" type="number" min="0" step="0.25" value="0"></div>
+ <div class="field"><label>Interest treatment</label><select id="devInterestMethod"><option value="rolled">Rolled</option><option value="serviced">Serviced monthly</option></select></div><div class="field"><label>Works funding to test (%)</label><input id="devWorksFundingPct" type="number" min="0" max="100" step="5" value="100"></div><div class="field"><label>Professional fees funding to test (%)</label><input id="devProfessionalFundingPct" type="number" min="0" max="100" step="5" value="100"></div><div class="field"><label>Purchase / acquisition funding to test (%)</label><input id="devAcquisitionFundingPct" type="number" min="0" max="100" step="5" value="65"><div class="help">A modelling input, not a lender maximum.</div></div><div class="field"><label>Certification / reimbursement lag</label><select id="devCertificationLag"><option value="0">Same month</option><option value="1" selected>1 month in arrears</option><option value="2">2 months in arrears</option></select></div>
+ <div class="field"><label>Senior facility limit to test (£)</label><input id="devSeniorLimit" type="number" min="0" step="10000" value="0"><div class="help">0 = no artificial cap. Enter a facility size to test headroom/liquidity.</div></div><div class="field"><label>Optional mezzanine limit (£)</label><input id="devMezzLimit" type="number" min="0" step="10000" value="0"></div><div class="field"><label>Mezzanine rate (% p.a.)</label><input id="devMezzRate" type="number" min="0" step="0.5" value="15"></div>
+ <div class="field"><label>Sale proceeds applied to debt (%)</label><input id="devReleasePct" type="number" min="0" max="100" step="5" value="100"></div><div class="field"><label>Or minimum release per sold unit (£)</label><input id="devReleaseAmount" type="number" min="0" step="10000" value="0"><div class="help">If entered, this overrides the percentage for each sale.</div></div><div class="field"><label>Sales / disposal costs (% of sales)</label><input id="devSalesCostPct" type="number" min="0" step="0.25" value="0"></div>
+ </div><details class="disclosure"><summary>Retained units and exit finance</summary><div class="grid3" style="margin-top:8px"><div class="field"><label>Retained-unit refinance advance (£)</label><input id="devRefiAmount" type="number" min="0" step="10000" value="0"></div><div class="field"><label>Refinance fee (%)</label><input id="devRefiFee" type="number" min="0" step="0.25" value="0"></div><div class="field"><label>Exit-finance rate to compare (% p.a.)</label><input id="devExitCompareRate" type="number" min="0" step="0.25" value="0"><div class="help">Leave 0 if you do not want an exit-finance comparison.</div></div><div class="field"><label>Exit-finance fee to compare (%)</label><input id="devExitCompareFee" type="number" min="0" step="0.25" value="0"></div></div></details>`;
+ excel.parentNode.insertBefore(panel,excel);
+ const fs=state.developmentFinanceSeed||null;if(fs){const setv=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v;};setv("devSeniorRate",fs.annualRate);setv("devArrangementFee",fs.arrangementFeePct);setv("devExitFee",fs.exitFeePct);setv("devInterestMethod",fs.interestMethod);setv("devWorksFundingPct",fs.worksFundingPct);setv("devProfessionalFundingPct",fs.professionalFundingPct??fs.worksFundingPct);setv("devAcquisitionFundingPct",fs.acquisitionFundingPct??65);setv("devCertificationLag",fs.certificationLag);setv("devReleasePct",fs.releasePct);setv("devSalesCostPct",fs.salesCostPct);}
+ excel.insertAdjacentHTML("afterbegin",`<label style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><input id="devUseImportedSchedule" type="checkbox" style="width:auto" ${state.monthlyRows.length?"checked":""}> Use imported/generated monthly schedule as the authoritative finance-timing schedule</label>`);
+ panel.querySelectorAll("input,select").forEach(e=>e.addEventListener("input",updateModulePreview));panel.querySelectorAll("select").forEach(e=>e.addEventListener("change",updateModulePreview));
+ const use=document.getElementById("devUseImportedSchedule");if(use)use.addEventListener("change",updateModulePreview);
+ const hist=document.getElementById("landHistoricCostField");if(hist)hist.classList.toggle("hidden",text("siteOwnership")!=="owned");
+ const contInput=document.getElementById("contingency"),contRange=document.getElementById("contingencyR"),contView=document.getElementById("contingencyView");
+ if(!state.developmentSeed && !state.devContingencyUserEdited && state.developmentFamily==="existing" && contInput && Number(contInput.value)===5){contInput.value=7.5;if(contRange)contRange.value=7.5;if(contView)contView.textContent="7.5";}
+ if(contInput){contInput.addEventListener("input",()=>{state.devContingencyUserEdited=true;});}
+ document.querySelectorAll("#existingDevTypes .pill").forEach(b=>b.addEventListener("click",()=>{if(state.devContingencyUserEdited)return;const target=["conversion","heavy_refurb"].includes(b.dataset.v)?7.5:5;if(contInput){contInput.value=target;if(contRange)contRange.value=target;if(contView)contView.textContent=String(target);updateModulePreview();}}));
+ linkVisibleLabels(panel);
+ updateModulePreview();
+}
+const _legacyRenderSpecialistV13=renderSpecialist;
+renderSpecialist=function(){_legacyRenderSpecialistV13();if(state.objective==="develop"&&state.developmentEntryMode==="advanced")augmentDetailedDevelopmentUI();};
+const _legacyUpdateDevelopmentSiteFieldsV13=updateDevelopmentSiteFields;
+updateDevelopmentSiteFields=function(){_legacyUpdateDevelopmentSiteFieldsV13();const h=document.getElementById("landHistoricCostField");if(h)h.classList.toggle("hidden",text("siteOwnership")!=="owned");};
+
+function devExitBreakEven(cfg,result,exitRate,exitFeePct){
+ const buildRow=result.ledger.find(x=>x.month===cfg.buildMonths)||result.ledger.filter(x=>x.month<=cfg.buildMonths).slice(-1)[0];if(!buildRow||buildRow.closingDebt<=0||exitRate<=0)return null;const opening=buildRow.closingDebt,sold=Math.max(1,cfg.units-cfg.retainUnits),soldValue=cfg.gdv*(sold/cfg.units),perUnit=soldValue/sold;
+ function path(rate,fee,horizon){let debt=opening,cost=opening*fee/100;for(let m=1;m<=horizon;m++){const i=debt*(rate/100/12);debt+=i;cost+=i;const due=[];for(let u=0;u<sold;u++){const slot=sold===1?1:1+Math.round(u*(horizon-1)/(sold-1));if(slot===m)due.push(perUnit);}debt=Math.max(0,debt-due.reduce((a,b)=>a+b,0));}return cost;}
+ for(let h=1;h<=36;h++){if(path(exitRate,exitFeePct,h)<path(cfg.annualRate,0,h))return h;}return null;
+}
+function devExitFinanceComparison(cfg,result){
+ const rate=val("devExitCompareRate");if(rate<=0||cfg.exitMonths<=0)return null;const feePct=val("devExitCompareFee");const buildRow=result.ledger.find(x=>x.month===cfg.buildMonths)||result.ledger.filter(x=>x.month<=cfg.buildMonths).slice(-1)[0];if(!buildRow||buildRow.closingDebt<=0)return null;
+ const opening=buildRow.closingDebt,events=devSaleEvents(cfg).events;function path(annual,fee){let debt=opening,cost=opening*fee/100,interest=0;for(let m=cfg.buildMonths+1;m<=result.totalMonths;m++){const i=debt*(annual/100/12);debt+=i;interest+=i;const proceeds=events.filter(e=>e.month===m).reduce((s,e)=>s+e.net,0);debt=Math.max(0,debt-proceeds);}return {interest,fee:opening*fee/100,total:interest+opening*fee/100,closing:debt};}return {stay:path(cfg.annualRate,0),exit:path(rate,feePct),opening,breakEvenMonths:devExitBreakEven(cfg,result,rate,feePct)};
+}
+function devScenarioRows(){
+ const defs=[{name:"Base"},{name:"Build cost +10%",buildCostPct:.10},{name:"GDV -10%",gdvPct:-.10},{name:"Build period +3m",buildMonthsAdd:3},{name:"Sales period +6m",exitMonthsAdd:6},{name:"Combined downside",buildCostPct:.10,gdvPct:-.10,buildMonthsAdd:3,exitMonthsAdd:6}];
+ return defs.map(d=>{const p=devDetailedPrepared(d),r=runDevelopmentCashflowModel(p.cfg);return {name:d.name,r};});
+}
+function renderDetailedDevelopmentPreview(){
+ const p=document.getElementById("modulePreview");if(!p||!document.getElementById("devSeniorRate"))return;const prep=devDetailedPrepared(),r=runDevelopmentCashflowModel(prep.cfg);const market=developmentMarketPosition(r.peakLtgdv,state.developmentFamily==="ground"?"ground":"existing",r.peakLtc,r.peakDebt);const exitComp=devExitFinanceComparison(prep.cfg,r);
+ let alerts="";if(r.extraEquity>0)alerts+=`<div class="dev-alert"><strong>Additional developer liquidity required: ${moneyExact(r.extraEquity)}</strong><div class="note">This is above the opening cash entered and is driven by cost timing, draw eligibility/lag and serviced finance where applicable. Peak single-month injection: ${moneyExact(r.peakMonthlyEquityInjection)}.</div></div>`;if(r.exitShortfall>1)alerts+=`<div class="dev-alert danger"><strong>Exit shortfall: ${moneyExact(r.exitShortfall)}</strong><div class="note">Development debt remains after the modelled sales/refinance exit.</div></div>`;if(r.facilityHeadroom!==null&&r.facilityHeadroom<0)alerts+=`<div class="dev-alert danger"><strong>Senior facility limit exceeded by ${moneyExact(-r.facilityHeadroom)}</strong><div class="note">The entered senior commitment is below the modelled peak senior balance.</div></div>`;
+ const scenarios=devScenarioRows();const scenarioHtml=`<details class="disclosure" open><summary>Scenario comparison</summary><table class="dev-scenario-table"><thead><tr><th>Scenario</th><th>Profit after finance</th><th>Finance cost</th><th>Peak debt</th><th>Peak debt / GDV</th><th>Exit shortfall</th></tr></thead><tbody>${scenarios.map(x=>`<tr><td>${x.name}</td><td>${moneyExact(x.r.profitAfterFinance)}</td><td>${moneyExact(x.r.totalFinanceCost)}</td><td>${moneyExact(x.r.peakDebt)}</td><td>${Number.isFinite(x.r.peakLtgdv)?(x.r.peakLtgdv*100).toFixed(1)+"%":"—"}</td><td>${moneyExact(x.r.exitShortfall)}</td></tr>`).join("")}</tbody></table><div class="note">When actual monthly rows are imported, scenario cost changes and timing shifts apply only to forecast rows.</div></details>`;
+ const ledger=`<details class="disclosure"><summary>Monthly funding ledger (${r.ledger.length} periods)</summary><div class="dev-ledger-wrap"><table class="dev-ledger"><thead><tr><th>Month</th><th>Status</th><th>Costs</th><th>Senior draw</th><th>Mezz draw</th><th>Interest</th><th>Sales</th><th>Refinance</th><th>Senior repaid</th><th>Mezz repaid</th><th>Equity injection</th><th>Closing cash</th><th>Senior balance</th><th>Mezz balance</th><th>Closing debt</th></tr></thead><tbody>${r.ledger.map(x=>`<tr><td>${x.month}</td><td><span class="dev-data-badge ${x.status}">${x.status}</span></td><td>${moneyExact(x.costs)}</td><td>${moneyExact(x.drawSenior)}</td><td>${moneyExact(x.drawMezz)}</td><td>${moneyExact(x.interest)}</td><td>${moneyExact(x.sales)}</td><td>${moneyExact(x.refinance)}</td><td>${moneyExact(x.repaymentSenior||0)}</td><td>${moneyExact(x.repaymentMezz||0)}</td><td>${moneyExact(x.equityInjection)}</td><td>${moneyExact(x.closingCash)}</td><td>${moneyExact(x.closingSenior||0)}</td><td>${moneyExact(x.closingMezz||0)}</td><td>${moneyExact(x.closingDebt)}</td></tr>`).join("")}</tbody></table></div></details>`;
+ const exitHtml=exitComp?`<div class="section"><h3>Development exit-finance comparison</h3><table class="result-table"><tr><td>Debt at end of works</td><td>${moneyExact(exitComp.opening)}</td></tr><tr><td>Stay on development finance: interest during exit</td><td>${moneyExact(exitComp.stay.total)}</td></tr><tr><td>Switch to tested exit finance: interest + fee</td><td>${moneyExact(exitComp.exit.total)}</td></tr><tr><td>Indicative saving / (extra cost)</td><td>${moneyExact(exitComp.stay.total-exitComp.exit.total)}</td></tr><tr><td>First sale horizon where exit finance is cheaper</td><td>${exitComp.breakEvenMonths?exitComp.breakEvenMonths+" months":"Not within 36 months on these assumptions"}</td></tr></table></div>`:"";
+ p.innerHTML=`<div class="assumption-key"><span class="key user">Entered by you</span><span class="key model">Illustrative assumption</span><span class="key derived">Calculated result</span></div><div class="section"><h3>Detailed development finance view</h3><table class="result-table">
+ <tr><td>Economic project cost before finance</td><td>${moneyExact(r.economicCostBeforeFinance)}</td></tr><tr><td>Completed value / GDV</td><td>${moneyExact(prep.cfg.gdv)}</td></tr><tr><td>Profit before finance</td><td>${moneyExact(r.profitBeforeFinance)}</td></tr><tr><td>Project funding need before finance costs</td><td>${moneyExact(r.coreFundingNeed)}</td></tr><tr><td>Day-one advance / debt created</td><td>${moneyExact(r.dayOneAdvance)}</td></tr><tr><td>Indicative gross facility requirement (peak debt)</td><td>${moneyExact(r.peakDebt)}</td></tr><tr><td>Total interest</td><td>${moneyExact(r.totalInterest)}</td></tr><tr><td>Total finance cost</td><td>${moneyExact(r.totalFinanceCost)}</td></tr><tr><td>Sales / disposal costs</td><td>${moneyExact(r.totalSalesCosts)}</td></tr><tr><td><strong>Profit after finance</strong></td><td><strong>${moneyExact(r.profitAfterFinance)}</strong></td></tr><tr><td>Profit on total cost after finance</td><td>${(r.profitOnTotalCost*100).toFixed(1)}%</td></tr><tr><td>Peak development debt</td><td>${moneyExact(r.peakDebt)}</td></tr><tr><td>Peak debt / GDV</td><td>${Number.isFinite(r.peakLtgdv)?(r.peakLtgdv*100).toFixed(1)+"%":"—"}</td></tr><tr><td>Peak debt / project cost</td><td>${Number.isFinite(r.peakLtc)?(r.peakLtc*100).toFixed(1)+"%":"—"}</td></tr><tr><td>Total developer equity represented / required</td><td>${moneyExact(r.totalDeveloperEquity)}</td></tr><tr><td>Additional equity above opening cash</td><td>${moneyExact(r.extraEquity)}</td></tr><tr><td>Indicative developer equity IRR</td><td>${Number.isFinite(r.equityIRR)?(r.equityIRR*100).toFixed(1)+"%":"—"}</td></tr><tr><td>Closing development debt / exit shortfall</td><td>${moneyExact(r.exitShortfall)}</td></tr>${r.facilityHeadroom!==null?`<tr><td>Senior facility headroom at peak</td><td>${moneyExact(r.facilityHeadroom)}</td></tr>`:""}</table>${alerts}${marketPositionPanel(market.status,market.cls,market.reason,prep.imported?`Monthly imported/generated data is authoritative for finance timing. Actual history through month ${prep.actualThrough||0} remains fixed in scenario tests.`:"The monthly cost profile has been generated from the current assumptions. Import Excel/CSV to replace it with project-specific timing.")}</div>${exitHtml}${scenarioHtml}${ledger}`;
+ updateSide();updateUsefulNow();rankAssumptions();materialityPrompt();
+}
+const _legacyUpdateModulePreviewV13=updateModulePreview;
+updateModulePreview=function(){if(state.objective==="develop"&&state.developmentEntryMode==="advanced"&&document.getElementById("devSeniorRate")){renderDetailedDevelopmentPreview();return;}return _legacyUpdateModulePreviewV13();};
+
+function devSuggestedCanonical(h){const n=normaliseHeader(h);const syn={Period:["period","month","date","month date","period end"],Status:["status","type","forecast actual","actual forecast","data status"],Category:["category","cost category","cost type","heading"],Subcategory:["subcategory","sub category","cost subcategory","sub heading"],Description:["description","detail","details","item","cost item","notes"],Forecast:["forecast","budget","planned","forecast cost","expected cost","forecast spend"],Actual:["actual","actual cost","actual spend","spent","paid","actuals"],Source:["source","data source","origin","evidence"]};for(const [k,vals] of Object.entries(syn))if(vals.includes(n))return k;for(const [k,vals] of Object.entries(syn))if(vals.some(v=>n.includes(v)||v.includes(n)))return k;return "";}
+renderMapping=function(){const area=document.getElementById("mappingArea");if(!area)return;const opts=["","Period","Status","Category","Subcategory","Description","Forecast","Actual","Source"];area.innerHTML=`<div style="margin-top:12px"><strong>Confirm column mapping</strong>${state.importedSheetName?`<span class="dev-data-badge">Sheet: ${escapeHtml(state.importedSheetName)}</span>`:""}<table class="mapping-table"><thead><tr><th>Your column</th><th>Use as</th></tr></thead><tbody>${state.importedHeaders.map((h,i)=>{const sug=devSuggestedCanonical(h);return `<tr><td>${escapeHtml(h)}</td><td><select class="mapSelect" data-index="${i}">${opts.map(o=>`<option value="${o}" ${o===sug?"selected":""}>${o||"Ignore"}</option>`).join("")}</select></td></tr>`;}).join("")}</tbody></table><div class="import-actions"><button class="btn primary" type="button" onclick="applyMapping()">Use mapped data</button></div></div>`;document.getElementById("importStatus").textContent="Common headings have been suggested. Confirm ambiguous columns before the data drives the finance model.";};
+applyMapping=function(){const maps={};document.querySelectorAll(".mapSelect").forEach(s=>{if(s.value)maps[s.value]=state.importedHeaders[Number(s.dataset.index)]});if(!maps.Period||(!maps.Forecast&&!maps.Actual)){document.getElementById("importStatus").textContent="Please map a Period/Month/Date column and at least Forecast or Actual.";return;}state.monthlyRows=state.importedRawRows.map(r=>({Month:r[maps.Period]||"",Status:maps.Status?r[maps.Status]||"":"",Category:maps.Category?r[maps.Category]||"":"",Subcategory:maps.Subcategory?r[maps.Subcategory]||"":"",Description:maps.Description?r[maps.Description]||"":"",Forecast:maps.Forecast?parseMoney(r[maps.Forecast]):0,Actual:maps.Actual?parseMoney(r[maps.Actual]):0,Source:maps.Source?r[maps.Source]||"":""}));renderMonthlyPreview();const use=document.getElementById("devUseImportedSchedule");if(use)use.checked=true;document.getElementById("importStatus").textContent=`Imported ${state.monthlyRows.length} monthly rows. The mapped schedule now drives finance timing.`;updateModulePreview();};
+async function handleDevelopmentFile(file){const status=document.getElementById("importStatus");try{const name=(file.name||"").toLowerCase();let rows=[];if(name.endsWith(".xlsx")||name.endsWith(".xls")){if(typeof XLSX==="undefined")throw new Error("Excel library has not loaded");const ab=await file.arrayBuffer();const wb=XLSX.read(ab,{cellFormula:true,cellDates:true});const sheetName=wb.SheetNames.find(n=>{const r=XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,defval:""});return r.length>1;})||wb.SheetNames[0];state.importedSheetName=sheetName;rows=XLSX.utils.sheet_to_json(wb.Sheets[sheetName],{defval:"",raw:false});}else{state.importedSheetName="CSV";const text=await file.text();const lines=text.replace(/\r/g,"").split("\n").filter(x=>x.trim());if(lines.length<2)throw new Error("The CSV does not contain data rows");const headers=parseCsvLine(lines[0]);rows=lines.slice(1).map(line=>{const vals=parseCsvLine(line),o={};headers.forEach((h,i)=>o[h]=vals[i]??"");return o;});}if(!rows.length)throw new Error("No data rows were found");state.importedHeaders=Object.keys(rows[0]);state.importedRawRows=rows;renderMapping();}catch(err){console.error(err);if(status)status.textContent=`Import failed: ${err.message||err}`;}};
+downloadDevelopmentTemplate=function(){const months=Math.max(1,val("buildMonths")||12),rows=["Period,Status,Category,Subcategory,Description,Forecast,Actual,Source"];for(let m=1;m<=months;m++)rows.push(`${m},Forecast,Core construction,,Build month ${m},,,User / QS`);downloadText("EAS-Development-Monthly-Template.csv",rows.join("\n"),"text/csv");};
+function downloadDevelopmentExcelTemplate(){if(typeof XLSX==="undefined"){alert("Excel support has not loaded yet. Please retry in a moment.");return;}const months=Math.max(1,val("buildMonths")||12),data=[["Period","Status","Category","Subcategory","Description","Forecast","Actual","Source"]];for(let m=1;m<=months;m++)data.push([m,"Forecast","Core construction","","Build month "+m,"","","User / QS"]);const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(data);XLSX.utils.book_append_sheet(wb,ws,"Monthly Cost Plan");XLSX.writeFile(wb,"EAS-Development-Monthly-Template.xlsx");}
+function generateMonthlyPlan(){const months=Math.max(1,Math.round(val("buildMonths")||12)),works=val("buildCost"),prof=val("profFees"),cont=works*val("contingency")/100,w=devSCurveWeights(months);state.monthlyRows=[];for(let i=0;i<months;i++){state.monthlyRows.push({Month:i+1,Status:"Forecast",Category:"Core construction",Subcategory:"",Description:`Build month ${i+1}`,Forecast:works*w[i],Actual:0,Source:"Generated"});state.monthlyRows.push({Month:i+1,Status:"Forecast",Category:"Professional",Subcategory:"",Description:`Professional fees month ${i+1}`,Forecast:prof/months,Actual:0,Source:"Generated"});state.monthlyRows.push({Month:i+1,Status:"Forecast",Category:"Contingency",Subcategory:"",Description:`Contingency month ${i+1}`,Forecast:cont*w[i],Actual:0,Source:"Generated"});}renderMonthlyPreview();const use=document.getElementById("devUseImportedSchedule");if(use)use.checked=true;const s=document.getElementById("importStatus");if(s)s.textContent="Generated EAS monthly schedule is now driving finance timing. Export to Excel to amend it, then re-import if required.";updateModulePreview();}
+renderMonthlyPreview=function(){const el=document.getElementById("monthlyPreview");if(!el)return;if(!state.monthlyRows.length){el.innerHTML="";return;}const forecast=state.monthlyRows.reduce((s,r)=>s+(Number(r.Forecast)||0),0),actual=state.monthlyRows.reduce((s,r)=>s+(Number(r.Actual)||0),0);el.innerHTML=`<div class="summary-grid"><div class="summary-box"><span>Rows</span><strong>${state.monthlyRows.length}</strong></div><div class="summary-box"><span>Forecast total</span><strong>${money(forecast)}</strong></div><div class="summary-box"><span>Actual total</span><strong>${money(actual)}</strong></div></div><div class="monthly-preview"><table><thead><tr><th>Period</th><th>Status</th><th>Category</th><th>Description</th><th>Forecast</th><th>Actual</th></tr></thead><tbody>${state.monthlyRows.slice(0,120).map(r=>`<tr><td>${escapeHtml(r.Month)}</td><td>${escapeHtml(r.Status||"")}</td><td>${escapeHtml(r.Category)}</td><td>${escapeHtml(r.Description)}</td><td>${money(r.Forecast)}</td><td>${money(r.Actual)}</td></tr>`).join("")}</tbody></table></div>`;};
+function downloadDevelopmentManifest(){const prep=devDetailedPrepared();const payload={schema_version:"1.3.1",generated_at:new Date().toISOString(),project:{development_type:state.developmentType,development_family:state.developmentFamily,inputs:prep.cfg,monthly_rows:state.monthlyRows}};downloadText("EAS-Development-Model-v1.3.1.json",JSON.stringify(payload,null,2),"application/json");}
+function exportDetailedDevelopmentWorkbook(){if(typeof XLSX==="undefined"){alert("Excel support has not loaded yet. Please retry in a moment.");return;}const prep=devDetailedPrepared(),r=runDevelopmentCashflowModel(prep.cfg),sc=devScenarioRows();const inputs=[["Field","Value"],...[ ["Development type",state.developmentType],["Site position",prep.cfg.siteStatus],["Site/current value",prep.cfg.siteValue],["Historic land cost",prep.cfg.landHistoricCost],["Existing debt",prep.cfg.existingDebt],["Acquisition costs",prep.cfg.acquisitionCosts],["GDV",prep.cfg.gdv],["Opening cash",prep.cfg.openingCash],["Senior rate %",prep.cfg.annualRate],["Arrangement fee %",prep.cfg.arrangementFeePct],["Works funding %",prep.cfg.worksFundingPct],["Professional fees funding %",prep.cfg.professionalFundingPct],["Acquisition funding %",prep.cfg.acquisitionFundingPct],["Certification lag months",prep.cfg.certificationLag] ]];const ledger=[Object.keys(r.ledger[0]||{}),...r.ledger.map(x=>Object.values(x))];const scenarios=[["Scenario","Profit after finance","Finance cost","Peak debt","Peak debt / GDV","Exit shortfall"],...sc.map(x=>[x.name,x.r.profitAfterFinance,x.r.totalFinanceCost,x.r.peakDebt,x.r.peakLtgdv,x.r.exitShortfall])];const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(inputs),"Inputs");XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ledger),"Monthly Ledger");XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(scenarios),"Scenarios");if(state.monthlyRows.length)XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(state.monthlyRows),"Imported Cost Plan");XLSX.writeFile(wb,"EAS-Development-Model.xlsx");}
+
+const _legacyRenderResultsV13=renderResults;
+renderResults=function(){if(state.objective==="develop"&&state.developmentEntryMode==="quick"){renderCaseValidation();const r=document.getElementById("finalResults"),preview=document.getElementById("modulePreview");let html=`<div class="callout"><strong>${currentRouteLabel()}</strong><br>This is the current quick comparison. Each project uses its own cash contribution; wider borrower/security information is deliberately deferred until a project is taken into the Detailed Development Model.</div>`+(preview?preview.innerHTML:"");if(state.assets.length){const c=commonMetrics(),sec=state.assets.filter(a=>a.security!=="never"),secEq=sec.reduce((s,a)=>s+Math.max(0,a.value-a.debt),0);html+=`<div class="section"><h3>Optional wider assets entered</h3><table class="result-table"><tr><td>Gross asset equity entered</td><td>${money(c.equity)}</td></tr><tr><td>Gross equity not excluded from security</td><td>${money(secEq)}</td></tr></table><div class="callout">This equity is context only and has not been treated as project cash or automatic borrowing capacity.</div></div>`;}r.innerHTML=html;return;}return _legacyRenderResultsV13();};
+function buildDevCaseSummaryV3(){const lines=["EAS Finance Workspace - Development Summary","Route: "+currentRouteLabel(),""];const add=(k,v)=>lines.push(k+": "+v);if(state.developmentEntryMode==="quick"){add("Finance assumptions",`${state.quickDevFinance.annualRate}% p.a.; ${state.quickDevFinance.arrangementFeePct}% arrangement fee; ${state.quickDevFinance.interestMethod}; ${state.quickDevFinance.acquisitionFundingPct}% acquisition funding; ${state.quickDevFinance.worksFundingPct}% works funding; ${state.quickDevFinance.professionalFundingPct}% professional-fee funding; ${state.quickDevFinance.certificationLag} month draw lag`);add("Stress",state.quickDevStress.name);state.quickProjects.forEach((p,i)=>{const m=quickProjectMetrics(p);lines.push("",(p.name||`Project ${i+1}`).toUpperCase());add("Project type",p.type==="ground"?"Ground-up":"Conversion / refurbishment");add("Economic project cost",moneyExact(m.economicCostBeforeFinance));add("GDV",moneyExact(m.gdv));add("Profit before finance",moneyExact(m.profitBeforeFinance));add("Estimated finance cost",moneyExact(m.totalFinanceCost));add("Profit after finance",moneyExact(m.profitAfterFinance));add("Peak debt",moneyExact(m.peakDebt));add("Peak debt / GDV",(m.peakLtgdv*100).toFixed(1)+"%");add("Peak debt / project cost",(m.peakLtc*100).toFixed(1)+"%");add("Developer equity represented / required",moneyExact(m.totalDeveloperEquity));add("Additional equity required",moneyExact(m.extraEquity));add("Indicative equity IRR",Number.isFinite(m.equityIRR)?(m.equityIRR*100).toFixed(1)+"%":"—");add("Exit shortfall",moneyExact(m.exitShortfall));add("Market position",m.market.status);lines.push("Market comment: "+m.market.reason);});}else{const prep=devDetailedPrepared(),m=runDevelopmentCashflowModel(prep.cfg);add("Economic project cost",moneyExact(m.economicCostBeforeFinance));add("GDV",moneyExact(prep.cfg.gdv));add("Profit before finance",moneyExact(m.profitBeforeFinance));add("Total interest",moneyExact(m.totalInterest));add("Total finance cost",moneyExact(m.totalFinanceCost));add("Profit after finance",moneyExact(m.profitAfterFinance));add("Peak debt",moneyExact(m.peakDebt));add("Peak debt / GDV",(m.peakLtgdv*100).toFixed(1)+"%");add("Peak debt / project cost",(m.peakLtc*100).toFixed(1)+"%");add("Additional equity required",moneyExact(m.extraEquity));add("Equity IRR",Number.isFinite(m.equityIRR)?(m.equityIRR*100).toFixed(1)+"%":"—");add("Exit shortfall",moneyExact(m.exitShortfall));add("Monthly data",prep.imported?`Authoritative; actual through month ${prep.actualThrough}`:"Generated from assumptions");}lines.push("","IMPORTANT","This is an indicative model, not a lender decision or offer of finance.");return lines.join("\r\n");}
+const _legacyValidateCurrentCaseV13=validateCurrentCase;
+validateCurrentCase=function(){if(state.objective==="develop"&&state.developmentEntryMode==="quick"){const warnings=[],strengths=[];state.quickProjects.forEach((p,i)=>{const name=p.name||`Project ${i+1}`,m=quickProjectMetrics(p);if((Number(p.siteValue)||0)<=0)warnings.push(`${name}: enter a purchase price or current site value.`);if((Number(p.works)||0)<=0)warnings.push(`${name}: enter a works/build cost.`);if((Number(p.gdv)||0)<=0)warnings.push(`${name}: enter a completed value / GDV.`);if(m.profitAfterFinance<=0)warnings.push(`${name}: the current inputs do not produce a positive profit after estimated finance.`);if(m.exitShortfall>1)warnings.push(`${name}: the model leaves ${moneyExact(m.exitShortfall)} development debt at exit.`);if(p.type==="part_complete")warnings.push(`${name}: part-complete projects should be taken into Detailed with actual/forecast costs before relying on the finance estimate.`);});return {warnings,strengths};}const base=_legacyValidateCurrentCaseV13();if(state.objective==="develop"&&state.developmentEntryMode==="advanced"&&state.developmentType==="part_complete"){const hasActual=state.monthlyRows.some(r=>String(r.Status||"").toLowerCase().startsWith("actual")||Number(r.Actual)>0);if(!hasActual)base.warnings.push("Part-complete selected: import or enter actual costs to date so the remaining funding requirement is not modelled as a fresh project.");}return base;};
+const _legacyBuildCaseSummaryTextV13=buildCaseSummaryText;
+buildCaseSummaryText=function(){if(state.objective==="develop")return buildDevCaseSummaryV3();return _legacyBuildCaseSummaryTextV13();};
+
+
 const caseSummaryLink=document.getElementById("downloadCaseSummaryBtn");
 if(caseSummaryLink) caseSummaryLink.addEventListener("click",prepareCaseSummaryDownload);
 
@@ -2773,5 +3417,4 @@ updateSide();
 
 </script>
 </div>
-</body>
-</html>
+</body></html>
