@@ -1,5 +1,11 @@
-<!-- EAS Finance Workspace final v1.4.0 · WordPress Custom HTML component -->
+<!-- EAS Finance Workspace final v1.5.0 · unified workspace with Bridging Finance v1.0.0 -->
 <div id="eas-finance-workspace" class="intro-only">
+<header class="eas-masthead">
+  <div class="eas-masthead-inner">
+    <div class="eas-brand"><div class="eas-brand-mark">EAS</div><div><div class="eas-brand-name">EAS Finance</div><div class="eas-brand-sub">Commercial and property finance</div></div></div>
+    <div class="eas-masthead-version">Finance Workspace v1.5.0</div>
+  </div>
+</header>
 <a class="floating-experts-cta" href="https://easfinance.co.uk/contact-us/" target="_blank" rel="noopener" aria-label="Discuss your finance case with the EAS Finance team in a new tab">Discuss with the experts</a>
 <style>
 #eas-finance-workspace{
@@ -394,7 +400,7 @@
 }
 
 
-/* Final v1.4.0 readability and accessibility baseline */
+/* Final v1.5.0 readability and accessibility baseline */
 #eas-finance-workspace{font-size:16px}
 #eas-finance-workspace .eyebrow{font-size:14px;line-height:1.45}
 #eas-finance-workspace .option span{font-size:15px;line-height:1.5}
@@ -460,6 +466,134 @@
   #eas-finance-workspace details>summary{display:none}
 }
 
+
+/* v1.5.0 unified visual system, based on the Bridging Finance Reality Check */
+#eas-finance-workspace{--paper:#fffdf8;--ink:#243746;--radius:16px;line-height:1.55;color:var(--ink);padding-top:0}
+#eas-finance-workspace .eas-masthead{background:var(--navy);color:#fff;border-bottom:4px solid var(--gold-decor);margin-bottom:0}
+#eas-finance-workspace .eas-masthead-inner{width:min(1200px,calc(100% - 40px));min-height:72px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px}
+#eas-finance-workspace .eas-brand{display:flex;align-items:center;gap:13px}
+#eas-finance-workspace .eas-brand-mark{width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.5);color:#f4ead5;font:700 17px/1 Georgia,serif;letter-spacing:.04em}
+#eas-finance-workspace .eas-brand-name{font-weight:750;letter-spacing:.02em}
+#eas-finance-workspace .eas-brand-sub,#eas-finance-workspace .eas-masthead-version{color:#cad6df;font-size:14px}
+#eas-finance-workspace>.shell{padding-top:0}
+#eas-finance-workspace>.shell>.hero{max-width:none;margin:0 -20px 34px;padding:46px max(20px,calc((100% - 1160px)/2)) 40px;background:linear-gradient(135deg,#fffdf8 0%,#f4ead5 100%);border-bottom:1px solid var(--line)}
+#eas-finance-workspace>.shell>.hero h1{max-width:850px;font-size:clamp(34px,4vw,56px)}
+#eas-finance-workspace .layout{grid-template-columns:minmax(0,1.35fr) minmax(330px,.65fr);gap:28px}
+#eas-finance-workspace .card{background:var(--paper);border-radius:var(--radius);box-shadow:0 18px 50px rgba(16,42,67,.09)}
+#eas-finance-workspace .workspace{padding:28px;min-height:0}
+#eas-finance-workspace .field{margin:17px 0}
+#eas-finance-workspace .grid2{gap:17px 18px}
+#eas-finance-workspace .grid3{gap:17px 18px}
+#eas-finance-workspace label{font-size:15px;color:var(--navy);font-weight:750;margin-bottom:7px}
+#eas-finance-workspace input,#eas-finance-workspace select{min-height:46px;border-color:#bfc7ce;padding:10px 12px;color:var(--ink)}
+#eas-finance-workspace input:focus,#eas-finance-workspace select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(138,105,45,.15)}
+#eas-finance-workspace .option{border-color:#bfc7ce;padding:18px;min-height:102px}
+#eas-finance-workspace .option strong{font-size:17px}
+#eas-finance-workspace .help,#eas-finance-workspace .note{color:#4f6473}
+#eas-finance-workspace #step2>.section,#eas-finance-workspace #step3>.section,#eas-finance-workspace #step4>.section{border:1px solid var(--line);border-radius:14px;background:#fff;padding:22px 24px;margin:18px 0}
+#eas-finance-workspace .side{padding:0;overflow:hidden;top:18px}
+#eas-finance-workspace .side>.eyebrow{margin:0;padding:23px 23px 5px;background:var(--navy);color:#dec38d}
+#eas-finance-workspace .side>h3{margin:0;padding:0 23px 20px;background:var(--navy);color:#fff;font-size:24px}
+#eas-finance-workspace .side>.metrics{padding:18px 22px 9px;margin:0}
+#eas-finance-workspace .side>.metrics .metric{padding:12px 0}
+#eas-finance-workspace .side>#sideModule,#eas-finance-workspace .side>.version,#eas-finance-workspace .side>#sideInsights,#eas-finance-workspace .side>#assumptionPriorities{margin-left:22px;margin-right:22px}
+#eas-finance-workspace .btn{min-height:44px;padding:10px 16px}
+#eas-finance-workspace .money-wrap,#eas-finance-workspace .suffix-wrap{position:relative}
+#eas-finance-workspace .money-wrap::before{content:"£";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#4f6473;z-index:1}
+#eas-finance-workspace .money-wrap input{padding-left:27px}
+#eas-finance-workspace .suffix-wrap::after{content:attr(data-suffix);position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#4f6473;font-size:13px;pointer-events:none}
+#eas-finance-workspace .suffix-wrap input{padding-right:48px}
+
+#eas-finance-workspace.bridge-mode .layout{display:block}
+#eas-finance-workspace.bridge-mode .side{display:none}
+#eas-finance-workspace.bridge-mode>.shell>.hero{display:none}
+#eas-finance-workspace.bridge-mode .workspace{padding:0;background:transparent;border:0;box-shadow:none}
+#eas-finance-workspace.bridge-mode .workspace>#stepEyebrow,#eas-finance-workspace.bridge-mode .workspace>#stepTitle,#eas-finance-workspace.bridge-mode .workspace>#progressTrack{display:none}
+#eas-finance-workspace.bridge-mode .workspace>.actions{justify-content:flex-start}
+#eas-finance-workspace.bridge-mode #nextBtn{display:none}
+#eas-finance-workspace.bridge-mode #backBtn{background:var(--paper);padding-left:18px;padding-right:18px}
+
+#eas-finance-workspace .bridge-intro{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,.7fr);gap:44px;align-items:end;margin:20px 0 28px;padding:32px 34px;background:linear-gradient(135deg,#fffdf8 0%,#f4ead5 100%);border:1px solid var(--line);border-radius:16px}
+#eas-finance-workspace .bridge-intro h2{font-size:clamp(30px,4vw,48px);margin-bottom:12px}
+#eas-finance-workspace .bridge-intro p{margin:0;color:var(--navy2);font-size:17px}
+#eas-finance-workspace .bridge-intro-note{border-left:3px solid var(--gold);padding-left:18px;color:var(--navy2);font-size:15px}
+#eas-finance-workspace .bridge-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(330px,.65fr);gap:28px;align-items:start}
+#eas-finance-workspace .bridge-module .input-column{min-width:0}
+#eas-finance-workspace .bridge-module .result-column{position:sticky;top:18px;min-width:0}
+#eas-finance-workspace .bridge-module .panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 50px rgba(16,42,67,.09)}
+#eas-finance-workspace .bridge-module .panel+.panel{margin-top:18px}
+#eas-finance-workspace .bridge-module .section-head{padding:23px 25px 16px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:14px}
+#eas-finance-workspace .bridge-module .step{flex:0 0 31px;width:31px;height:31px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px}
+#eas-finance-workspace .bridge-module .section-head h2{margin:0;font-size:21px}
+#eas-finance-workspace .bridge-module .section-head p{margin:3px 0 0;color:#4f6473;font-size:15px}
+#eas-finance-workspace .bridge-module .section-body{padding:22px 25px 25px}
+#eas-finance-workspace .bridge-module .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 18px}
+#eas-finance-workspace .bridge-module .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+#eas-finance-workspace .bridge-module .full{grid-column:1/-1}
+#eas-finance-workspace .bridge-module fieldset.field{min-width:0;margin:0;padding:0;border:0}
+#eas-finance-workspace .bridge-module .field label,#eas-finance-workspace .bridge-module .field legend{display:block;margin:0 0 6px;padding:0;color:var(--navy);font-weight:750;font-size:15px}
+#eas-finance-workspace .bridge-module .field small{display:block;margin-top:5px;color:#4f6473;font-size:14px;line-height:1.5}
+#eas-finance-workspace .bridge-module .radio-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#eas-finance-workspace .bridge-module .radio-card{position:relative}
+#eas-finance-workspace .bridge-module .radio-card input{position:absolute;opacity:0;pointer-events:none}
+#eas-finance-workspace .bridge-module .radio-card span{display:block;min-height:100%;border:1px solid #bfc7ce;border-radius:9px;padding:13px;background:#fff;color:var(--ink)}
+#eas-finance-workspace .bridge-module .radio-card input:focus-visible+span{outline:3px solid rgba(138,105,45,.3);outline-offset:2px}
+#eas-finance-workspace .bridge-module .radio-card input:checked+span{border-color:var(--gold);background:#f4ead5;box-shadow:inset 0 0 0 1px var(--gold);color:var(--navy)}
+#eas-finance-workspace .bridge-module .radio-card strong{display:block;font-size:15px}
+#eas-finance-workspace .bridge-module .radio-card em{display:block;margin-top:3px;color:#4f6473;font-style:normal;font-size:14px}
+#eas-finance-workspace .bridge-module details.advanced{margin-top:18px;border-top:1px dashed var(--line);padding-top:15px}
+#eas-finance-workspace .bridge-module details.advanced summary{color:var(--navy);font-weight:800;cursor:pointer}
+#eas-finance-workspace .bridge-module details.advanced[open] summary{margin-bottom:18px}
+#eas-finance-workspace .bridge-module .inline-note{margin:18px 0 0;padding:13px 15px;border-radius:9px;background:#eef3f6;color:var(--navy2);font-size:14px}
+#eas-finance-workspace .bridge-module .scope-stop{margin-top:14px;padding:14px 15px;border:1px solid #e3a7ab;border-radius:9px;background:#fbeaec;color:#9f2f35;font-weight:700}
+#eas-finance-workspace .bridge-module [hidden]{display:none!important}
+#eas-finance-workspace .bridge-module .summary-panel{overflow:hidden}
+#eas-finance-workspace .bridge-module .summary-top{padding:23px 23px 19px;background:var(--navy);color:#fff}
+#eas-finance-workspace .bridge-module .summary-top .eyebrow{color:#dec38d;margin-bottom:5px}
+#eas-finance-workspace .bridge-module .summary-top h2{color:#fff;margin:0;font-size:24px}
+#eas-finance-workspace .bridge-module .status{margin-top:15px;padding:11px 12px;border-radius:8px;font-size:14px;font-weight:800}
+#eas-finance-workspace .bridge-module .status.green{color:#d8f4e9;background:rgba(29,106,84,.45);border:1px solid rgba(216,244,233,.25)}
+#eas-finance-workspace .bridge-module .status.amber{color:#ffe9c5;background:rgba(154,98,20,.45);border:1px solid rgba(255,233,197,.3)}
+#eas-finance-workspace .bridge-module .status.red{color:#ffe1e4;background:rgba(159,47,53,.5);border:1px solid rgba(255,225,228,.3)}
+#eas-finance-workspace .bridge-module .metrics{padding:18px 22px 9px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#eas-finance-workspace .bridge-module .metric{padding:12px 0;border-bottom:1px solid #e4ded2;border-top:0}
+#eas-finance-workspace .bridge-module .metric-label{display:block;color:#4f6473;font-size:14px;line-height:1.35}
+#eas-finance-workspace .bridge-module .metric-value{display:block;margin-top:2px;color:var(--navy);font:700 19px/1.3 Georgia,serif;overflow-wrap:anywhere}
+#eas-finance-workspace .bridge-module .summary-detail{border-top:1px solid var(--line);padding:18px 22px 21px}
+#eas-finance-workspace .bridge-module .summary-detail h3{margin:0 0 12px;font-size:17px}
+#eas-finance-workspace .bridge-module .bar-row{margin-top:12px}
+#eas-finance-workspace .bridge-module .bar-meta{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:#4f6473}
+#eas-finance-workspace .bridge-module .bar{height:8px;margin-top:5px;border-radius:100px;background:#e4e8eb;overflow:hidden}
+#eas-finance-workspace .bridge-module .bar span{display:block;height:100%;width:0;background:var(--gold);transition:width .2s ease}
+#eas-finance-workspace .bridge-module .bar.red span{background:#9f2f35}
+#eas-finance-workspace .bridge-module .warning-list{list-style:none;padding:0;margin:0}
+#eas-finance-workspace .bridge-module .warning-list li{position:relative;padding:10px 0 10px 22px;border-top:1px solid #eee8dc;color:var(--ink);font-size:14px}
+#eas-finance-workspace .bridge-module .warning-list li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:9px;border-radius:50%;background:#9a6214}
+#eas-finance-workspace .bridge-module .warning-list li.material::before,#eas-finance-workspace .bridge-module .warning-list li.stop::before{background:#9f2f35}
+#eas-finance-workspace .bridge-module .warning-list li.ok::before{background:#1d6a54}
+#eas-finance-workspace .bridge-module .analysis-panel{margin-top:24px;overflow:hidden}
+#eas-finance-workspace .bridge-module .analysis-head{padding:22px 25px 14px}
+#eas-finance-workspace .bridge-module .tabs{display:flex;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#f8f5ed}
+#eas-finance-workspace .bridge-module .tab{min-height:43px;border:0;border-right:1px solid var(--line);background:transparent;color:var(--navy2);padding:9px 17px;font-weight:800;font-size:14px}
+#eas-finance-workspace .bridge-module .tab.active{color:var(--navy);background:var(--paper);box-shadow:inset 0 -3px var(--gold)}
+#eas-finance-workspace .bridge-module .tab-panel{padding:22px 25px 26px}
+#eas-finance-workspace .bridge-module table{width:100%;border-collapse:collapse;font-size:14px}
+#eas-finance-workspace .bridge-module th,#eas-finance-workspace .bridge-module td{padding:10px 9px;text-align:right;border-bottom:1px solid #e5dfd4;vertical-align:top}
+#eas-finance-workspace .bridge-module th{color:var(--navy);background:#f5f1e8;font-size:13px}
+#eas-finance-workspace .bridge-module th:first-child,#eas-finance-workspace .bridge-module td:first-child{text-align:left}
+#eas-finance-workspace .bridge-module tr.total td{color:var(--navy);font-weight:800;border-top:2px solid var(--navy)}
+#eas-finance-workspace .bridge-module .amount-negative{color:#9f2f35;font-weight:800}
+#eas-finance-workspace .bridge-module .amount-positive{color:#1d6a54;font-weight:800}
+#eas-finance-workspace .bridge-module .assumption-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#eas-finance-workspace .bridge-module .assumption{padding:12px 13px;background:#f5f1e8;border-radius:8px}
+#eas-finance-workspace .bridge-module .assumption span{display:block;color:#4f6473;font-size:13px}
+#eas-finance-workspace .bridge-module .assumption strong{display:block;margin-top:2px;color:var(--navy);font-size:14px}
+#eas-finance-workspace .bridge-module .disclaimer{margin:18px 0 0;color:#4f6473;font-size:14px}
+#eas-finance-workspace .bridge-module .actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}
+@media(max-width:940px){#eas-finance-workspace .bridge-intro,#eas-finance-workspace .bridge-grid{grid-template-columns:1fr}#eas-finance-workspace .bridge-module .result-column{position:static;order:-1}}
+@media(max-width:650px){#eas-finance-workspace .eas-masthead-inner{width:min(100% - 24px,1200px)}#eas-finance-workspace .eas-masthead-version{display:none}#eas-finance-workspace .bridge-intro{padding:24px 20px;gap:20px}#eas-finance-workspace .bridge-module .grid,#eas-finance-workspace .bridge-module .grid.three,#eas-finance-workspace .bridge-module .assumption-grid{grid-template-columns:1fr}#eas-finance-workspace .bridge-module .radio-row{grid-template-columns:1fr}#eas-finance-workspace .bridge-module .section-head,#eas-finance-workspace .bridge-module .section-body,#eas-finance-workspace .bridge-module .tab-panel{padding-left:17px;padding-right:17px}#eas-finance-workspace .bridge-module .tabs{display:grid;grid-template-columns:1fr 1fr}#eas-finance-workspace .bridge-module .table-scroll{overflow-x:auto}#eas-finance-workspace .bridge-module table{min-width:620px}}
+@media print{#eas-finance-workspace.bridge-mode .eas-masthead,#eas-finance-workspace.bridge-mode>.floating-experts-cta,#eas-finance-workspace.bridge-mode>.shell>.hero,#eas-finance-workspace.bridge-mode .workspace>#stepEyebrow,#eas-finance-workspace.bridge-mode .workspace>#stepTitle,#eas-finance-workspace.bridge-mode .workspace>#progressTrack,#eas-finance-workspace.bridge-mode .workspace>.actions,#eas-finance-workspace.bridge-mode .bridge-intro-note,#eas-finance-workspace.bridge-mode .bridge-module .actions,#eas-finance-workspace.bridge-mode .bridge-module .tabs{display:none!important}#eas-finance-workspace.bridge-mode .bridge-grid{display:flex;flex-direction:column}#eas-finance-workspace.bridge-mode .bridge-module .result-column{position:static;order:0}#eas-finance-workspace.bridge-mode .bridge-module .input-column{order:1}#eas-finance-workspace.bridge-mode .bridge-module .panel{box-shadow:none;break-inside:avoid}#eas-finance-workspace.bridge-mode .bridge-module .tab-panel{display:block!important}}
+
 </style>
 
 <div class="shell">
@@ -481,7 +615,7 @@
           <ul class="capability-list">
             <li><strong>Ground-up development</strong> from site, groundworks and construction through to sale or refinance</li>
             <li><strong>Conversion / refurbishment</strong> including heavy refurbishment, light refurbishment and part-complete schemes</li>
-            <li>Property purchase and bridging</li>
+            <li><strong>Bridging finance</strong> for purchases, refinancing, capital raising, refurbishment and development exits</li>
             <li>Refinance and capital raising</li>
             <li>Commercial mortgages</li>
             <li>Buy-to-let and retained units</li>
@@ -500,8 +634,8 @@
                 <option value="develop_existing">Conversion / refurbishment</option>
               </optgroup>
               <optgroup label="Property finance">
-                <option value="buy_property">Buy a property</option>
-              <option value="refinance">Refinance or raise capital</option>
+                <option value="bridge">Bridging finance</option>
+                <option value="buy_property">Buy a commercial or investment property</option>
                 <option value="retain">Keep completed property</option>
               </optgroup>
               <optgroup label="Business finance">
@@ -613,7 +747,7 @@
         <div class="metric"><b id="mEquity">£0</b><span id="mEquityLabel">Gross equity</span></div>
       </div>
       <div id="sideModule" class="callout">Choose an objective and the relevant finance module will open here. Everything else stays hidden.</div>
-<div class="version">Case version: <strong id="caseVersion">Final v1.4.0 · Development engine v3.2</strong> · assumptions remain traceable</div>
+<div class="version">Case version: <strong id="caseVersion">Final v1.5.0 · Development engine v3.2</strong> · assumptions remain traceable</div>
       <div id="sideInsights"></div><div id="assumptionPriorities"></div>
     </aside>
   </div>
@@ -626,8 +760,8 @@
 
 const objectives = [
   ["develop","Develop or refurbish property","Ground-up, conversion, refurbishment or part-complete"],
-  ["buy_property","Buy a property","Commercial, investment or short-term acquisition"],
-  ["refinance","Refinance or raise capital","Against property you already own"],
+  ["bridge","Bridging finance","Purchase, refinance, capital raising, refurbishment or development exit"],
+  ["buy_property","Buy a property","Commercial or investment property purchase"],
   ["retain","Keep completed property","Sell some, retain some, or refinance completed units"],
   ["buy_business","Buy a business","Purchase price, buyer cash, debt and vendor support"],
   ["business_growth","Fund business growth","Working capital, cash cycle and business borrowing"],
@@ -701,7 +835,7 @@ objectives.forEach(o=>{
     document.getElementById('eas-finance-workspace').classList.remove("intro-only");
     document.getElementById("nextBtn").disabled=false;
     updateSide();
-    setStep(2);
+    setStep(state.objective==="bridge"?3:2);
   };
   grid.appendChild(b);
 });
@@ -730,7 +864,7 @@ document.getElementById("introRoute").addEventListener("change", e=>{
   document.getElementById('eas-finance-workspace').classList.remove("intro-only");
   document.getElementById("nextBtn").disabled=false;
   updateSide();
-  setStep(2);
+  setStep(state.objective==="bridge"?3:2);
   configureStage2ForRoute();
 });
 
@@ -979,7 +1113,8 @@ function updateSide(){
   const moduleMap={
     develop:"Development engine",
     buy_property:"Property purchase route",
-    refinance:"Bridging / commercial / BTL route",
+    bridge:"Full bridging cashflow and exit engine",
+    refinance:"Legacy short-term refinance route",
     retain:"BTL / refinance engine",
     buy_business:"Business acquisition engine",
     business_growth:"Working-capital engine",
@@ -1071,6 +1206,11 @@ function setStep(n){
   }
   document.getElementById("backBtn").disabled=n===1;
   document.getElementById("nextBtn").textContent=n===4?"Start again":"Continue";
+  const root=document.getElementById("eas-finance-workspace");
+  const bridgeMode=state.objective==="bridge"&&n===3;
+  root.classList.toggle("bridge-mode",bridgeMode);
+  document.getElementById("backBtn").textContent=bridgeMode?"Back to finance routes":"Back";
+  if(bridgeMode){document.getElementById("stepTitle").textContent="Bridging Finance Reality Check";}
   document.getElementById("nextBtn").disabled=(n===1&&!state.objective);
   if(n===2){
     renderRouteSummaries();
@@ -1100,6 +1240,10 @@ document.getElementById("nextBtn").onclick=()=>{
   setStep(state.step+1);
 };
 document.getElementById("backBtn").onclick=()=>{
+  if(state.objective==="bridge"&&state.step===3){
+    returnToRouteSelection();
+    return;
+  }
   if(state.step===2){
     setStep(1);
     document.getElementById('eas-finance-workspace').classList.add("intro-only");
@@ -1687,9 +1831,1007 @@ function restoreProjectSchedule(id){
  state.importedSheetName=saved?saved.importedSheetName:"";
 }
 
+const BRIDGE_TEMPLATE=`<div id="eas-bridge-module" class="bridge-module">
+  <section class="bridge-intro">
+    <div>
+      <p class="eyebrow">Bridging finance reality check</p>
+      <h2>Does the proposed bridge actually solve the transaction?</h2>
+      <p>Model the usable advance, gross facility, upfront cash, estimated redemption and the strength of the proposed exit.</p>
+    </div>
+    <div class="bridge-intro-note"><strong>Not a rate comparison.</strong><br>This is an indicative transaction model. It does not confirm lender acceptance, terms or availability.</div>
+  </section>
+  <div class="bridge-grid">
+<div class="input-column">
+      <section class="panel">
+        <div class="section-head"><span class="step">1</span><div><h2>Goal and scope</h2><p>Start with what the bridge needs to achieve and when.</p></div></div>
+        <div class="section-body">
+          <div class="grid">
+            <div class="field full">
+              <label for="purpose">Transaction objective</label>
+              <select id="purpose">
+                <option value="purchase">Complete a purchase</option>
+                <option value="auction">Complete an auction purchase</option>
+                <option value="refinance">Refinance an existing bridge or loan</option>
+                <option value="capital_raise">Raise capital against property</option>
+                <option value="refurbishment">Fund a light refurbishment</option>
+                <option value="development_exit">Exit a development facility</option>
+                <option value="other">Other business or investment purpose</option>
+              </select>
+            </div>
+            <div class="field"><label for="borrowerType">Borrowing entity</label><select id="borrowerType"><option value="limited_company">Limited company or SPV</option><option value="individual">Individual</option><option value="partnership">Partnership</option><option value="llp">Limited liability partnership</option><option value="trust">Trust or trustee</option></select></div>
+            <div class="field"><label for="propertyType">Main security type</label><select id="propertyType"><option value="residential_investment">Residential investment property</option><option value="semi_commercial">Semi-commercial or mixed use</option><option value="commercial">Commercial property</option><option value="land">Land</option><option value="specialist">Specialist or non-standard property</option></select></div>
+            <fieldset class="field full">
+              <legend>Is any security used, or intended to be used, as the borrower's or a close relative's home?</legend>
+              <div class="radio-row">
+                <label class="radio-card"><input type="radio" name="regulated" value="no" checked><span><strong>No</strong><em>Business or investment property route</em></span></label>
+                <label class="radio-card"><input type="radio" name="regulated" value="yes"><span><strong>Yes or possibly</strong><em>This needs the appropriate regulated route</em></span></label>
+              </div>
+            </fieldset>
+            <fieldset class="field full">
+              <legend>Is the borrowing clearly being entered into wholly or predominantly for business or investment purposes?</legend>
+              <div class="radio-row">
+                <label class="radio-card"><input type="radio" name="businessPurpose" value="yes" checked><span><strong>Yes</strong><em>A clear business or investment transaction</em></span></label>
+                <label class="radio-card"><input type="radio" name="businessPurpose" value="uncertain"><span><strong>No or uncertain</strong><em>For example, a former home, inherited property or uncertain consumer buy-to-let position</em></span></label>
+              </div>
+            </fieldset>
+            <div id="scopeStop" class="scope-stop full" role="alert" hidden>This model is not intended for residential owner-occupier, consumer buy-to-let or other potentially regulated mortgage cases. The case should be referred through the appropriate route.</div>
+            <div id="auctionDetails" class="full" hidden>
+              <div class="grid">
+                <div class="field"><label for="auctionExchangeDate">Auction or exchange date</label><input id="auctionExchangeDate" type="date"></div>
+                <div class="field"><label for="depositAtRisk">Deposit already committed</label><div class="money-wrap"><input id="depositAtRisk" type="number" min="0" step="1000" value="0"></div><small>Shown as timing risk; it is not added to the facility requirement unless entered in transaction uses.</small></div>
+              </div>
+            </div>
+            <div class="field"><label for="startDate">Expected completion</label><input id="startDate" type="date"></div>
+            <div class="field"><label for="exitDate">Expected exit completion</label><input id="exitDate" type="date"></div>
+            <div class="field"><label for="maturityDate">Contractual maturity</label><input id="maturityDate" type="date" aria-describedby="maturityHelp"><small id="maturityHelp">Keep a practical buffer after the expected exit.</small></div>
+            <div class="field"><label for="upfrontCash">Upfront cash available</label><div class="money-wrap"><input id="upfrontCash" type="number" min="0" step="100" value="5000" aria-describedby="upfrontHelp"></div><small id="upfrontHelp">For valuation, legal and other borrower-paid costs.</small></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head"><span class="step">2</span><div><h2>Funding requirement</h2><p>Enter the cash needed directly, or build it from the transaction uses.</p></div></div>
+        <div class="section-body">
+          <fieldset class="field full">
+            <legend>How should the requirement be entered?</legend>
+            <div class="radio-row">
+              <label class="radio-card"><input type="radio" name="needMode" value="direct" checked><span><strong>Quick project view</strong><em>I know the usable facility cash required</em></span></label>
+              <label class="radio-card"><input type="radio" name="needMode" value="uses"><span><strong>Transaction uses</strong><em>Calculate the requirement from the funding stack</em></span></label>
+            </div>
+          </fieldset>
+          <div id="directNeed" class="grid" style="margin-top:18px">
+            <div class="field full"><label for="requiredNet">Funds needed in hand from the facility</label><div class="money-wrap"><input id="requiredNet" type="number" min="1" step="1000" value="200000" aria-describedby="requiredNetHelp"></div><small id="requiredNetHelp">Usable facility proceeds after withheld fees and any retained interest allocation.</small></div>
+          </div>
+          <div id="usesNeed" hidden style="margin-top:18px">
+            <div class="grid three">
+              <div class="field"><label for="usePurchase">Purchase or completion payment</label><div class="money-wrap"><input id="usePurchase" type="number" min="0" step="1000" value="200000"></div></div>
+              <div class="field"><label for="useDebt">Secured debt to redeem</label><div class="money-wrap"><input id="useDebt" type="number" min="0" step="1000" value="0"></div></div>
+              <div class="field"><label for="useTax">Taxes and transaction costs</label><div class="money-wrap"><input id="useTax" type="number" min="0" step="100" value="0"></div></div>
+              <div class="field"><label for="useWorks">Works funded at completion</label><div class="money-wrap"><input id="useWorks" type="number" min="0" step="1000" value="0"></div></div>
+              <div class="field"><label for="useOther">Other stated uses</label><div class="money-wrap"><input id="useOther" type="number" min="0" step="100" value="0"></div></div>
+              <div class="field"><label for="sourceCash">Borrower cash at completion</label><div class="money-wrap"><input id="sourceCash" type="number" min="0" step="1000" value="0"></div></div>
+              <div class="field"><label for="sourceDeposit">Deposit already paid</label><div class="money-wrap"><input id="sourceDeposit" type="number" min="0" step="1000" value="0"></div></div>
+              <div class="field"><label for="sourceOther">Other confirmed sources</label><div class="money-wrap"><input id="sourceOther" type="number" min="0" step="1000" value="0"></div></div>
+            </div>
+            <div class="inline-note">Calculated usable facility requirement: <strong id="calculatedNeed">£200,000</strong>. This does not assume that every transaction cost is lender-financeable.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head"><span class="step">3</span><div><h2>Security and existing debt</h2><p>Use current value for day-one leverage. Future value is tested separately.</p></div></div>
+        <div class="section-body">
+          <div class="grid">
+            <div class="field"><label for="securityValue1">Main security open market value today</label><div class="money-wrap"><input id="securityValue1" type="number" min="0" step="1000" value="500000"></div></div>
+            <div class="field"><label for="priorDebt1">Current debt secured on main security</label><div class="money-wrap"><input id="priorDebt1" type="number" min="0" step="1000" value="0"></div></div>
+            <div class="field"><label for="priorDebtTreatment1">Treatment of that debt</label><select id="priorDebtTreatment1"><option value="redeemed">Repaid by this bridge</option><option value="remaining">Remains ahead of this bridge</option></select></div>
+            <div class="field"><label for="purchasePrice">Purchase price, if relevant</label><div class="money-wrap"><input id="purchasePrice" type="number" min="0" step="1000" value="400000"></div></div>
+            <div class="field"><label for="valuationBasis">Value basis used for the leverage assumption</label><select id="valuationBasis"><option value="omv">Open market value today</option><option value="lower_purchase_omv">Lower of purchase price and open market value</option><option value="restricted90">90-day restricted-sale value</option><option value="restricted180">180-day restricted-sale value</option><option value="custom">Custom eligible value</option></select><small>The selected basis is a product assumption, not a universal lender rule.</small></div>
+            <div class="field"><label for="maxLtv">Selected gross-LTV assumption</label><div class="suffix-wrap" data-suffix="%"><input id="maxLtv" type="number" min="1" max="100" step="0.5" value="75" aria-describedby="maxLtvHelp"></div><small id="maxLtvHelp">A modelling assumption, not a lender limit.</small></div>
+            <div id="customValueWrap" class="field" hidden><label for="customEligibleValue">Custom eligible security value</label><div class="money-wrap"><input id="customEligibleValue" type="number" min="0" step="1000" value="0"></div></div>
+            <div class="field"><label for="valuationEvidence">Valuation evidence</label><select id="valuationEvidence"><option value="formal">Current formal valuation</option><option value="agent">Agent or surveyor opinion</option><option value="user" selected>User estimate</option><option value="unknown">Not yet evidenced</option></select></div>
+          </div>
+          <details class="advanced">
+            <summary>Add restricted-sale/future values or a second security</summary>
+            <div class="grid three">
+              <div class="field"><label for="restricted90_1">Main security 90-day value</label><div class="money-wrap"><input id="restricted90_1" type="number" min="0" step="1000" value="0"></div></div>
+              <div class="field"><label for="restricted180_1">Main security 180-day value</label><div class="money-wrap"><input id="restricted180_1" type="number" min="0" step="1000" value="0"></div></div>
+              <div class="field"><label for="futureValue1">Main security future/post-works value</label><div class="money-wrap"><input id="futureValue1" type="number" min="0" step="1000" value="0"></div></div>
+              <div class="field"><label for="securityValue2">Additional security value today</label><div class="money-wrap"><input id="securityValue2" type="number" min="0" step="1000" value="0"></div></div>
+              <div class="field"><label for="priorDebt2">Current debt on additional security</label><div class="money-wrap"><input id="priorDebt2" type="number" min="0" step="1000" value="0"></div></div>
+              <div class="field"><label for="priorDebtTreatment2">Treatment of that debt</label><select id="priorDebtTreatment2"><option value="redeemed">Repaid by this bridge</option><option value="remaining">Remains ahead of this bridge</option></select></div>
+              <div class="field"><label for="restricted90_2">Additional security 90-day value</label><div class="money-wrap"><input id="restricted90_2" type="number" min="0" step="1000" value="0"></div></div>
+              <div class="field"><label for="restricted180_2">Additional security 180-day value</label><div class="money-wrap"><input id="restricted180_2" type="number" min="0" step="1000" value="0"></div></div>
+              <div class="field"><label for="futureValue2">Additional security future value</label><div class="money-wrap"><input id="futureValue2" type="number" min="0" step="1000" value="0"></div></div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head"><span class="step">4</span><div><h2>Facility assumptions</h2><p>Make the lender mechanics explicit. Small differences can materially change the usable advance.</p></div></div>
+        <div class="section-body">
+          <div class="grid">
+            <div class="field"><label for="interestMode">Interest treatment</label><select id="interestMode"><option value="retained">Interest retained within the facility</option><option value="rolled">Interest rolled into the balance</option><option value="serviced">Interest serviced monthly</option></select></div>
+            <div class="field"><label for="monthlyRate">Monthly interest rate</label><div class="suffix-wrap" data-suffix="%"><input id="monthlyRate" type="number" min="0" max="10" step="0.01" value="0.80"></div></div>
+            <div class="field"><label for="compounding">Interest calculation</label><select id="compounding"><option value="simple">Simple interest</option><option value="compound">Monthly compounding</option></select></div>
+            <div class="field"><label for="interestBase">Interest base</label><select id="interestBase"><option value="gross">Gross facility</option><option value="opening">Opening interest-bearing debt</option><option value="net">Net advance</option></select></div>
+            <div class="field"><label for="arrangementRate">Arrangement fee on gross facility</label><div class="suffix-wrap" data-suffix="%"><input id="arrangementRate" type="number" min="0" max="20" step="0.1" value="2"></div></div>
+            <div class="field"><label for="minimumInterest">Minimum interest</label><div class="suffix-wrap" data-suffix="mths"><input id="minimumInterest" type="number" min="0" max="24" step="1" value="0"></div></div>
+            <div id="servicingWrap" class="field" hidden><label for="monthlyCashAvailable">Monthly cash available to service interest</label><div class="money-wrap"><input id="monthlyCashAvailable" type="number" min="0" step="100" value="0"></div><small>External cash flow; it is not deducted from the facility.</small></div>
+          </div>
+          <details class="advanced">
+            <summary>Fees, professional costs and overrun assumptions</summary>
+            <div class="grid three">
+              <div class="field"><label for="valuationFee">Valuation</label><div class="money-wrap"><input id="valuationFee" type="number" min="0" step="100" value="1500"></div></div>
+              <div class="field"><label for="legalFee">Borrower legal and due diligence</label><div class="money-wrap"><input id="legalFee" type="number" min="0" step="100" value="2000"></div></div>
+              <div class="field"><label for="lenderLegalFee">Lender legal costs paid by borrower</label><div class="money-wrap"><input id="lenderLegalFee" type="number" min="0" step="100" value="1500"></div></div>
+              <div class="field"><label for="brokerFee">Broker or adviser fee</label><div class="money-wrap"><input id="brokerFee" type="number" min="0" step="100" value="0"></div></div>
+              <div class="field"><label for="brokerFeeTreatment">Broker fee treatment</label><select id="brokerFeeTreatment"><option value="cash">Paid separately in cash</option><option value="facility">Withheld from facility</option></select></div>
+              <div class="field"><label for="facilityAdminFee">Lender/admin/title fee withheld</label><div class="money-wrap"><input id="facilityAdminFee" type="number" min="0" step="100" value="0"></div></div>
+              <div class="field"><label for="exitFeeRate">Exit fee on redemption</label><div class="suffix-wrap" data-suffix="%"><input id="exitFeeRate" type="number" min="0" max="20" step="0.1" value="0"></div></div>
+              <div class="field"><label for="exitFeeBase">Exit fee basis</label><select id="exitFeeBase"><option value="redemption">Balance before exit fee</option><option value="gross">Gross facility</option><option value="net">Net advance</option></select></div>
+              <div class="field"><label for="periodRounding">Interest period treatment</label><select id="periodRounding"><option value="whole">Whole calendar months</option><option value="exact">Exact days ÷ 365/12</option></select></div>
+              <div class="field"><label for="feeBearsInterest">Arrangement fee bears interest?</label><select id="feeBearsInterest"><option value="yes">Yes</option><option value="no">No</option></select></div>
+              <div class="field"><label for="defaultMonthlyRate">Monthly rate after maturity</label><div class="suffix-wrap" data-suffix="%"><input id="defaultMonthlyRate" type="number" min="0" max="10" step="0.01" value="1.20"></div></div>
+              <div class="field"><label for="extensionFeeRate">Extension fee on balance</label><div class="suffix-wrap" data-suffix="%"><input id="extensionFeeRate" type="number" min="0" max="20" step="0.1" value="1"></div></div>
+              <div class="field"><label for="extensionFixedCost">Extension legal/admin cost</label><div class="money-wrap"><input id="extensionFixedCost" type="number" min="0" step="100" value="1000"></div></div>
+            </div>
+            <p class="disclaimer">Enter fee estimates including VAT where applicable. An overrun calculation is a stress illustration only and does not assume that an extension will be offered.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head"><span class="step">5</span><div><h2>Works and future drawings</h2><p>Keep day-one cash separate from amounts reserved for later works.</p></div></div>
+        <div class="section-body">
+          <div class="grid three">
+            <div class="field"><label for="futureWorks">Future works allocation</label><div class="money-wrap"><input id="futureWorks" type="number" min="0" step="1000" value="0"></div></div>
+            <div class="field"><label for="worksContingency">Contingency within the facility</label><div class="money-wrap"><input id="worksContingency" type="number" min="0" step="1000" value="0"></div></div>
+            <div class="field"><label for="worksDrawCount">Assumed number of drawings</label><input id="worksDrawCount" type="number" min="1" max="24" step="1" value="3"></div>
+            <div class="field"><label for="worksDurationMonths">Last drawing after completion</label><div class="suffix-wrap" data-suffix="mths"><input id="worksDurationMonths" type="number" min="1" max="24" step="1" value="6"></div></div>
+            <div class="field"><label for="worksEvidence">Works evidence</label><select id="worksEvidence"><option value="costed">Costed schedule and programme</option><option value="outline">Outline budget</option><option value="none" selected>Not yet evidenced</option></select></div>
+          </div>
+          <div class="inline-note">Future drawings increase the commitment and accrue interest only from their assumed draw dates. Day-one works already included in transaction uses should not be entered again here.</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head"><span class="step">6</span><div><h2>Exit test</h2><p>Test the proposed repayment route on the realistic completion date.</p></div></div>
+        <div class="section-body">
+          <div class="grid">
+            <div class="field full"><label for="exitType">Primary exit</label><select id="exitType"><option value="sale">Sale of the security</option><option value="refinance">Refinance to term debt</option><option value="other">Other evidenced liquidity event</option></select></div>
+            <div class="field"><label for="exitEvidence">Primary exit evidence</label><select id="exitEvidence"><option value="verified">Verified or formally agreed</option><option value="progressing">Professional work in progress</option><option value="stated" selected>Borrower-stated assumption</option><option value="none">No evidence yet</option></select></div>
+          </div>
+          <div id="saleExit" class="grid" style="margin-top:17px">
+            <div class="field"><label for="saleValue">Expected sale value</label><div class="money-wrap"><input id="saleValue" type="number" min="0" step="1000" value="500000"></div></div>
+            <div class="field"><label for="saleCosts">Selling and legal costs</label><div class="money-wrap"><input id="saleCosts" type="number" min="0" step="100" value="10000"></div></div>
+            <div class="field"><label for="saleOtherDebt">Other debt repaid from sale</label><div class="money-wrap"><input id="saleOtherDebt" type="number" min="0" step="1000" value="0"></div></div>
+          </div>
+          <div id="refinanceExit" class="grid" style="margin-top:17px" hidden>
+            <div class="field full"><label for="refinanceType">Refinance route</label><select id="refinanceType"><option value="btl">Residential investment / buy-to-let</option><option value="commercial_investment">Commercial investment</option><option value="owner_occupied">Owner-occupied commercial</option><option value="value_only">Value-only screening</option></select></div>
+            <div class="field"><label for="refiValue">Value at refinance</label><div class="money-wrap"><input id="refiValue" type="number" min="0" step="1000" value="500000"></div></div>
+            <div class="field"><label for="refiLtv">Maximum refinance LTV</label><div class="suffix-wrap" data-suffix="%"><input id="refiLtv" type="number" min="0" max="100" step="0.5" value="75"></div></div>
+            <div id="investmentRefiFields" class="full"><div class="grid three">
+              <div class="field"><label for="annualRent">Annual eligible rent or NOI</label><div class="money-wrap"><input id="annualRent" type="number" min="0" step="100" value="30000"></div></div>
+              <div class="field"><label for="requiredIcr">Required ICR/DSCR</label><div class="suffix-wrap" data-suffix="x"><input id="requiredIcr" type="number" min="0.1" max="10" step="0.05" value="1.25"></div></div>
+              <div class="field"><label for="stressRate">Stressed annual interest rate</label><div class="suffix-wrap" data-suffix="%"><input id="stressRate" type="number" min="0.1" max="30" step="0.1" value="6"></div></div>
+            </div></div>
+            <div id="ownerOccupiedRefiFields" class="full" hidden><div class="grid three">
+              <div class="field"><label for="annualDebtServiceCash">Annual cash available for debt service</label><div class="money-wrap"><input id="annualDebtServiceCash" type="number" min="0" step="100" value="30000"></div></div>
+              <div class="field"><label for="requiredDscr">Required DSCR</label><div class="suffix-wrap" data-suffix="x"><input id="requiredDscr" type="number" min="0.1" max="10" step="0.05" value="1.25"></div></div>
+              <div class="field"><label for="repaymentBasis">Repayment basis</label><select id="repaymentBasis"><option value="repayment">Capital and interest</option><option value="interest_only">Interest only</option></select></div>
+              <div class="field"><label for="refiTermYears">Term</label><div class="suffix-wrap" data-suffix="yrs"><input id="refiTermYears" type="number" min="1" max="40" step="1" value="20"></div></div>
+              <div class="field"><label for="ownerStressRate">Stressed annual interest rate</label><div class="suffix-wrap" data-suffix="%"><input id="ownerStressRate" type="number" min="0.1" max="30" step="0.1" value="7"></div></div>
+            </div></div>
+            <div class="field"><label for="refiCosts">Refinance completion costs</label><div class="money-wrap"><input id="refiCosts" type="number" min="0" step="100" value="5000"></div></div>
+          </div>
+          <div id="otherExit" class="grid" style="margin-top:17px" hidden>
+            <div class="field"><label for="otherExitAmount">Expected evidenced amount</label><div class="money-wrap"><input id="otherExitAmount" type="number" min="0" step="1000" value="250000"></div></div>
+            <div class="field"><label for="otherExitCosts">Associated costs</label><div class="money-wrap"><input id="otherExitCosts" type="number" min="0" step="100" value="0"></div></div>
+          </div>
+          <details class="advanced" open>
+            <summary>Downside scenarios</summary>
+            <div class="grid three">
+              <div class="field"><label for="delayMonths">Exit delay</label><div class="suffix-wrap" data-suffix="mths"><input id="delayMonths" type="number" min="1" max="12" step="1" value="3"></div></div>
+              <div class="field"><label for="valueFall">Lower exit value</label><div class="suffix-wrap" data-suffix="%"><input id="valueFall" type="number" min="0" max="90" step="1" value="10"></div></div>
+              <div class="field"><label for="rateRise">Higher monthly rate</label><div class="suffix-wrap" data-suffix="%"><input id="rateRise" type="number" min="0" max="5" step="0.05" value="0.20"></div></div>
+            </div>
+          </details>
+          <details class="advanced">
+            <summary>Fallback exit</summary>
+            <div class="grid three">
+              <div class="field"><label for="fallbackType">Fallback route</label><select id="fallbackType"><option value="none">None stated</option><option value="sale">Sale</option><option value="refinance">Refinance</option><option value="other">Other liquidity event</option></select></div>
+              <div class="field"><label for="fallbackAmount">Expected fallback capacity</label><div class="money-wrap"><input id="fallbackAmount" type="number" min="0" step="1000" value="0"></div></div>
+              <div class="field"><label for="fallbackDate">Expected fallback completion</label><input id="fallbackDate" type="date"></div>
+              <div class="field"><label for="fallbackEvidence">Fallback evidence</label><select id="fallbackEvidence"><option value="verified">Verified</option><option value="progressing">In progress</option><option value="stated">Borrower-stated</option><option value="none" selected>None</option></select></div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="panel analysis-panel">
+        <div class="analysis-head"><h2>How the structure works</h2><p>Open each view to inspect the cash waterfall, exit and scenario movement.</p></div>
+        <div class="tabs" role="tablist">
+          <button id="tab-button-waterfall" class="tab active" data-tab="waterfall" type="button" role="tab" aria-selected="true" aria-controls="tab-waterfall">Cash waterfall</button>
+          <button id="tab-button-exit" class="tab" data-tab="exit" type="button" role="tab" aria-selected="false" aria-controls="tab-exit" tabindex="-1">Exit test</button>
+          <button id="tab-button-scenarios" class="tab" data-tab="scenarios" type="button" role="tab" aria-selected="false" aria-controls="tab-scenarios" tabindex="-1">Scenarios</button>
+          <button id="tab-button-assumptions" class="tab" data-tab="assumptions" type="button" role="tab" aria-selected="false" aria-controls="tab-assumptions" tabindex="-1">Assumptions</button>
+        </div>
+        <div id="tab-waterfall" class="tab-panel" role="tabpanel" aria-labelledby="tab-button-waterfall" data-print-title="Cash waterfall"></div>
+        <div id="tab-exit" class="tab-panel" role="tabpanel" aria-labelledby="tab-button-exit" data-print-title="Exit test" hidden></div>
+        <div id="tab-scenarios" class="tab-panel" role="tabpanel" aria-labelledby="tab-button-scenarios" data-print-title="Scenarios" hidden></div>
+        <div id="tab-assumptions" class="tab-panel" role="tabpanel" aria-labelledby="tab-button-assumptions" data-print-title="Assumptions" hidden></div>
+      </section>
+    </div>
+
+    <aside class="result-column">
+      <section class="panel summary-panel">
+        <div class="summary-top">
+          <p class="eyebrow">Live finance picture</p>
+          <h2>Bridge summary</h2>
+          <div id="reviewState" class="status green" role="status" aria-live="polite" aria-atomic="true">No immediate numerical warning under these assumptions</div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><span class="metric-label">Funds needed in hand</span><span class="metric-value" id="mNet">£0</span></div>
+          <div class="metric"><span class="metric-label">Gross facility</span><span class="metric-value" id="mGross">£0</span></div>
+          <div class="metric"><span class="metric-label">Upfront cash required</span><span class="metric-value" id="mUpfront">£0</span></div>
+          <div class="metric"><span class="metric-label">Opening debt</span><span class="metric-value" id="mOpening">£0</span></div>
+          <div class="metric"><span class="metric-label">Future works allocation</span><span class="metric-value" id="mFutureWorks">£0</span></div>
+          <div class="metric"><span class="metric-label">Interest to expected exit</span><span class="metric-value" id="mInterest">£0</span></div>
+          <div class="metric"><span class="metric-label">Unused retained interest</span><span class="metric-value" id="mUnused">£0</span></div>
+          <div class="metric"><span class="metric-label">Projected peak debt</span><span class="metric-value" id="mPeak">£0</span></div>
+          <div class="metric"><span class="metric-label">Estimated redemption</span><span class="metric-value" id="mRedemption">£0</span></div>
+          <div class="metric"><span class="metric-label">Exit headroom</span><span class="metric-value" id="mHeadroom">£0</span></div>
+          <div class="metric"><span class="metric-label">Total modelled finance cost</span><span class="metric-value" id="mCost">£0</span></div>
+          <div class="metric"><span class="metric-label">Cost as % of usable cash</span><span class="metric-value" id="mCostRatio">0%</span></div>
+          <div class="metric"><span class="metric-label">Simple annualised cost equivalent</span><span class="metric-value" id="mAnnualised">0%</span></div>
+          <div class="metric"><span class="metric-label">Serviced interest per month</span><span class="metric-value" id="mServicing">Not applicable</span></div>
+        </div>
+        <div class="summary-detail">
+          <h3>Leverage and timing</h3>
+          <div class="bar-row"><div class="bar-meta"><span id="grossLtvLabel">Gross LTV on eligible value</span><strong id="grossLtvText">0%</strong></div><div class="bar" id="grossLtvBar"><span></span></div></div>
+          <div class="bar-row"><div class="bar-meta"><span>Gross LTV on open market value</span><strong id="omvLtvText">0%</strong></div><div class="bar" id="omvLtvBar"><span></span></div></div>
+          <div class="bar-row"><div class="bar-meta"><span>Combined LTV</span><strong id="combinedLtvText">0%</strong></div><div class="bar" id="combinedLtvBar"><span></span></div></div>
+          <div class="bar-row"><div class="bar-meta"><span>Projected peak LTV</span><strong id="peakLtvText">0%</strong></div><div class="bar" id="peakLtvBar"><span></span></div></div>
+          <div class="bar-row"><div class="bar-meta"><span>Gross loan to purchase price</span><strong id="ltpText">Not applicable</strong></div><div class="bar" id="ltpBar"><span></span></div></div>
+          <div class="bar-row"><div class="bar-meta"><span>Exit buffer</span><strong id="bufferText">0 days</strong></div></div>
+        </div>
+        <div class="summary-detail">
+          <h3>Points requiring attention</h3>
+          <ul id="warnings" class="warning-list"></ul>
+          <div class="actions"><button class="btn primary" id="printButton" type="button">Print summary</button><button class="btn secondary" id="exportButton" type="button">Export case</button></div>
+          <p class="disclaimer">Indicative calculation only. The simple annualised cost is not an APR. This is not a credit decision, lender offer or confirmation of availability.</p>
+        </div>
+      </section>
+    </aside>
+  </div>
+</div>`;
+
+function initBridgeModule(){
+  "use strict";
+  const ENGINE_VERSION = "1.0.0";
+  const FORMULA_VERSION = "EAS-BRIDGE-CASHFLOW-1.0";
+  const MARKET_REFERENCE_DATE = "2026-08-17";
+  const MARKET_REVIEW_LTV = .75;
+  const DAY = 86400000;
+  const AVG_MONTH = 365 / 12;
+  const bridgeRoot = document.getElementById("eas-bridge-module");
+  const $ = id => bridgeRoot?.querySelector("#" + CSS.escape(id));
+  const num = id => {
+    const control = $(id);
+    const value = Number(control.value);
+    if (!Number.isFinite(value) || value < 0) return 0;
+    if (control.max !== "" && value > Number(control.max)) {
+      throw new Error(`${control.labels?.[0]?.textContent || id} cannot exceed ${control.max}.`);
+    }
+    return value;
+  };
+  const money = value => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(Number.isFinite(value) ? value : 0);
+  const money2 = value => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Number.isFinite(value) ? value : 0);
+  const pct = value => `${(value * 100).toFixed(1)}%`;
+  const round = value => Math.round(value * 100) / 100;
+  const esc = value => String(value).replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
+
+  function isoDate(date) {
+    const y = date.getUTCFullYear();
+    const m = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const d = String(date.getUTCDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  }
+
+  function parseDate(value) {
+    const date = new Date(`${value}T00:00:00Z`);
+    if (Number.isNaN(date.getTime())) throw new Error("Please enter valid completion, exit and maturity dates.");
+    return date;
+  }
+
+  function daysInUtcMonth(year, monthIndex) {
+    return new Date(Date.UTC(year, monthIndex + 1, 0)).getUTCDate();
+  }
+
+  function addMonths(value, months) {
+    const source = parseDate(value);
+    const originalDay = source.getUTCDate();
+    const targetIndex = source.getUTCMonth() + Number(months);
+    const targetYear = source.getUTCFullYear() + Math.floor(targetIndex / 12);
+    const targetMonth = ((targetIndex % 12) + 12) % 12;
+    const targetDay = Math.min(originalDay, daysInUtcMonth(targetYear, targetMonth));
+    return new Date(Date.UTC(targetYear, targetMonth, targetDay)).toISOString().slice(0, 10);
+  }
+
+  function daysBetween(start, end) {
+    const days = Math.round((parseDate(end) - parseDate(start)) / DAY);
+    if (days < 0) throw new Error("The dates are not in a valid order.");
+    return days;
+  }
+
+  function signedDaysBetween(start, end) {
+    return Math.round((parseDate(end) - parseDate(start)) / DAY);
+  }
+
+  function calendarMonthsCharged(start, end) {
+    const s = parseDate(start);
+    const e = parseDate(end);
+    if (e < s) throw new Error("The dates are not in a valid order.");
+    let months = (e.getUTCFullYear() - s.getUTCFullYear()) * 12 + (e.getUTCMonth() - s.getUTCMonth());
+    let anniversary = parseDate(addMonths(start, months));
+    if (anniversary > e) {
+      months -= 1;
+      anniversary = parseDate(addMonths(start, months));
+    }
+    if (anniversary < e) months += 1;
+    return Math.max(0, months);
+  }
+
+  function chargedMonths(start, end, rounding) {
+    const days = daysBetween(start, end);
+    return rounding === "whole" ? calendarMonthsCharged(start, end) : days / AVG_MONTH;
+  }
+
+  function interestAmount(principal, start, end, monthlyRate, compounding, minimumMonths, rounding) {
+    const months = Math.max(chargedMonths(start, end, rounding), minimumMonths);
+    if (principal <= 0 || monthlyRate <= 0 || months <= 0) return { amount: 0, months, days: daysBetween(start, end) };
+    const amount = compounding === "compound"
+      ? principal * (Math.pow(1 + monthlyRate, months) - 1)
+      : principal * monthlyRate * months;
+    return { amount: round(amount), months, days: daysBetween(start, end) };
+  }
+
+  function needFromForm() {
+    const mode = bridgeRoot.querySelector('input[name="needMode"]:checked').value;
+    if (mode === "direct") return num("requiredNet");
+    const uses = num("usePurchase") + num("useDebt") + num("useTax") + num("useWorks") + num("useOther");
+    const sources = num("sourceCash") + num("sourceDeposit") + num("sourceOther");
+    return round(Math.max(0, uses - sources));
+  }
+
+  function readCase(overrides = {}) {
+    const securities = [{
+      label: "Main security",
+      value: num("securityValue1"),
+      restricted90: num("restricted90_1"),
+      restricted180: num("restricted180_1"),
+      futureValue: num("futureValue1"),
+      priorDebt: num("priorDebt1"),
+      debtTreatment: $("priorDebtTreatment1").value
+    }];
+    if (num("securityValue2") > 0 || num("priorDebt2") > 0) securities.push({
+      label: "Additional security",
+      value: num("securityValue2"),
+      restricted90: num("restricted90_2"),
+      restricted180: num("restricted180_2"),
+      futureValue: num("futureValue2"),
+      priorDebt: num("priorDebt2"),
+      debtTreatment: $("priorDebtTreatment2").value
+    });
+    const base = {
+      purpose: $("purpose").value,
+      borrowerType: $("borrowerType").value,
+      propertyType: $("propertyType").value,
+      scope: bridgeRoot.querySelector('input[name="regulated"]:checked').value === "no" && bridgeRoot.querySelector('input[name="businessPurpose"]:checked').value === "yes" ? "unregulated_business_or_investment" : "potentially_regulated",
+      requiredNet: needFromForm(),
+      startDate: $("startDate").value,
+      exitDate: $("exitDate").value,
+      maturityDate: $("maturityDate").value,
+      auctionExchangeDate: $("auctionExchangeDate").value,
+      depositAtRisk: num("depositAtRisk"),
+      upfrontCash: num("upfrontCash"),
+      securities,
+      purchasePrice: num("purchasePrice"),
+      valuationBasis: $("valuationBasis").value,
+      customEligibleValue: num("customEligibleValue"),
+      valuationEvidence: $("valuationEvidence").value,
+      maxLtv: num("maxLtv") / 100,
+      interestMode: $("interestMode").value,
+      monthlyRate: num("monthlyRate") / 100,
+      compounding: $("compounding").value,
+      interestBase: $("interestBase").value,
+      minimumInterest: num("minimumInterest"),
+      periodRounding: $("periodRounding").value,
+      arrangementRate: num("arrangementRate") / 100,
+      feeBearsInterest: $("feeBearsInterest").value === "yes",
+      valuationFee: num("valuationFee"),
+      legalFee: num("legalFee"),
+      lenderLegalFee: num("lenderLegalFee"),
+      brokerFee: num("brokerFee"),
+      brokerFeeTreatment: $("brokerFeeTreatment").value,
+      facilityAdminFee: num("facilityAdminFee"),
+      exitFeeRate: num("exitFeeRate") / 100,
+      exitFeeBase: $("exitFeeBase").value,
+      monthlyCashAvailable: num("monthlyCashAvailable"),
+      defaultMonthlyRate: num("defaultMonthlyRate") / 100,
+      extensionFeeRate: num("extensionFeeRate") / 100,
+      extensionFixedCost: num("extensionFixedCost"),
+      futureWorks: num("futureWorks"),
+      worksContingency: num("worksContingency"),
+      worksDrawCount: Math.max(1, Math.round(num("worksDrawCount"))),
+      worksDurationMonths: Math.max(1, Math.round(num("worksDurationMonths"))),
+      worksEvidence: $("worksEvidence").value,
+      exitType: $("exitType").value,
+      exitEvidence: $("exitEvidence").value,
+      saleValue: num("saleValue"),
+      saleCosts: num("saleCosts"),
+      saleOtherDebt: num("saleOtherDebt"),
+      refinanceType: $("refinanceType").value,
+      refiValue: num("refiValue"),
+      refiLtv: num("refiLtv") / 100,
+      annualRent: num("annualRent"),
+      requiredIcr: num("requiredIcr"),
+      stressRate: num("stressRate") / 100,
+      annualDebtServiceCash: num("annualDebtServiceCash"),
+      requiredDscr: num("requiredDscr"),
+      repaymentBasis: $("repaymentBasis").value,
+      refiTermYears: num("refiTermYears"),
+      ownerStressRate: num("ownerStressRate") / 100,
+      refiCosts: num("refiCosts"),
+      otherExitAmount: num("otherExitAmount"),
+      otherExitCosts: num("otherExitCosts"),
+      fallbackType: $("fallbackType").value,
+      fallbackAmount: num("fallbackAmount"),
+      fallbackDate: $("fallbackDate").value,
+      fallbackEvidence: $("fallbackEvidence").value
+    };
+    return { ...base, ...overrides };
+  }
+
+  function normaliseCase(c) {
+    return {
+      valuationFee: 0, legalFee: 0, lenderLegalFee: 0, brokerFee: 0, brokerFeeTreatment: "cash", facilityAdminFee: 0,
+      exitFeeBase: "redemption", monthlyCashAvailable: 0, defaultMonthlyRate: c.monthlyRate || 0,
+      extensionFeeRate: 0, extensionFixedCost: 0, futureWorks: 0, worksContingency: 0, worksDrawCount: 1,
+      worksDurationMonths: 1, worksEvidence: "none", valuationBasis: "omv", customEligibleValue: 0,
+      valuationEvidence: "user", exitEvidence: "stated", refinanceType: "btl", annualDebtServiceCash: 0,
+      requiredDscr: 1.25, repaymentBasis: "repayment", refiTermYears: 20, ownerStressRate: .07,
+      fallbackType: "none", fallbackAmount: 0, fallbackDate: "", fallbackEvidence: "none",
+      borrowerType: "limited_company", propertyType: "residential_investment", auctionExchangeDate: "", depositAtRisk: 0,
+      ...c
+    };
+  }
+
+  function feeTotals(c) {
+    const brokerCash = c.brokerFeeTreatment === "cash" ? c.brokerFee : 0;
+    const brokerFacility = c.brokerFeeTreatment === "facility" ? c.brokerFee : 0;
+    return {
+      upfront: round(c.valuationFee + c.legalFee + c.lenderLegalFee + brokerCash),
+      facilityFixed: round(c.facilityAdminFee + brokerFacility)
+    };
+  }
+
+  function buildWorksDraws(c) {
+    const total = round(c.futureWorks + c.worksContingency);
+    if (total <= 0) return [];
+    const count = Math.max(1, c.worksDrawCount);
+    let allocated = 0;
+    return Array.from({ length: count }, (_, index) => {
+      const amount = index === count - 1 ? round(total - allocated) : round(total / count);
+      allocated = round(allocated + amount);
+      const month = Math.max(1, Math.round(c.worksDurationMonths * (index + 1) / count));
+      return { date: addMonths(c.startDate, month), amount };
+    });
+  }
+
+  function interestBaseValue(c, gross, net, opening, arrangement) {
+    const selectedBase = c.interestMode === "retained" ? c.interestBase : (c.interestBase === "gross" ? "opening" : c.interestBase);
+    if (selectedBase === "gross") return gross;
+    if (selectedBase === "opening") return c.feeBearsInterest ? opening : Math.max(0, opening - arrangement);
+    if (selectedBase === "net") return net;
+    return net;
+  }
+
+  function scheduledInterest(c, initialBase, draws, endDate, minimumMonths = c.minimumInterest) {
+    const components = [{ date: c.startDate, amount: initialBase, minimumMonths }];
+    draws.filter(draw => parseDate(draw.date) <= parseDate(endDate)).forEach(draw => components.push({ ...draw, minimumMonths: 0 }));
+    const amount = components.reduce((sum, component) => sum + interestAmount(component.amount, component.date, endDate, c.monthlyRate, c.compounding, component.minimumMonths, c.periodRounding).amount, 0);
+    return { amount: round(amount), components };
+  }
+
+  function evaluateGross(c, gross) {
+    const fees = feeTotals(c);
+    const draws = buildWorksDraws(c);
+    const worksAllocation = round(draws.reduce((sum, draw) => sum + draw.amount, 0));
+    const arrangement = round(gross * c.arrangementRate);
+    let net = round(Math.max(0, gross - arrangement - fees.facilityFixed - worksAllocation));
+    let opening = round(net + arrangement + fees.facilityFixed);
+    let allowance = 0;
+    if (c.interestMode === "retained") {
+      for (let i = 0; i < 250; i += 1) {
+        opening = round(net + arrangement + fees.facilityFixed);
+        const base = interestBaseValue(c, gross, net, opening, arrangement);
+        const interestDraws = c.interestBase === "gross" ? [] : draws;
+        const nextAllowance = scheduledInterest(c, base, interestDraws, c.maturityDate).amount;
+        const nextNet = round(gross - arrangement - fees.facilityFixed - worksAllocation - nextAllowance);
+        if (nextNet < 0) throw new Error("The selected fees and retained interest exceed the gross facility.");
+        if (Math.abs(nextNet - net) <= .011 && Math.abs(nextAllowance - allowance) <= .011) {
+          net = nextNet;
+          allowance = round(nextAllowance);
+          opening = round(net + arrangement + fees.facilityFixed);
+          break;
+        }
+        net = nextNet;
+        allowance = nextAllowance;
+        if (i === 249) throw new Error("The retained-interest calculation did not converge under these assumptions.");
+      }
+    }
+    const actualBase = interestBaseValue(c, gross, net, opening, arrangement);
+    const interestDraws = c.interestMode === "retained" && c.interestBase === "gross" ? [] : draws;
+    const maturityInterest = scheduledInterest(c, actualBase, interestDraws, c.maturityDate);
+    const exitAfterMaturity = parseDate(c.exitDate) > parseDate(c.maturityDate);
+    const normalEnd = exitAfterMaturity ? c.maturityDate : c.exitDate;
+    const accrued = scheduledInterest(c, actualBase, interestDraws, normalEnd);
+    const drawsAtExit = round(draws.filter(draw => parseDate(draw.date) <= parseDate(c.exitDate)).reduce((sum, draw) => sum + draw.amount, 0));
+    const drawsAtMaturity = round(draws.filter(draw => parseDate(draw.date) <= parseDate(c.maturityDate)).reduce((sum, draw) => sum + draw.amount, 0));
+    const capitalisedNormal = c.interestMode === "serviced" ? 0 : accrued.amount;
+    const maturityBalance = round(opening + drawsAtMaturity + (c.interestMode === "serviced" ? 0 : maturityInterest.amount));
+    const overrunInterest = exitAfterMaturity
+      ? interestAmount(maturityBalance, c.maturityDate, c.exitDate, c.defaultMonthlyRate, c.compounding, 0, c.periodRounding).amount
+      : 0;
+    const extensionFee = exitAfterMaturity ? round(maturityBalance * c.extensionFeeRate) : 0;
+    const extensionCost = exitAfterMaturity ? c.extensionFixedCost : 0;
+    const preExit = round(opening + drawsAtExit + capitalisedNormal + overrunInterest + extensionFee + extensionCost);
+    const exitFeeBase = c.exitFeeBase === "gross" ? gross : c.exitFeeBase === "net" ? net : preExit;
+    const exitFee = round(exitFeeBase * c.exitFeeRate);
+    const peakAtMaturity = round(opening + drawsAtMaturity + (c.interestMode === "serviced" ? 0 : maturityInterest.amount));
+    const peakDebt = round(Math.max(peakAtMaturity, preExit));
+    const servicedInterest = c.interestMode === "serviced" ? round(accrued.amount) : 0;
+    const charged = chargedMonths(c.startDate, normalEnd, c.periodRounding);
+    return {
+      gross: round(gross), net: round(net), arrangement, opening: round(opening), allowance: round(allowance),
+      fees, worksAllocation, draws, drawsAtExit, drawsAtMaturity,
+      interest: accrued.amount, servicedInterest,
+      monthlyServicedInterest: c.interestMode === "serviced" && charged > 0 ? round(servicedInterest / charged) : 0,
+      projectedInterestToMaturity: maturityInterest.amount,
+      peakDebt, overrunInterest, extensionFee, extensionCost,
+      unusedAllowance: c.interestMode === "retained" ? round(Math.max(0, allowance - accrued.amount)) : 0,
+      exitFee, preExit,
+      redemption: round(preExit + exitFee), chargedMonths: charged, actualDays: daysBetween(c.startDate, normalEnd),
+      effectiveInterestBase: c.interestMode === "retained" ? c.interestBase : (c.interestBase === "gross" ? "opening" : c.interestBase)
+    };
+  }
+
+  function solveGross(c) {
+    if (c.requiredNet <= 0) throw new Error("The usable facility requirement must be greater than zero.");
+    let low = c.requiredNet;
+    let high = Math.max(c.requiredNet * 1.3, c.requiredNet + 10000);
+    for (let i = 0; i < 60 && evaluateGross(c, high).net < c.requiredNet; i += 1) high *= 1.5;
+    let best = evaluateGross(c, high);
+    for (let i = 0; i < 180; i += 1) {
+      const mid = (low + high) / 2;
+      const result = evaluateGross(c, round(mid));
+      if (Math.abs(result.net - c.requiredNet) < Math.abs(best.net - c.requiredNet)) best = result;
+      if (Math.abs(result.net - c.requiredNet) <= .01) return result;
+      if (result.net < c.requiredNet) low = mid; else high = mid;
+    }
+    if (Math.abs(best.net - c.requiredNet) <= .02) return best;
+    throw new Error("The required net advance could not be solved under these assumptions.");
+  }
+
+  function eligibleSecurityValue(c) {
+    const omv = round(c.securities.reduce((sum, security) => sum + security.value, 0));
+    const future = round(c.securities.reduce((sum, security) => sum + (security.futureValue || 0), 0));
+    if (c.valuationBasis === "omv") return { amount: omv, omv, future, label: "Open market value" };
+    if (c.valuationBasis === "lower_purchase_omv") {
+      if (c.purchasePrice <= 0) throw new Error("Purchase price is required for the lower-of-purchase-price-and-value basis.");
+      const main = c.securities[0]?.value || 0;
+      const additional = c.securities.slice(1).reduce((sum, security) => sum + security.value, 0);
+      return { amount: round(Math.min(main, c.purchasePrice) + additional), omv, future, label: "Lower of purchase price and OMV, plus additional security" };
+    }
+    if (c.valuationBasis === "restricted90" || c.valuationBasis === "restricted180") {
+      const key = c.valuationBasis === "restricted90" ? "restricted90" : "restricted180";
+      if (c.securities.some(security => !security[key])) throw new Error(`Enter the ${key === "restricted90" ? "90" : "180"}-day value for every security used.`);
+      return { amount: round(c.securities.reduce((sum, security) => sum + security[key], 0)), omv, future, label: `${key === "restricted90" ? "90" : "180"}-day restricted-sale value` };
+    }
+    if (c.customEligibleValue <= 0) throw new Error("Enter a custom eligible security value.");
+    return { amount: c.customEligibleValue, omv, future, label: "Custom eligible value" };
+  }
+
+  function ownerOccupiedCapacity(c) {
+    const annualPayment = c.requiredDscr > 0 ? c.annualDebtServiceCash / c.requiredDscr : 0;
+    if (c.repaymentBasis === "interest_only") return c.ownerStressRate > 0 ? round(annualPayment / c.ownerStressRate) : 0;
+    const monthlyPayment = annualPayment / 12;
+    const monthlyRate = c.ownerStressRate / 12;
+    const periods = Math.max(1, Math.round(c.refiTermYears * 12));
+    if (monthlyRate === 0) return round(monthlyPayment * periods);
+    return round(monthlyPayment * (1 - Math.pow(1 + monthlyRate, -periods)) / monthlyRate);
+  }
+
+  function testExit(c, facility, totalPriorDebt) {
+    if (c.exitType === "sale") {
+      const grossCapacity = c.saleValue;
+      const deductions = round(c.saleCosts + c.saleOtherDebt + totalPriorDebt);
+      const capacity = round(grossCapacity - deductions);
+      return { type: "Sale", capacity, grossCapacity, valueCapacity: null, incomeCapacity: null, costs: c.saleCosts, priorDebt: totalPriorDebt, headroom: round(capacity - facility.redemption), passes: capacity >= facility.redemption };
+    }
+    if (c.exitType === "refinance") {
+      const byValue = round(c.refiValue * c.refiLtv);
+      let byIncome = null;
+      if (["btl", "commercial_investment"].includes(c.refinanceType)) {
+        const denominator = c.requiredIcr * c.stressRate;
+        byIncome = denominator > 0 ? round(c.annualRent / denominator) : 0;
+      } else if (c.refinanceType === "owner_occupied") byIncome = ownerOccupiedCapacity(c);
+      const grossCapacity = byIncome === null ? byValue : Math.min(byValue, byIncome);
+      const capacity = round(grossCapacity - c.refiCosts - totalPriorDebt);
+      return { type: "Refinance", capacity, grossCapacity, valueCapacity: byValue, incomeCapacity: byIncome, costs: c.refiCosts, priorDebt: totalPriorDebt, headroom: round(capacity - facility.redemption), passes: capacity >= facility.redemption };
+    }
+    const capacity = round(c.otherExitAmount - c.otherExitCosts);
+    return { type: "Other liquidity event", capacity, grossCapacity: c.otherExitAmount, valueCapacity: null, incomeCapacity: null, costs: c.otherExitCosts, priorDebt: 0, headroom: round(capacity - facility.redemption), passes: capacity >= facility.redemption };
+  }
+
+  function calculate(input) {
+    const c = normaliseCase(input);
+    if (!c.startDate || !c.exitDate || !c.maturityDate) throw new Error("Please enter all three facility dates.");
+    daysBetween(c.startDate, c.exitDate);
+    daysBetween(c.startDate, c.maturityDate);
+    const values = eligibleSecurityValue(c);
+    const totalValue = values.omv;
+    const eligibleValue = values.amount;
+    const totalPriorDebt = round(c.securities.reduce((s, x) => s + (x.debtTreatment === "remaining" ? x.priorDebt : 0), 0));
+    if (totalValue <= 0) throw new Error("At least one current security value is required.");
+    if (eligibleValue <= 0) throw new Error("The selected eligible security value must be greater than zero.");
+    const contractualMonths = chargedMonths(c.startDate, c.maturityDate, c.periodRounding);
+    if (buildWorksDraws(c).some(draw => parseDate(draw.date) > parseDate(c.maturityDate))) throw new Error("A future works drawing falls after contractual maturity. Shorten the works programme or extend the modelled term.");
+    const facility = solveGross(c);
+    const grossLtv = facility.gross / eligibleValue;
+    const omvLtv = facility.gross / totalValue;
+    const combinedLtv = (facility.gross + totalPriorDebt) / eligibleValue;
+    const peakLtv = (facility.peakDebt + totalPriorDebt) / eligibleValue;
+    const ltp = c.purchasePrice > 0 ? facility.gross / c.purchasePrice : null;
+    const bufferDays = signedDaysBetween(c.exitDate, c.maturityDate);
+    const exit = testExit(c, facility, totalPriorDebt);
+    const warnings = [];
+    if (c.scope !== "unregulated_business_or_investment") warnings.push({ severity: "stop", code: "OUTSIDE_SCOPE", text: "This case requires the appropriate regulated route and is outside this model's scope." });
+    if (grossLtv > c.maxLtv) warnings.push({ severity: "material", code: "LTV", text: `Gross LTV of ${pct(grossLtv)} on the selected eligible value exceeds the ${pct(c.maxLtv)} modelling assumption.` });
+    if (totalPriorDebt > 0 && combinedLtv > c.maxLtv) warnings.push({ severity: "material", code: "CLTV", text: `Combined LTV of ${pct(combinedLtv)} exceeds the selected ${pct(c.maxLtv)} modelling assumption.` });
+    if (peakLtv > c.maxLtv && peakLtv > combinedLtv) warnings.push({ severity: "material", code: "PEAK_LTV", text: `Projected peak LTV of ${pct(peakLtv)} exceeds the selected leverage assumption.` });
+    if (totalPriorDebt > 0) warnings.push({ severity: "review", code: "SECOND_CHARGE", text: "Debt is shown as remaining ahead of the bridge. First-chargeholder consent and second-charge structure require review." });
+    if (!exit.passes) warnings.push({ severity: "material", code: "EXIT", text: `The stated ${exit.type.toLowerCase()} exit leaves a shortfall of ${money(Math.abs(exit.headroom))}.` });
+    if (facility.fees.upfront > c.upfrontCash) warnings.push({ severity: "material", code: "CASH", text: `Available upfront cash is ${money(facility.fees.upfront - c.upfrontCash)} below the modelled borrower-paid costs.` });
+    if (Math.max(grossLtv, combinedLtv) > MARKET_REVIEW_LTV) warnings.push({ severity: Math.max(grossLtv, combinedLtv) > .85 ? "material" : "review", code: "MARKET_REFERENCE", text: `Leverage is above the model's general 75% market-review reference. This is not a lender criterion; product, security and value-basis limits vary.` });
+    if (bufferDays < 0) warnings.push({ severity: "material", code: "OVERRUN", text: `The expected exit is ${Math.abs(bufferDays)} days after contractual maturity. Default interest and stated extension costs are illustrated, but an extension is not assumed to be available.` });
+    else if (bufferDays < 90) warnings.push({ severity: "review", code: "BUFFER", text: `The expected exit leaves only ${bufferDays} days before contractual maturity; a three-month practical buffer has not been achieved.` });
+    if (c.interestMode === "serviced" && c.monthlyCashAvailable < facility.monthlyServicedInterest) warnings.push({ severity: "material", code: "SERVICING", text: `Monthly cash available is ${money(facility.monthlyServicedInterest - c.monthlyCashAvailable)} below modelled serviced interest.` });
+    else if (c.interestMode === "serviced") warnings.push({ severity: "review", code: "SERVICING", text: `Serviced interest of about ${money(facility.monthlyServicedInterest)} per charged month requires evidenced external cash flow.` });
+    if (facility.worksAllocation > 0 && c.worksEvidence !== "costed") warnings.push({ severity: "review", code: "WORKS_EVIDENCE", text: "Future drawings are modelled, but the works budget and programme are not recorded as fully costed evidence." });
+    if (c.purpose === "development_exit") warnings.push({ severity: "review", code: "DEVELOPMENT_EXIT", text: "Repayment of a development facility requires redemption statements, practical completion evidence and exit-specific lender review." });
+    if (["purchase", "auction"].includes(c.purpose) && c.purchasePrice <= 0) warnings.push({ severity: "review", code: "PURCHASE_PRICE", text: "Purchase price has not been entered, so loan-to-purchase-price and lender-specific purchase caps cannot be assessed." });
+    if (["user", "unknown"].includes(c.valuationEvidence)) warnings.push({ severity: "review", code: "VALUATION_EVIDENCE", text: "The security value is not supported by a current formal valuation; lender leverage will depend on an acceptable valuation." });
+    if (["stated", "none"].includes(c.exitEvidence)) warnings.push({ severity: "review", code: "EXIT_EVIDENCE", text: "The primary exit is not yet supported by verified evidence. A numerical surplus alone is not an evidenced exit." });
+    if (c.exitType === "refinance" && c.refinanceType === "value_only") warnings.push({ severity: "review", code: "REFI_AFFORDABILITY", text: "The refinance exit is screened by value only; affordability, ICR or DSCR has not been tested." });
+    if (c.fallbackType === "none") warnings.push({ severity: "review", code: "FALLBACK", text: "No fallback exit has been stated." });
+    else if (c.fallbackAmount < facility.redemption) warnings.push({ severity: "review", code: "FALLBACK_CAPACITY", text: `The stated fallback capacity is ${money(facility.redemption - c.fallbackAmount)} below the estimated redemption.` });
+    if (c.purpose === "auction" && c.auctionExchangeDate) {
+      const auctionDays = daysBetween(c.auctionExchangeDate, c.startDate);
+      if (auctionDays < 20) warnings.push({ severity: auctionDays < 10 ? "material" : "review", code: "AUCTION_TIMING", text: `Only ${auctionDays} days are allowed from auction/exchange to completion; valuation, legal and funding timing require immediate review${c.depositAtRisk ? ` and ${money(c.depositAtRisk)} is recorded as committed` : ""}.` });
+    }
+    if (c.minimumInterest > contractualMonths) warnings.push({ severity: "review", code: "MINIMUM_INTEREST", text: `Minimum interest of ${c.minimumInterest} months exceeds the contractual term used in the schedule.` });
+    if (warnings.length === 0) warnings.push({ severity: "ok", code: "OK", text: "No immediate numerical warning is shown. Lender, property, borrower and evidence review is still required." });
+    const hasMaterial = warnings.some(w => ["stop", "material"].includes(w.severity));
+    const hasReview = warnings.some(w => w.severity === "review");
+    const reviewState = hasMaterial ? "The model shows a material numerical constraint" : hasReview ? "One or more assumptions require review" : "No immediate numerical warning under these assumptions";
+    const reviewClass = hasMaterial ? "red" : hasReview ? "amber" : "green";
+    const cost = round(facility.arrangement + facility.fees.facilityFixed + facility.fees.upfront + facility.interest + facility.overrunInterest + facility.extensionFee + facility.extensionCost + facility.exitFee);
+    const usableCash = round(facility.net + facility.drawsAtExit);
+    const costRatio = usableCash > 0 ? cost / usableCash : 0;
+    const totalExitDays = signedDaysBetween(c.startDate, c.exitDate);
+    const annualisedEquivalent = totalExitDays > 0 ? costRatio * 365 / totalExitDays : 0;
+    return { calculatedAt: new Date().toISOString(), c, facility, values, totalValue, eligibleValue, totalPriorDebt, grossLtv, omvLtv, combinedLtv, peakLtv, ltp, bufferDays, exit, warnings, reviewState, reviewClass, cost, usableCash, costRatio, annualisedEquivalent };
+  }
+
+  function scenarioCase(base, kind) {
+    if (kind === "delay") {
+      return { ...base, exitDate: addMonths(base.exitDate, num("delayMonths")) };
+    }
+    if (kind === "value") {
+      const factor = 1 - num("valueFall") / 100;
+      return { ...base, saleValue: base.saleValue * factor, refiValue: base.refiValue * factor, otherExitAmount: base.otherExitAmount * factor };
+    }
+    if (kind === "rate") return { ...base, monthlyRate: base.monthlyRate + num("rateRise") / 100 };
+    return base;
+  }
+
+  function updateBar(id, value, limit) {
+    const bar = $(id);
+    const width = Math.max(0, Math.min(100, value * 100));
+    bar.querySelector("span").style.width = `${width}%`;
+    bar.classList.toggle("red", value > limit);
+  }
+
+  function row(label, amount, total = false, css = "") {
+    return `<tr class="${total ? "total" : ""}"><td>${esc(label)}</td><td class="${css}">${money2(amount)}</td></tr>`;
+  }
+
+  function textRow(label, value) {
+    return `<tr><td>${esc(label)}</td><td>${esc(value)}</td></tr>`;
+  }
+
+  function renderWaterfall(r) {
+    const f = r.facility;
+    const retainedLine = r.c.interestMode === "retained" ? row("Less: retained interest allocation to contractual maturity", -f.allowance) : "";
+    const projectedLine = r.c.interestMode === "rolled" ? row("Projected rolled interest to contractual maturity", f.projectedInterestToMaturity) + row("Projected peak debt at maturity", f.peakDebt, true) : "";
+    const unusedLine = r.c.interestMode === "retained" ? row("Unused retained interest at expected exit", f.unusedAllowance) : "";
+    const overrunLines = f.overrunInterest > 0 ? row("Default/overrun interest", f.overrunInterest) + row("Extension fee and stated costs", f.extensionFee + f.extensionCost) : "";
+    $("tab-waterfall").innerHTML = `<div class="table-scroll"><table><thead><tr><th>Facility waterfall</th><th>Amount</th></tr></thead><tbody>
+      ${row("Gross facility commitment", f.gross)}
+      ${retainedLine}
+      ${row("Less: arrangement fee withheld", -f.arrangement)}
+      ${f.fees.facilityFixed ? row("Less: other facility-withheld fees", -f.fees.facilityFixed) : ""}
+      ${f.worksAllocation ? row("Less: future works allocation", -f.worksAllocation) : ""}
+      ${row("Net advance available for transaction uses", f.net, true)}
+      ${row("Opening interest-bearing debt", f.opening)}
+      ${f.worksAllocation ? row("Future works drawn by expected exit", f.drawsAtExit) : ""}
+      ${row(`${r.c.interestMode === "serviced" ? "Serviced" : "Capitalised"} interest to expected exit`, f.interest)}
+      ${overrunLines}
+      ${unusedLine}
+      ${projectedLine}
+      ${row("Exit fee", f.exitFee)}
+      ${row("Estimated redemption balance", f.redemption, true)}
+    </tbody></table></div><p class="disclaimer">Retained interest is reserved within the commitment. Rolled interest increases debt as it accrues. Future drawings accrue from their assumed dates. Overrun terms are a stress assumption only. The lender's own documentation remains decisive.</p>`;
+  }
+
+  function renderExit(r) {
+    const e = r.exit;
+    let rows = textRow("Exit route", e.type);
+    if (e.valueCapacity !== null) rows += row("Value-based refinance capacity", e.valueCapacity) + (e.incomeCapacity === null ? textRow("Income/affordability capacity", "Not tested") : row("Income/affordability capacity", e.incomeCapacity));
+    rows += row("Gross exit proceeds/capacity", e.grossCapacity);
+    if (e.costs) rows += row("Exit completion costs", -e.costs);
+    if (e.priorDebt) rows += row("Prior-ranking debt", -e.priorDebt);
+    rows += row("Capacity available to repay bridge", e.capacity) + row("Estimated bridge redemption", -r.facility.redemption);
+    rows += row(e.headroom >= 0 ? "Exit headroom" : "Exit shortfall", e.headroom, true, e.headroom >= 0 ? "amount-positive" : "amount-negative");
+    $("tab-exit").innerHTML = `<div class="table-scroll"><table><thead><tr><th>${esc(e.type)} test</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table></div><p class="disclaimer">A numerical surplus does not test lender appetite, property acceptability, borrower credit, valuation evidence or the practical time required to complete the exit.</p>`;
+  }
+
+  function renderScenarios(baseResult) {
+    const base = baseResult.c;
+    const definitions = [
+      { id: "base", label: "Base", input: base, result: baseResult },
+      { id: "delay", label: `${num("delayMonths")} month delay`, input: scenarioCase(base, "delay") },
+      { id: "value", label: `${num("valueFall")}% lower exit value`, input: scenarioCase(base, "value") },
+      { id: "rate", label: `Rate +${num("rateRise").toFixed(2)}% monthly`, input: scenarioCase(base, "rate") }
+    ];
+    const entries = definitions.map(entry => {
+      if (entry.result) return entry;
+      try { return { ...entry, result: calculate(entry.input) }; }
+      catch (error) { return { ...entry, error: error.message }; }
+    });
+    $("tab-scenarios").innerHTML = `<div class="table-scroll"><table><thead><tr><th>Scenario</th><th>Gross facility</th><th>Redemption</th><th>Exit headroom</th><th>Exit buffer</th></tr></thead><tbody>${entries.map(entry => entry.error
+      ? `<tr><td>${esc(entry.label)}</td><td colspan="4" class="amount-negative">Not modelled: ${esc(entry.error)}</td></tr>`
+      : `<tr><td>${esc(entry.label)}</td><td>${money(entry.result.facility.gross)}</td><td>${money(entry.result.facility.redemption)}</td><td class="${entry.result.exit.headroom >= 0 ? "amount-positive" : "amount-negative"}">${money(entry.result.exit.headroom)}</td><td>${entry.result.bufferDays >= 0 ? entry.result.bufferDays + " days" : Math.abs(entry.result.bufferDays) + " days over"}</td></tr>`).join("")}</tbody></table></div><p class="disclaimer">Each scenario reruns the complete facility, drawing schedule, maturity overrun and exit calculation.</p>`;
+    return entries.map(entry => ({ id: entry.id, label: entry.label, input: entry.input, result: entry.result || null, error: entry.error || null }));
+  }
+
+  function renderAssumptions(r) {
+    const c = r.c;
+    const labels = {
+      retained: "Retained within facility", rolled: "Rolled into balance", serviced: "Serviced monthly",
+      gross: "Gross facility", opening: "Opening debt", net: "Net advance",
+      simple: "Simple", compound: "Monthly compound", whole: "Whole months", exact: "Exact days"
+    };
+    const items = [
+      ["Calculation version", ENGINE_VERSION], ["Formula version", FORMULA_VERSION], ["Calculation timestamp", r.calculatedAt], ["Model scope", c.scope === "unregulated_business_or_investment" ? "Unregulated business/investment" : "Potentially regulated: refer"],
+      ["Borrowing entity", c.borrowerType.replaceAll("_", " ")], ["Property type", c.propertyType.replaceAll("_", " ")],
+      ["Interest treatment", labels[c.interestMode]], ["Interest rate", `${(c.monthlyRate * 100).toFixed(2)}% per month`],
+      ["Interest base applied", labels[r.facility.effectiveInterestBase]], ["Accrual", `${labels[c.compounding]}, ${labels[c.periodRounding]}`],
+      ["Minimum interest", `${c.minimumInterest} months`], ["Eligible value basis", r.values.label], ["Eligible value", money(r.eligibleValue)], ["Open market value", money(r.totalValue)], ["Gross-LTV assumption", pct(c.maxLtv)],
+      ["Calculated gross LTV", pct(r.grossLtv)], ["Calculated combined LTV", pct(r.combinedLtv)],
+      ["Projected peak LTV", pct(r.peakLtv)], ["Gross loan to purchase price", r.ltp === null ? "Not applicable" : pct(r.ltp)],
+      ["Future works allocation", money(r.facility.worksAllocation)], ["Expected exit", c.exitDate], ["Contractual maturity", c.maturityDate],
+      ["Valuation evidence", c.valuationEvidence.replaceAll("_", " ")], ["Exit evidence", c.exitEvidence.replaceAll("_", " ")], ["Market review reference", `75% general reference at ${MARKET_REFERENCE_DATE}`], ["Lender criteria", "Not applied — assumptions only"]
+    ];
+    $("tab-assumptions").innerHTML = `<div class="assumption-grid">${items.map(([a,b]) => `<div class="assumption"><span>${esc(a)}</span><strong>${esc(b)}</strong></div>`).join("")}</div><p class="disclaimer">Known facts, user assumptions and lender/product rules should be stored separately in a production case. Changing a market assumption must never overwrite a borrower fact.</p>`;
+  }
+
+  let lastResult = null;
+  let lastScenarios = [];
+
+  function render(r) {
+    const f = r.facility;
+    $("mNet").textContent = money(f.net);
+    $("mGross").textContent = money(f.gross);
+    $("mUpfront").textContent = money(f.fees.upfront);
+    $("mOpening").textContent = money(f.opening);
+    $("mFutureWorks").textContent = money(f.worksAllocation);
+    $("mInterest").textContent = money(f.interest);
+    $("mUnused").textContent = r.c.interestMode === "retained" ? money(f.unusedAllowance) : "Not applicable";
+    $("mPeak").textContent = money(f.peakDebt);
+    $("mRedemption").textContent = money(f.redemption);
+    $("mHeadroom").textContent = money(r.exit.headroom);
+    $("mHeadroom").classList.toggle("amount-negative", r.exit.headroom < 0);
+    $("mHeadroom").classList.toggle("amount-positive", r.exit.headroom >= 0);
+    $("mCost").textContent = money(r.cost);
+    $("mCostRatio").textContent = pct(r.costRatio);
+    $("mAnnualised").textContent = pct(r.annualisedEquivalent);
+    $("mServicing").textContent = r.c.interestMode === "serviced" ? money(f.monthlyServicedInterest) : "Not applicable";
+    $("reviewState").textContent = r.reviewState;
+    $("reviewState").className = `status ${r.reviewClass}`;
+    $("grossLtvText").textContent = pct(r.grossLtv);
+    $("grossLtvLabel").textContent = `Gross LTV — ${r.values.label}`;
+    $("omvLtvText").textContent = pct(r.omvLtv);
+    $("combinedLtvText").textContent = pct(r.combinedLtv);
+    $("peakLtvText").textContent = pct(r.peakLtv);
+    $("ltpText").textContent = r.ltp === null ? "Not applicable" : pct(r.ltp);
+    $("bufferText").textContent = r.bufferDays >= 0 ? `${r.bufferDays} days` : `${Math.abs(r.bufferDays)} days over maturity`;
+    updateBar("grossLtvBar", r.grossLtv, r.c.maxLtv);
+    updateBar("omvLtvBar", r.omvLtv, r.c.maxLtv);
+    updateBar("combinedLtvBar", r.combinedLtv, r.c.maxLtv);
+    updateBar("peakLtvBar", r.peakLtv, r.c.maxLtv);
+    updateBar("ltpBar", r.ltp === null ? 0 : r.ltp, 1);
+    $("warnings").innerHTML = r.warnings.map(w => `<li class="${w.severity}">${esc(w.text)}</li>`).join("");
+    renderWaterfall(r); renderExit(r); lastScenarios = renderScenarios(r); renderAssumptions(r);
+    lastResult = r;
+  }
+
+  function renderScopeStop() {
+    const message = "This case falls outside the scope of this unregulated finance model and requires appropriate regulatory review.";
+    $("reviewState").textContent = message;
+    $("reviewState").className = "status red";
+    ["mNet","mGross","mUpfront","mOpening","mFutureWorks","mInterest","mUnused","mPeak","mRedemption","mHeadroom","mCost","mCostRatio","mAnnualised","mServicing"].forEach(id => $(id).textContent = "Not calculated");
+    $("mHeadroom").classList.remove("amount-negative", "amount-positive");
+    $("grossLtvText").textContent = "Not calculated";
+    $("omvLtvText").textContent = "Not calculated";
+    $("combinedLtvText").textContent = "Not calculated";
+    $("peakLtvText").textContent = "Not calculated";
+    $("ltpText").textContent = "Not calculated";
+    $("bufferText").textContent = "Not calculated";
+    updateBar("grossLtvBar", 0, 1);
+    updateBar("omvLtvBar", 0, 1);
+    updateBar("combinedLtvBar", 0, 1);
+    updateBar("peakLtvBar", 0, 1);
+    updateBar("ltpBar", 0, 1);
+    $("warnings").innerHTML = `<li class="stop">${esc(message)} No facility illustration has been produced.</li>`;
+    ["waterfall","exit","scenarios","assumptions"].forEach(id => $("tab-" + id).innerHTML = `<p>${esc(message)}</p>`);
+    lastResult = null;
+    lastScenarios = [];
+  }
+
+  function showError(error) {
+    $("reviewState").textContent = error.message;
+    $("reviewState").className = "status red";
+    ["mNet","mGross","mUpfront","mOpening","mFutureWorks","mInterest","mUnused","mPeak","mRedemption","mHeadroom","mCost","mCostRatio","mAnnualised","mServicing"].forEach(id => $(id).textContent = "Not calculated");
+    $("mHeadroom").classList.remove("amount-negative", "amount-positive");
+    ["grossLtvText","omvLtvText","combinedLtvText","peakLtvText","ltpText","bufferText"].forEach(id => $(id).textContent = "Not calculated");
+    updateBar("grossLtvBar", 0, 1); updateBar("omvLtvBar", 0, 1); updateBar("combinedLtvBar", 0, 1); updateBar("peakLtvBar", 0, 1); updateBar("ltpBar", 0, 1);
+    $("warnings").innerHTML = `<li class="material">${esc(error.message)}</li>`;
+    ["waterfall","exit","scenarios","assumptions"].forEach(id => $("tab-" + id).innerHTML = `<p>${esc(error.message)}</p>`);
+    lastResult = null;
+    lastScenarios = [];
+  }
+
+  function calculateAndRender() {
+    try {
+      $("calculatedNeed").textContent = money(needFromForm());
+      const caseInput = readCase();
+      if (caseInput.scope !== "unregulated_business_or_investment") return renderScopeStop();
+      render(calculate(caseInput));
+    } catch (error) { showError(error); }
+  }
+
+  function setVisibility() {
+    const uses = bridgeRoot.querySelector('input[name="needMode"]:checked').value === "uses";
+    $("directNeed").hidden = uses;
+    $("usesNeed").hidden = !uses;
+    const exit = $("exitType").value;
+    $("saleExit").hidden = exit !== "sale";
+    $("refinanceExit").hidden = exit !== "refinance";
+    $("otherExit").hidden = exit !== "other";
+    $("auctionDetails").hidden = $("purpose").value !== "auction";
+    $("customValueWrap").hidden = $("valuationBasis").value !== "custom";
+    const regulated = bridgeRoot.querySelector('input[name="regulated"]:checked').value === "yes" || bridgeRoot.querySelector('input[name="businessPurpose"]:checked').value !== "yes";
+    $("scopeStop").hidden = !regulated;
+    const interestMode = $("interestMode").value;
+    $("servicingWrap").hidden = interestMode !== "serviced";
+    const grossOption = $("interestBase").querySelector('option[value="gross"]');
+    grossOption.disabled = interestMode !== "retained";
+    if (grossOption.disabled && $("interestBase").value === "gross") $("interestBase").value = "opening";
+    const refiType = $("refinanceType").value;
+    $("investmentRefiFields").hidden = !["btl", "commercial_investment"].includes(refiType);
+    $("ownerOccupiedRefiFields").hidden = refiType !== "owner_occupied";
+  }
+
+  function initialiseDates() {
+    const today = new Date();
+    const start = new Date(Date.UTC(today.getFullYear(), today.getMonth() + 1, 1));
+    const exit = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + 9, 1));
+    const maturity = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + 12, 1));
+    $("startDate").value = isoDate(start);
+    $("exitDate").value = isoDate(exit);
+    $("maturityDate").value = isoDate(maturity);
+  }
+
+  let calculationTimer = null;
+  const queueCalculation = immediate => {
+    clearTimeout(calculationTimer);
+    if (immediate) calculateAndRender();
+    else calculationTimer = setTimeout(calculateAndRender, 250);
+  };
+
+  bridgeRoot.querySelectorAll("input, select").forEach(el => {
+    el.addEventListener("input", () => { setVisibility(); queueCalculation(false); });
+    el.addEventListener("change", () => { setVisibility(); queueCalculation(true); });
+  });
+
+  const tabs = [...bridgeRoot.querySelectorAll(".tab")];
+  function activateTab(button, moveFocus = false) {
+    tabs.forEach(tab => {
+      const selected = tab === button;
+      tab.classList.toggle("active", selected);
+      tab.setAttribute("aria-selected", String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+    });
+    bridgeRoot.querySelectorAll(".tab-panel").forEach(panel => panel.hidden = panel.id !== `tab-${button.dataset.tab}`);
+    if (moveFocus) button.focus();
+  }
+  tabs.forEach((button, index) => {
+    button.addEventListener("click", () => activateTab(button));
+    button.addEventListener("keydown", event => {
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      let target = index;
+      if (event.key === "ArrowLeft") target = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === "ArrowRight") target = (index + 1) % tabs.length;
+      if (event.key === "Home") target = 0;
+      if (event.key === "End") target = tabs.length - 1;
+      activateTab(tabs[target], true);
+    });
+  });
+  $("printButton").addEventListener("click", () => window.print());
+  $("exportButton").addEventListener("click", () => {
+    if (!lastResult) return;
+    const stripCase = result => {
+      if (!result) return null;
+      const { c, ...outputs } = result;
+      return outputs;
+    };
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      engineVersion: ENGINE_VERSION,
+      formulaVersion: FORMULA_VERSION,
+      criteriaMode: "User assumptions only; no live lender criteria applied",
+      caseInput: lastResult.c,
+      baseResult: stripCase(lastResult),
+      scenarios: lastScenarios.map(scenario => ({ ...scenario, result: stripCase(scenario.result) }))
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `eas-bridge-case-${new Date().toISOString().slice(0,10)}.json`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  });
+
+  window.EASBridgeModel = { calculate, readCase, refresh: calculateAndRender, getResult: () => lastResult, getScenarios: () => lastScenarios };
+  initialiseDates();
+  setVisibility();
+  calculateAndRender();
+}
+
 function renderSpecialist(){
  const el=document.getElementById("step3");
  const o=state.objective;
+ if(o==="bridge"){
+  el.innerHTML=BRIDGE_TEMPLATE;
+  initBridgeModule();
+  return;
+ }
  if(o==="develop" && state.developmentEntryMode==="quick"){
   renderQuickDevelopmentWorkspace(el);
   return;
@@ -1772,8 +2914,7 @@ function renderSpecialist(){
     <select id="purchasePurpose">
       <option value="owner_occupied">Business premises / owner-occupied commercial</option>
       <option value="investment">Investment property</option>
-      <option value="bridge">Short-term purchase / bridging</option>
-      <option value="refurb">Purchase with refurbishment or conversion</option>
+            <option value="refurb">Purchase with refurbishment or conversion</option>
     </select>
    </div>
 
@@ -4308,13 +5449,13 @@ renderMonthlyPreview=function(){const el=document.getElementById("monthlyPreview
 const _renderMonthlyPreviewV138=renderMonthlyPreview;
 renderMonthlyPreview=function(){_renderMonthlyPreviewV138();updateDetailedScheduleStatus();};
 
-function downloadDevelopmentManifest(){const prep=devDetailedPrepared();const payload={schema_version:"1.4.0",generated_at:new Date().toISOString(),project:{development_type:state.developmentType,development_family:state.developmentFamily,inputs:prep.cfg,monthly_rows:state.monthlyRows}};downloadText("EAS-Development-Model-v1.4.0.json",JSON.stringify(payload,null,2),"application/json");}
+function downloadDevelopmentManifest(){const prep=devDetailedPrepared();const payload={schema_version:"1.5.0",generated_at:new Date().toISOString(),project:{development_type:state.developmentType,development_family:state.developmentFamily,inputs:prep.cfg,monthly_rows:state.monthlyRows}};downloadText("EAS-Development-Model-v1.5.0.json",JSON.stringify(payload,null,2),"application/json");}
 function exportDetailedDevelopmentWorkbook(){if(typeof XLSX==="undefined"){alert("Excel support has not loaded yet. Please retry in a moment.");return;}const prep=devDetailedPrepared(),r=runDevelopmentCashflowModel(prep.cfg),sc=devScenarioRows();const inputs=[["Field","Value"],...[ ["Development type",state.developmentType],["Site position",prep.cfg.siteStatus],["Site/current value",prep.cfg.siteValue],["Historic land cost",prep.cfg.landHistoricCost],["Existing debt",prep.cfg.existingDebt],["Acquisition costs",prep.cfg.acquisitionCosts],["GDV",prep.cfg.gdv],["Opening cash",prep.cfg.openingCash],["Senior rate %",prep.cfg.annualRate],["Arrangement fee %",prep.cfg.arrangementFeePct],["Arrangement fee basis",prep.cfg.arrangementFeeBasis],["Exit fee %",prep.cfg.exitFeePct],["Exit fee basis",prep.cfg.exitFeeBasis],["Acquisition draw convention",prep.cfg.acquisitionDrawConvention],["Works funding %",prep.cfg.worksFundingPct],["Professional fees funding %",prep.cfg.professionalFundingPct],["Acquisition funding %",prep.cfg.acquisitionFundingPct],["Certification lag months",prep.cfg.certificationLag] ]];const ledger=[Object.keys(r.ledger[0]||{}),...r.ledger.map(x=>Object.values(x))];const scenarios=[["Scenario","Profit after finance","Finance cost","Peak debt","Peak debt / GDV","Exit shortfall"],...sc.map(x=>[x.name,x.r.profitAfterFinance,x.r.totalFinanceCost,x.r.peakDebt,x.r.peakLtgdv,x.r.exitShortfall])];const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(inputs),"Inputs");XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ledger),"Monthly Ledger");XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(scenarios),"Scenarios");if(state.monthlyRows.length)XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(state.monthlyRows),"Monthly Cost Plan");XLSX.writeFile(wb,"EAS-Development-Model.xlsx");}
 
 const _legacyRenderResultsV13=renderResults;
 renderResults=function(){if(state.objective==="develop"&&state.developmentEntryMode==="quick"){renderCaseValidation();const r=document.getElementById("finalResults"),preview=document.getElementById("modulePreview");let html=`<div class="callout"><strong>${currentRouteLabel()}</strong><br>This is the current quick comparison. Each project uses its own cash contribution; wider borrower/security information is deliberately deferred until a project is taken into the Detailed Development Model.</div>`+(preview?preview.innerHTML:"");if(state.assets.length){const c=commonMetrics(),sec=state.assets.filter(a=>a.security!=="never"),secEq=sec.reduce((s,a)=>s+Math.max(0,a.value-a.debt),0);html+=`<div class="section"><h3>Optional wider assets entered</h3><table class="result-table"><tr><td>Gross asset equity entered</td><td>${money(c.equity)}</td></tr><tr><td>Gross equity not excluded from security</td><td>${money(secEq)}</td></tr></table><div class="callout">This equity is context only and has not been treated as project cash or automatic borrowing capacity.</div></div>`;}r.innerHTML=html;return;}return _legacyRenderResultsV13();};
 function buildDevCaseSummaryV3(){
- const lines=["EAS Finance Workspace - Development Summary","Version: Final v1.4.0","Generated: "+new Date().toLocaleString("en-GB"),"Route: "+currentRouteLabel(),""];
+ const lines=["EAS Finance Workspace - Development Summary","Version: Final v1.5.0","Generated: "+new Date().toLocaleString("en-GB"),"Route: "+currentRouteLabel(),""];
  const add=(k,v)=>lines.push(k+": "+v);
  if(state.developmentEntryMode==="quick"){
   add("Finance assumptions",`${state.quickDevFinance.annualRate}% p.a.; ${state.quickDevFinance.arrangementFeePct}% arrangement fee on ${state.quickDevFinance.arrangementFeeBasis==="gross"?"gross facility before interest":"pre-finance funding need"}; ${state.quickDevFinance.interestMethod}; ${state.quickDevFinance.acquisitionDrawConvention==="lender_advance"?"lender advance at completion":"equity first"}; ${state.quickDevFinance.acquisitionFundingPct}% acquisition funding; ${state.quickDevFinance.worksFundingPct}% works funding; ${state.quickDevFinance.professionalFundingPct}% professional-fee funding; ${state.quickDevFinance.certificationLag} month draw lag`);
